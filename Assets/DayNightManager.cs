@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using TMPro;
 
@@ -9,111 +8,77 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField] private Light2D globalLight;
 
     [Header("Time Settings")]
-    [SerializeField] private float startHour = 6f;       // 6:00 AM
-    [SerializeField] private float endHour = 27f;      // 3:00 AM next day = 24+3
-    [SerializeField] private float dayDuration = 120f;   // real seconds for full cycle
+    [SerializeField] private float startHour = 6f;
+    [SerializeField] private float endHour = 27f;
+    [SerializeField] private float dayDuration = 120f;
 
     [Header("UI (optional)")]
     [SerializeField] private TextMeshProUGUI clockText;
 
-    // current time in hours (6.0 to 27.0)
     private float currentHour;
     private float totalHours;
-
-    // light colors for each time of day
-    private Color dawn = new Color(1.0f, 0.75f, 0.5f, 1f);   // warm orange
-    private Color morning = new Color(1.0f, 0.95f, 0.8f, 1f);   // soft yellow
-    private Color noon = new Color(1.0f, 1.0f, 1.0f, 1f);   // pure white
-    private Color afternoon = new Color(1.0f, 0.9f, 0.7f, 1f);   // golden
-    private Color sunset = new Color(1.0f, 0.5f, 0.2f, 1f);   // deep orange
-    private Color dusk = new Color(0.4f, 0.3f, 0.6f, 1f);   // purple
-    private Color night = new Color(0.05f, 0.05f, 0.2f, 1f);   // dark blue
-    private Color midnight = new Color(0.02f, 0.02f, 0.1f, 1f);   // near black
 
     void Start()
     {
         currentHour = startHour;
-        totalHours = endHour - startHour; // = 21 hours
+        totalHours = endHour - startHour;
     }
 
     void Update()
     {
-        // advance time
         currentHour += (totalHours / dayDuration) * Time.deltaTime;
 
-        // loop back to start when cycle ends
         if (currentHour >= endHour)
             currentHour = startHour;
 
-        // apply light based on current hour
-        UpdateLight(currentHour);
+        UpdateLight();
 
-        // update clock UI if assigned
         if (clockText != null)
             clockText.text = GetFormattedTime(currentHour);
     }
 
-    void UpdateLight(float hour)
+    void UpdateLight()
     {
-        Color targetColor;
-        float targetIntensity;
+        Color color;
+        float intensity;
 
-        if (hour < 7f)        // 6AM-7AM dawn
+        // use currentHour — not currentTime
+        if (currentHour >= 6f && currentHour < 8f)
         {
-            float t = Mathf.InverseLerp(6f, 7f, hour);
-            targetColor = Color.Lerp(night, dawn, t);
-            targetIntensity = Mathf.Lerp(0.2f, 0.7f, t);
+            float t = Mathf.InverseLerp(6f, 8f, currentHour);
+            color = Color.Lerp(new Color(0.8f, 0.6f, 0.4f), new Color(1f, 0.95f, 0.8f), t);
+            intensity = Mathf.Lerp(0.8f, 1f, t);
         }
-        else if (hour < 9f)   // 7AM-9AM morning
+        else if (currentHour >= 8f && currentHour < 17f)
         {
-            float t = Mathf.InverseLerp(7f, 9f, hour);
-            targetColor = Color.Lerp(dawn, morning, t);
-            targetIntensity = Mathf.Lerp(0.7f, 1.0f, t);
+            color = new Color(1f, 0.98f, 0.9f);
+            intensity = 1f;
         }
-        else if (hour < 13f)  // 9AM-1PM full day
+        else if (currentHour >= 17f && currentHour < 19f)
         {
-            float t = Mathf.InverseLerp(9f, 13f, hour);
-            targetColor = Color.Lerp(morning, noon, t);
-            targetIntensity = 1.0f;
+            float t = Mathf.InverseLerp(17f, 19f, currentHour);
+            color = Color.Lerp(new Color(1f, 0.85f, 0.5f), new Color(0.9f, 0.5f, 0.3f), t);
+            intensity = Mathf.Lerp(1f, 0.8f, t);
         }
-        else if (hour < 17f)  // 1PM-5PM afternoon
+        else if (currentHour >= 19f && currentHour < 21f)
         {
-            float t = Mathf.InverseLerp(13f, 17f, hour);
-            targetColor = Color.Lerp(noon, afternoon, t);
-            targetIntensity = 1.0f;
+            float t = Mathf.InverseLerp(19f, 21f, currentHour);
+            color = Color.Lerp(new Color(0.9f, 0.5f, 0.3f), new Color(0.4f, 0.45f, 0.65f), t);
+            intensity = Mathf.Lerp(0.8f, 0.65f, t);
         }
-        else if (hour < 19f)  // 5PM-7PM sunset
+        else
         {
-            float t = Mathf.InverseLerp(17f, 19f, hour);
-            targetColor = Color.Lerp(afternoon, sunset, t);
-            targetIntensity = Mathf.Lerp(1.0f, 0.8f, t);
-        }
-        else if (hour < 21f)  // 7PM-9PM dusk
-        {
-            float t = Mathf.InverseLerp(19f, 21f, hour);
-            targetColor = Color.Lerp(sunset, dusk, t);
-            targetIntensity = Mathf.Lerp(0.8f, 0.4f, t);
-        }
-        else if (hour < 24f)  // 9PM-12AM night
-        {
-            float t = Mathf.InverseLerp(21f, 24f, hour);
-            targetColor = Color.Lerp(dusk, night, t);
-            targetIntensity = Mathf.Lerp(0.4f, 0.15f, t);
-        }
-        else                  // 12AM-3AM deep night
-        {
-            float t = Mathf.InverseLerp(24f, 27f, hour);
-            targetColor = Color.Lerp(night, midnight, t);
-            targetIntensity = Mathf.Lerp(0.15f, 0.05f, t);
+            // night — soft moonlit blue, not too dark
+            color = new Color(0.4f, 0.45f, 0.65f);
+            intensity = 0.65f;
         }
 
-        globalLight.color = targetColor;
-        globalLight.intensity = targetIntensity;
+        globalLight.color = color;
+        globalLight.intensity = intensity;
     }
 
     string GetFormattedTime(float hour)
     {
-        // wrap hour back to 0-24 range for display
         float displayHour = hour % 24f;
         int h = Mathf.FloorToInt(displayHour);
         int m = Mathf.FloorToInt((displayHour - h) * 60f);
@@ -123,7 +88,6 @@ public class DayNightCycle : MonoBehaviour
         return string.Format("{0}:{1:00} {2}", displayH, m, period);
     }
 
-    // call this from other scripts to get current time
     public float GetCurrentHour() { return currentHour % 24f; }
     public string GetTimeString() { return GetFormattedTime(currentHour); }
 }

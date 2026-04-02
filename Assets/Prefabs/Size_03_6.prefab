@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6086509976428073058}
   - component: {fileID: 2419364112718279121}
   - component: {fileID: 4485220556870520067}
+  - component: {fileID: -3652562157927923099}
   m_Layer: 0
   m_Name: Size_03_6
   m_TagString: Untagged
@@ -131,6 +132,18 @@ CapsuleCollider2D:
   m_Size: {x: 0.6394584, y: 1.8312254}
   m_Direction: 0
 --- !u!114 &4485220556870520067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822106803916273153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe96a20dce6e2b241aa5e321dadebcff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SortingOrderHandler
+--- !u!114 &-3652562157927923099
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

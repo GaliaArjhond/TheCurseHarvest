@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6860572927622474575}
   - component: {fileID: 5282603877267143554}
+  - component: {fileID: -5406671012476497007}
   m_Layer: 0
   m_Name: Vegetation_36
   m_TagString: Untagged
@@ -91,3 +92,15 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-5406671012476497007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291573718845504133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe96a20dce6e2b241aa5e321dadebcff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SortingOrderHandler
