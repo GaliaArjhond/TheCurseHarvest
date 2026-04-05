@@ -6,11 +6,13 @@ public class SaveController : MonoBehaviour
 {
     private string saveLocation;
     private InventoryController inventoryController;
+    private hotbarControler hotbarController;
 
     void Start()
     {
         saveLocation = Path.Combine(Application.persistentDataPath, "saveData.json");
         inventoryController = FindObjectOfType<InventoryController>();
+        hotbarController = FindObjectOfType<hotbarControler>();
         LoadGame();
     }
 
@@ -22,7 +24,8 @@ public class SaveController : MonoBehaviour
         {
             playerPosition = GameObject.FindWithTag("Player").transform.position,
             mapBoundary = confiner.m_BoundingShape2D.gameObject.name,
-            inventorySaveData = inventoryController.GetInventoryItems()  
+            inventorySaveData = inventoryController.GetInventoryItems(),
+            hotbarSaveData = hotbarController.GetHotbarItems()
         };
 
         string json = JsonUtility.ToJson(saveData);
@@ -31,21 +34,22 @@ public class SaveController : MonoBehaviour
 
     public void LoadGame()
     {
-        if (File.Exists(saveLocation))  // Fixed: removed ! so we read when file EXISTS
+        if (File.Exists(saveLocation))
         {
             SaveData saveData = JsonUtility.FromJson<SaveData>(File.ReadAllText(saveLocation));
 
-            GameObject.FindWithTag("Player").transform.position = saveData.playerPosition;  // Fixed: singular FindWithTag
+            GameObject.FindWithTag("Player").transform.position = saveData.playerPosition;
 
             FindObjectOfType<CinemachineConfiner>().m_BoundingShape2D =
                 GameObject.Find(saveData.mapBoundary).GetComponent<PolygonCollider2D>();
 
-            inventoryController.SetInventoryItems(saveData.inventorySaveData);  
+            inventoryController.SetInventoryItems(saveData.inventorySaveData);
+            hotbarController.SetHotbarItems(saveData.hotbarSaveData);
         }
-        else  // File does not exist, create a fresh save
+        else
         {
             SaveGame();
-            Debug.LogWarning("No save file found, creating a new one.");  // Fixed: saveData was out of scope here
+            Debug.LogWarning("No save file found, creating a new one.");
         }
     }
 }

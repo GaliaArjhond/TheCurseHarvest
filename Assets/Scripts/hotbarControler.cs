@@ -1,24 +1,59 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
+using UnityEngine.InputSystem;
 
-public class InventoryController : MonoBehaviour
+public class hotbarControler : MonoBehaviour
 {
+    public GameObject hotbarPanel;
+    public GameObject slotPrefab;
+    public int slotCount = 8;
+
     private ItemDictionary itemDictionary;
 
-    public GameObject inventoryPanel;
-    public GameObject slotPrefab;
-    public int slotCount;
-    public GameObject[] itemPrefabs;
+    private Key[] hotbarKeys;
 
-    void Start()
+    public void Awake()
     {
-        itemDictionary = Object.FindFirstObjectByType<ItemDictionary>();
+        itemDictionary = FindObjectOfType<ItemDictionary>();
+
+        hotbarKeys = new Key[slotCount];
+        for (int i = 0; i < slotCount; i++)
+        {
+            hotbarKeys[i] = i < 7 ? (Key)((int)Key.Digit1 + i) : Key.Digit0; // Assign keys 1-8 to the hotbar slots
+
+        }
     }
 
-    public List<InventorySaveData> GetInventoryItems()
+
+    void Update()
     {
-        List<InventorySaveData> invData = new List<InventorySaveData>();
-        foreach (Transform slotTransform in inventoryPanel.transform)
+        for (int i = 0; i < slotCount; i++) 
+        {
+            if (Keyboard.current[hotbarKeys[i]].wasPressedThisFrame)
+            {
+                UseItemSlot(i);
+            }
+        }
+    }
+
+    void UseItemSlot(int index) 
+    { 
+        Slot slot = hotbarPanel.transform.GetChild(index).GetComponent<Slot>();
+        if(slot.currentItem != null) 
+        {
+            Item item = slot.currentItem.GetComponent<Item>();
+            if (item != null) 
+            {
+                item.UseItem();
+            }
+        }
+    }
+
+     public List<InventorySaveData> GetHotbarItems()
+    {
+        List<InventorySaveData> hotbarData = new List<InventorySaveData>();
+        foreach (Transform slotTransform in hotbarPanel.transform)
         {
             Slot slot = slotTransform.GetComponent<Slot>();
             if (slot == null)
@@ -36,17 +71,17 @@ public class InventoryController : MonoBehaviour
                     continue;
                 }
 
-                invData.Add(new InventorySaveData { itemID = item.ID, slotIndex = slotTransform.GetSiblingIndex() });
+                hotbarData.Add(new InventorySaveData { itemID = item.ID, slotIndex = slotTransform.GetSiblingIndex() });
             }
         }
-        return invData;
+        return hotbarData;
     }
 
     // fixed — was missing parameter name
-    public void SetInventoryItems(List<InventorySaveData> inventorySaveData)
+    public void SetHotbarItems(List<InventorySaveData> inventorySaveData)
     {
         // clear existing slots
-        foreach (Transform child in inventoryPanel.transform)
+        foreach (Transform child in hotbarPanel.transform)
         {
             Destroy(child.gameObject);
         }
@@ -54,7 +89,7 @@ public class InventoryController : MonoBehaviour
         // create fresh slots
         for (int i = 0; i < slotCount; i++)
         {
-            Instantiate(slotPrefab, inventoryPanel.transform);
+            Instantiate(slotPrefab, hotbarPanel.transform);
         }
 
         // populate slots with saved items
@@ -62,7 +97,7 @@ public class InventoryController : MonoBehaviour
         {
             if (data.slotIndex < slotCount)
             {
-                Slot slot = inventoryPanel.transform
+                Slot slot = hotbarPanel.transform
                             .GetChild(data.slotIndex)
                             .GetComponent<Slot>();
 
