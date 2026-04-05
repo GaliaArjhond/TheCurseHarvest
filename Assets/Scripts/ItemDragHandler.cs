@@ -32,35 +32,23 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         canvasGroup.alpha = 1f;
 
         Slot dropSlot = eventData.pointerEnter?.GetComponent<Slot>();
-        Slot originalSlot = orginalParent.GetComponent<Slot>();
+        Slot orginalSlot = orginalParent.GetComponent<Slot>();
 
-        if (dropSlot != null)
+        if (dropSlot != null) 
         {
-            if (dropSlot.currentItem == null)
+            if (dropSlot.currentItem != null)
             {
-                transform.SetParent(dropSlot.transform);
-                dropSlot.currentItem = gameObject;
-
-                if (originalSlot != null)
-                    originalSlot.currentItem = null;
+                dropSlot.currentItem.transform.SetParent(orginalSlot.transform);
+                orginalSlot.currentItem = dropSlot.currentItem;
+                dropSlot.currentItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             }
-            else
-            {
-                GameObject tempItem = dropSlot.currentItem;
-
-                tempItem.transform.SetParent(originalSlot.transform);
-                tempItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-
-
-                transform.SetParent(dropSlot.transform);
-                dropSlot.currentItem = gameObject;
+            else 
+            { 
+                orginalSlot.currentItem = null;
             }
         }
-        else
-        {
-            transform.SetParent(orginalParent);
-        }
-
+        // Restore the dragged item to its original parent if not dropped on a valid slot
+        transform.SetParent(orginalParent);
         GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
     }
 }

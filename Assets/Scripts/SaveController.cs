@@ -1,23 +1,30 @@
-using System.Collections.Generic;
+﻿using Cinemachine;
 using System.IO;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SaveController : MonoBehaviour
 {
     public static SaveController Instance;
 
+    private InventoryController inventoryController;
+    private HotBarController hotbarController;
+    private CinemachineConfiner cinemachineConfiner;
     private string saveFilePath;
 
-    void Awake()
+    void Awake() 
     {
         Instance = this;
         saveFilePath = Path.Combine(Application.persistentDataPath, "savegame.json");
+
+        inventoryController = Object.FindFirstObjectByType<InventoryController>();
+        hotbarController = Object.FindFirstObjectByType<HotBarController>();
+        cinemachineConfiner = Object.FindFirstObjectByType<CinemachineConfiner>();
     }
 
     public void SaveGame()
     {
         SaveData data = new SaveData();
-
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         // position
@@ -47,6 +54,15 @@ public class SaveController : MonoBehaviour
             data.seasonIndex = DayManager.Instance.seasonIndex;
         }
 
+        if (cinemachineConfiner != null && cinemachineConfiner.m_BoundingShape2D != null)
+            data.mapBoundaryName = cinemachineConfiner.m_BoundingShape2D.gameObject.name;
+
+        if (inventoryController != null)
+            data.inventorySaveData = inventoryController.GetInventoryItems();
+
+        if (hotbarController != null)
+            data.hotbarSaveData = hotbarController.GetHotbarItems();
+
         File.WriteAllText(saveFilePath, JsonUtility.ToJson(data, true));
         Debug.Log("Game saved to: " + saveFilePath);
     }
@@ -55,8 +71,8 @@ public class SaveController : MonoBehaviour
     {
         if (!File.Exists(saveFilePath))
         {
-            Debug.LogWarning("No save file found � starting fresh!");
-            return;
+            Debug.LogWarning("No save file — skipping load, keeping default inventory");
+            return; // ← exits early, inventory stays as is
         }
 
         SaveData data = JsonUtility.FromJson<SaveData>(File.ReadAllText(saveFilePath));
@@ -90,13 +106,43 @@ public class SaveController : MonoBehaviour
             DayManager.Instance.UpdateDayUI();
         }
 
-        Debug.Log("Game loaded � Level: " + data.level + " Day: " + data.dayNumber);
+        // map boundary
+        if (!string.IsNullOrEmpty(data.mapBoundaryName) && cinemachineConfiner != null)
+        {
+            GameObject boundaryObj = GameObject.Find(data.mapBoundaryName);
+            if (boundaryObj != null)
+            {
+                cinemachineConfiner.m_BoundingShape2D = boundaryObj.GetComponent<PolygonCollider2D>();
+                cinemachineConfiner.InvalidatePathCache();
+            }
+        }
+
+        // inventory — only load if there is actual saved data
+        if (inventoryController != null
+            && data.inventorySaveData != null
+            && data.inventorySaveData.Count > 0) // ← only if items were actually saved
+        {
+            inventoryController.SetInventoryItems(data.inventorySaveData);
+            Debug.Log("Inventory loaded — " + data.inventorySaveData.Count + " items");
+        }
+        else
+            Debug.Log("No inventory data to load — keeping default");
+
+        // hotbar — only load if there is actual saved data
+        if (hotbarController != null
+            && data.hotbarSaveData != null
+            && data.hotbarSaveData.Count > 0) // ← only if items were actually saved
+        {
+            hotbarController.SetHotbarItems(data.hotbarSaveData);
+            Debug.Log("Hotbar loaded — " + data.hotbarSaveData.Count + " items");
+        }
+        else
+            Debug.Log("No hotbar data to load — keeping default");
+
+        Debug.Log("Game loaded — Level: " + data.level + " Day: " + data.dayNumber);
     }
 
-    public bool HasSave()
-    {
-        return File.Exists(saveFilePath);
-    }
+    public bool HasSave() { return File.Exists(saveFilePath); }
 
     public void DeleteSave()
     {
