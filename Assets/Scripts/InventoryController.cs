@@ -12,43 +12,47 @@ public class InventoryController : MonoBehaviour
 
     void Start()
     {
-        itemDictionary = Object.FindFirstObjectByType<ItemDictionary>();
+        itemDictionary = FindObjectOfType<ItemDictionary>();
     }
 
-    public List<InventorySaveData> GetInventoryItems()
+    public List<InventorySaveData> GetInventorySaveDatas()
     {
         // fixed — was invData which was never declared
-        List<InventorySaveData> invData = new List<InventorySaveData>();
+        List<InventorySaveData> saveDatas = new List<InventorySaveData>();
 
         foreach (Transform slotTransform in inventoryPanel.transform)
         {
             Slot slot = slotTransform.GetComponent<Slot>();
 
-            if (slot.currentItem != null) 
-            { 
+            if (slot != null && slot.currentItem != null)
+            {
                 Item item = slot.currentItem.GetComponent<Item>();
-                invData.Add(new InventorySaveData { itemID = item.ID, slotIndex = slotTransform.GetSiblingIndex() });
+                if (item != null)
+                {
+                    // fixed — was invData.Add, should be saveDatas.Add
+                    saveDatas.Add(new InventorySaveData
+                    {
+                        itemID = item.ID,
+                        slotIndex = slotTransform.GetSiblingIndex()
+                    });
+                }
             }
         }
 
-        return invData;
+        return saveDatas;
     }
 
     // fixed — was missing parameter name
     public void SetInventoryItems(List<InventorySaveData> inventorySaveData)
     {
         // clear existing slots
-        foreach (Transform child in inventoryPanel.transform) 
-        {
+        foreach (Transform child in inventoryPanel.transform)
             Destroy(child.gameObject);
-        }
 
         // create fresh slots
-        for (int i = 0; i < slotCount; i++) 
-        {
+        for (int i = 0; i < slotCount; i++)
             Instantiate(slotPrefab, inventoryPanel.transform);
-        }
-            
+
         // populate slots with saved items
         foreach (InventorySaveData data in inventorySaveData)
         {
@@ -61,7 +65,7 @@ public class InventoryController : MonoBehaviour
                 // fixed — was passing data.slotIndex, should be data.itemID
                 GameObject itemPrefab = itemDictionary.GetItemPrefab(data.itemID);
 
-                if (itemPrefab != null)
+                if (itemPrefab != null && slot != null)
                 {
                     GameObject item = Instantiate(itemPrefab, slot.transform);
                     item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
