@@ -24,8 +24,8 @@ public class InventoryController : MonoBehaviour
         {
             Slot slot = slotTransform.GetComponent<Slot>();
 
-            if (slot.currentItem != null) 
-            { 
+            if (slot.currentItem != null)
+            {
                 Item item = slot.currentItem.GetComponent<Item>();
                 invData.Add(new InventorySaveData { itemID = item.ID, slotIndex = slotTransform.GetSiblingIndex() });
             }
@@ -38,17 +38,17 @@ public class InventoryController : MonoBehaviour
     public void SetInventoryItems(List<InventorySaveData> inventorySaveData)
     {
         // clear existing slots
-        foreach (Transform child in inventoryPanel.transform) 
+        foreach (Transform child in inventoryPanel.transform)
         {
             Destroy(child.gameObject);
         }
 
         // create fresh slots
-        for (int i = 0; i < slotCount; i++) 
+        for (int i = 0; i < slotCount; i++)
         {
             Instantiate(slotPrefab, inventoryPanel.transform);
         }
-            
+
         // populate slots with saved items
         foreach (InventorySaveData data in inventorySaveData)
         {
