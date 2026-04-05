@@ -6,7 +6,14 @@ public class GameController : MonoBehaviour
 {
     void Start()
     {
-        // load game automatically on start
+        if (SaveController.Instance != null && SaveController.Instance.HasSave())
+            SaveController.Instance.LoadGame();
+        else
+            Debug.Log("No save file — starting fresh, inventory untouched");
+    }
+
+    void LoadAfterDelay()
+    {
         if (SaveController.Instance != null)
             SaveController.Instance.LoadGame();
     }

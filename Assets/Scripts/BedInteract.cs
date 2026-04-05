@@ -1,8 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-using System.Collections.Generic;
 
 public class BedInteract : MonoBehaviour
 {
@@ -21,6 +20,7 @@ public class BedInteract : MonoBehaviour
 
     private bool playerInRange = false;
     private bool isTransitioning = false;
+    private bool canTrigger = false; // ← NEW — prevents triggering on spawn
 
     void Start()
     {
@@ -29,11 +29,23 @@ public class BedInteract : MonoBehaviour
 
         restButton?.onClick.AddListener(OnRest);
         cancelButton?.onClick.AddListener(OnCancel);
+
+        // wait 1 second before allowing trigger
+        // prevents dialog showing when player spawns on bed
+        StartCoroutine(EnableTriggerAfterDelay());
+    }
+
+    IEnumerator EnableTriggerAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        canTrigger = true;
+        Debug.Log("Bed trigger enabled");
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+        if (!canTrigger) return; // ← ignore trigger on spawn
         playerInRange = true;
         if (interactPrompt != null) interactPrompt.SetActive(true);
         ShowDialog();
@@ -52,7 +64,6 @@ public class BedInteract : MonoBehaviour
         if (sleepDialog == null) return;
         sleepDialog.SetActive(true);
 
-        // show what day it will be after sleeping
         if (nextDayText != null && DayManager.Instance != null)
         {
             int nextDay = DayManager.Instance.dayNumber + 1;
@@ -91,28 +102,31 @@ public class BedInteract : MonoBehaviour
         isTransitioning = true;
         HideDialog();
 
-        // fade to black
         yield return StartCoroutine(Fade(0f, 1f));
 
-        // advance day
         if (DayManager.Instance != null)
             DayManager.Instance.AdvanceDay();
 
-        // restore health and stamina fully
         PlayerStatsManager stats = FindObjectOfType<PlayerStatsManager>();
         if (stats != null)
             stats.RestoreAll();
 
-        // save the game
+        // move player to outdoor spawn BEFORE saving
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject outdoorSpawn = GameObject.Find("ExteriorSpawn");
+        if (player != null && outdoorSpawn != null)
+        {
+            player.transform.position = outdoorSpawn.transform.position;
+            Debug.Log("Player moved to: " + outdoorSpawn.transform.position);
+        }
+        else
+            Debug.LogWarning("ExteriorSpawn not found!");
+
         if (SaveController.Instance != null)
             SaveController.Instance.SaveGame();
 
-        Debug.Log("Game saved! New day: " + DayManager.Instance?.GetDayString());
-
-        // hold black screen
         yield return new WaitForSeconds(1.5f);
 
-        // fade back in
         yield return StartCoroutine(Fade(1f, 0f));
 
         isTransitioning = false;
