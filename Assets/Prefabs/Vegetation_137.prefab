@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1613531081700880859}
   - component: {fileID: 9171047768667164711}
   - component: {fileID: 6663183579881974257}
-  - component: {fileID: 1032038317004685029}
+  - component: {fileID: 4175819165762347468}
   m_Layer: 0
   m_Name: Vegetation_137
   m_TagString: Untagged
@@ -130,7 +130,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.000000061893765, y: -0.48079765}
   m_Size: {x: 2.4700005, y: 0.98840845}
   m_Direction: 1
---- !u!114 &1032038317004685029
+--- !u!114 &4175819165762347468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,6 +139,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8622371674330325958}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe96a20dce6e2b241aa5e321dadebcff, type: 3}
+  m_Script: {fileID: 11500000, guid: b5d5c13a0b06eba4eac55c46e1aed413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SortingOrderHandler

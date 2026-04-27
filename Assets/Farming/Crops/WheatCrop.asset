@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e16a109f5a5d684db12daeec62343d6, type: 3}
+  m_Name: WheatCrop
+  m_EditorClassIdentifier: Assembly-CSharp::CropData
+  cropName: Wheat
+  daysToGrow: 6
+  growProgressSprites:
+  - {fileID: 3703259055243465117, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
+  - {fileID: 3703259055243465117, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
+  - {fileID: -1724842945715286110, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
+  - {fileID: 2447717276745128951, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
+  - {fileID: -7124156328152321891, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
+  readyToHarvestSprite: {fileID: -7124156328152321891, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
+  harvestItemID: 0
+  harvestItemName: Wheat
+  harvestMin: 1
+  harvestMax: 3

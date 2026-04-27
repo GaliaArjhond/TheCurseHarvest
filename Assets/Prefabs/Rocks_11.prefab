@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8720026644006938023}
   - component: {fileID: 2965274465182321400}
   - component: {fileID: 8155101220901067949}
-  - component: {fileID: 6971682436021374601}
+  - component: {fileID: 6904513803309638300}
   m_Layer: 0
   m_Name: Rocks_11
   m_TagString: Untagged
@@ -130,7 +130,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.000000010654451, y: -0.08937602}
   m_Size: {x: 0.5300002, y: 0.24345495}
   m_Direction: 1
---- !u!114 &6971682436021374601
+--- !u!114 &6904513803309638300
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,6 +139,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6276236197214765455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe96a20dce6e2b241aa5e321dadebcff, type: 3}
+  m_Script: {fileID: 11500000, guid: b5d5c13a0b06eba4eac55c46e1aed413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SortingOrderHandler
