@@ -1,0 +1,2327 @@
+fileFormatVersion: 2
+guid: 17b9f2832eb663144a807f2d7e7a0f23
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 750936396538958499
+    second: newjuanSheet_0
+  - first:
+      213: 2814349587872267621
+    second: newjuanSheet_1
+  - first:
+      213: -3015460648093892221
+    second: newjuanSheet_2
+  - first:
+      213: -707297832113842824
+    second: newjuanSheet_3
+  - first:
+      213: -1323614407321018466
+    second: newjuanSheet_4
+  - first:
+      213: 1657531976773554186
+    second: newjuanSheet_5
+  - first:
+      213: 4734128782309881971
+    second: newjuanSheet_6
+  - first:
+      213: -3589372345417328267
+    second: newjuanSheet_7
+  - first:
+      213: 4948728980990915034
+    second: newjuanSheet_8
+  - first:
+      213: 4992228529313166999
+    second: newjuanSheet_9
+  - first:
+      213: 300427630936303821
+    second: newjuanSheet_10
+  - first:
+      213: -1010951498345335371
+    second: newjuanSheet_11
+  - first:
+      213: -4702814037727667748
+    second: newjuanSheet_12
+  - first:
+      213: 534090124362245648
+    second: newjuanSheet_13
+  - first:
+      213: 3964722816720210699
+    second: newjuanSheet_14
+  - first:
+      213: 8367296452004943036
+    second: newjuanSheet_15
+  - first:
+      213: -8685019162268447358
+    second: newjuanSheet_16
+  - first:
+      213: -7254016243146994960
+    second: newjuanSheet_17
+  - first:
+      213: 6291126555406928008
+    second: newjuanSheet_18
+  - first:
+      213: -1480332595579409867
+    second: newjuanSheet_19
+  - first:
+      213: -7322777439331881698
+    second: newjuanSheet_20
+  - first:
+      213: -7528834131402520768
+    second: newjuanSheet_21
+  - first:
+      213: 291499456398632281
+    second: newjuanSheet_22
+  - first:
+      213: -2451636914006152060
+    second: newjuanSheet_23
+  - first:
+      213: 8406875175021250614
+    second: newjuanSheet_24
+  - first:
+      213: -8838024954339110649
+    second: newjuanSheet_25
+  - first:
+      213: 2670405247977238125
+    second: newjuanSheet_26
+  - first:
+      213: -5674083861234294416
+    second: newjuanSheet_27
+  - first:
+      213: 3638081862699411090
+    second: newjuanSheet_28
+  - first:
+      213: 2205364967891164138
+    second: newjuanSheet_29
+  - first:
+      213: 5542507159606724659
+    second: newjuanSheet_30
+  - first:
+      213: -1923532135093858964
+    second: newjuanSheet_31
+  - first:
+      213: 3573888419838683467
+    second: newjuanSheet_32
+  - first:
+      213: 8893919511279630378
+    second: newjuanSheet_33
+  - first:
+      213: 3162543162564043895
+    second: newjuanSheet_34
+  - first:
+      213: 6335109010033653469
+    second: newjuanSheet_35
+  - first:
+      213: 1301278785328784475
+    second: newjuanSheet_36
+  - first:
+      213: 5496873875558404652
+    second: newjuanSheet_37
+  - first:
+      213: 8573745320424692935
+    second: newjuanSheet_38
+  - first:
+      213: 8084500511147476004
+    second: newjuanSheet_39
+  - first:
+      213: -2749616347784595459
+    second: newjuanSheet_40
+  - first:
+      213: -5808760982203457824
+    second: newjuanSheet_41
+  - first:
+      213: -6910719758822529139
+    second: newjuanSheet_42
+  - first:
+      213: 2829254449323114592
+    second: newjuanSheet_43
+  - first:
+      213: -7150521312645483590
+    second: newjuanSheet_44
+  - first:
+      213: 6479073857625840204
+    second: newjuanSheet_45
+  - first:
+      213: -4316540885766733902
+    second: newjuanSheet_46
+  - first:
+      213: 2486863336648646347
+    second: newjuanSheet_47
+  - first:
+      213: -8371919023086484963
+    second: newjuanSheet_48
+  - first:
+      213: 7030895531397522859
+    second: newjuanSheet_49
+  - first:
+      213: -1582394552702898564
+    second: newjuanSheet_50
+  - first:
+      213: 6981155491148862074
+    second: newjuanSheet_51
+  - first:
+      213: -2137078327454643993
+    second: newjuanSheet_52
+  - first:
+      213: -8115833465519640402
+    second: newjuanSheet_53
+  - first:
+      213: -5152602605251008105
+    second: newjuanSheet_54
+  - first:
+      213: 6479672776601063593
+    second: newjuanSheet_55
+  - first:
+      213: -9014307189949579492
+    second: newjuanSheet_56
+  - first:
+      213: -7935464100008908701
+    second: newjuanSheet_57
+  - first:
+      213: -6875416724391119025
+    second: newjuanSheet_58
+  - first:
+      213: 2049328764388872805
+    second: newjuanSheet_59
+  - first:
+      213: -6989437547488159040
+    second: newjuanSheet_60
+  - first:
+      213: -3800030732151074730
+    second: newjuanSheet_61
+  - first:
+      213: -2856217395950684157
+    second: newjuanSheet_62
+  - first:
+      213: 3069152300033463439
+    second: newjuanSheet_63
+  - first:
+      213: 4647185010137079428
+    second: newjuanSheet_64
+  - first:
+      213: -8350144089683270564
+    second: newjuanSheet_65
+  - first:
+      213: -6108944008662615066
+    second: newjuanSheet_66
+  - first:
+      213: -8204973176607551842
+    second: newjuanSheet_67
+  - first:
+      213: 5621456093795841487
+    second: newjuanSheet_68
+  - first:
+      213: 4874212336119711685
+    second: newjuanSheet_69
+  - first:
+      213: 6919551234029772754
+    second: newjuanSheet_70
+  - first:
+      213: 1920155953278785614
+    second: newjuanSheet_71
+  - first:
+      213: 8208500150655934360
+    second: newjuanSheet_72
+  - first:
+      213: -8139669690039783838
+    second: newjuanSheet_73
+  - first:
+      213: 474770566419221163
+    second: newjuanSheet_74
+  - first:
+      213: 5163735963599512139
+    second: newjuanSheet_75
+  - first:
+      213: 1807041812241420076
+    second: newjuanSheet_76
+  - first:
+      213: -817418896438993569
+    second: newjuanSheet_77
+  - first:
+      213: 496165299530474727
+    second: newjuanSheet_78
+  - first:
+      213: 8890620975993991816
+    second: newjuanSheet_79
+  - first:
+      213: -3887882417061515368
+    second: newjuanSheet_80
+  - first:
+      213: -4409436445271219916
+    second: newjuanSheet_81
+  - first:
+      213: 4288458321479141664
+    second: newjuanSheet_82
+  - first:
+      213: 1885082331379230753
+    second: newjuanSheet_83
+  - first:
+      213: -748604917583049851
+    second: newjuanSheet_84
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: newjuanSheet_0
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 8
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a2dd9c8cacdb6a00800000000000000
+      internalID: 750936396538958499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_1
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 8
+        width: 26
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56db4e20a049e0720800000000000000
+      internalID: 2814349587872267621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_2
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 8
+        width: 26
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 381c134648ee626d0800000000000000
+      internalID: -3015460648093892221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_3
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 8
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 875537e7e5c2f26f0800000000000000
+      internalID: -707297832113842824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_4
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 8
+        width: 24
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9f9a0895b391ade0800000000000000
+      internalID: -1323614407321018466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_5
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 0
+        width: 24
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0050770d8cb00710800000000000000
+      internalID: 1657531976773554186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_6
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 8
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37878868b0103b140800000000000000
+      internalID: 4734128782309881971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_7
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 8
+        width: 39
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5791ac08edcff2ec0800000000000000
+      internalID: -3589372345417328267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_8
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 0
+        width: 24
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad1f4a9e9ca6da440800000000000000
+      internalID: 4948728980990915034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_9
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 8
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 796384fb565f74540800000000000000
+      internalID: 4992228529313166999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_10
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 8
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc8abaea6555b2400800000000000000
+      internalID: 300427630936303821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_11
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 8
+        width: 26
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b53affe7f068f1f0800000000000000
+      internalID: -1010951498345335371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_12
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 8
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd9958c9c8f3cbeb0800000000000000
+      internalID: -4702814037727667748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_13
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 8
+        width: 26
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 016e7ac6328796700800000000000000
+      internalID: 534090124362245648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_14
+      rect:
+        serializedVersion: 2
+        x: 916
+        y: 8
+        width: 21
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0b8e735566850730800000000000000
+      internalID: 3964722816720210699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_15
+      rect:
+        serializedVersion: 2
+        x: 980
+        y: 8
+        width: 21
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb414209acb9e1470800000000000000
+      internalID: 8367296452004943036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_16
+      rect:
+        serializedVersion: 2
+        x: 1044
+        y: 8
+        width: 21
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28d478d461d987780800000000000000
+      internalID: -8685019162268447358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_17
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 8
+        width: 21
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fa4f4809ae845b90800000000000000
+      internalID: -7254016243146994960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_18
+      rect:
+        serializedVersion: 2
+        x: 1172
+        y: 8
+        width: 21
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8888e0435429e4750800000000000000
+      internalID: 6291126555406928008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_19
+      rect:
+        serializedVersion: 2
+        x: 1234
+        y: 12
+        width: 23
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53aae03f85dc47be0800000000000000
+      internalID: -1480332595579409867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_20
+      rect:
+        serializedVersion: 2
+        x: 1300
+        y: 8
+        width: 21
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1de06777b4406a90800000000000000
+      internalID: -7322777439331881698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_21
+      rect:
+        serializedVersion: 2
+        x: 1361
+        y: 9
+        width: 28
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0478ae83f35348790800000000000000
+      internalID: -7528834131402520768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_22
+      rect:
+        serializedVersion: 2
+        x: 1429
+        y: 8
+        width: 20
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9552cde063d9b0400800000000000000
+      internalID: 291499456398632281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_23
+      rect:
+        serializedVersion: 2
+        x: 1493
+        y: 8
+        width: 20
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48cad6e47390afdd0800000000000000
+      internalID: -2451636914006152060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_24
+      rect:
+        serializedVersion: 2
+        x: 1557
+        y: 8
+        width: 20
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 638013e1e683ba470800000000000000
+      internalID: 8406875175021250614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_25
+      rect:
+        serializedVersion: 2
+        x: 1621
+        y: 8
+        width: 20
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70154904127095580800000000000000
+      internalID: -8838024954339110649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_26
+      rect:
+        serializedVersion: 2
+        x: 1680
+        y: 8
+        width: 29
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6ea504bc6f2f0520800000000000000
+      internalID: 2670405247977238125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_27
+      rect:
+        serializedVersion: 2
+        x: 1749
+        y: 7
+        width: 38
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0716a517aca9141b0800000000000000
+      internalID: -5674083861234294416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_28
+      rect:
+        serializedVersion: 2
+        x: 1813
+        y: 8
+        width: 20
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2966df1cd201d7230800000000000000
+      internalID: 3638081862699411090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_29
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 8
+        width: 29
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aeb5e37f0c70b9e10800000000000000
+      internalID: 2205364967891164138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_30
+      rect:
+        serializedVersion: 2
+        x: 1940
+        y: 8
+        width: 42
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3380b6d65e0faec40800000000000000
+      internalID: 5542507159606724659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_31
+      rect:
+        serializedVersion: 2
+        x: 2005
+        y: 8
+        width: 20
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6d8ea5e6bd3e45e0800000000000000
+      internalID: -1923532135093858964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_32
+      rect:
+        serializedVersion: 2
+        x: 2069
+        y: 8
+        width: 20
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b49ed532590099130800000000000000
+      internalID: 3573888419838683467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_33
+      rect:
+        serializedVersion: 2
+        x: 2129
+        y: 9
+        width: 25
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a28fcba6cac8d6b70800000000000000
+      internalID: 8893919511279630378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_34
+      rect:
+        serializedVersion: 2
+        x: 2197
+        y: 8
+        width: 20
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 774687f104c93eb20800000000000000
+      internalID: 3162543162564043895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_35
+      rect:
+        serializedVersion: 2
+        x: 2259
+        y: 9
+        width: 24
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd6be6c6414dae750800000000000000
+      internalID: 6335109010033653469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_36
+      rect:
+        serializedVersion: 2
+        x: 2324
+        y: 9
+        width: 21
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b54264929221f0210800000000000000
+      internalID: 1301278785328784475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_37
+      rect:
+        serializedVersion: 2
+        x: 2388
+        y: 9
+        width: 21
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2298c78aa1d84c40800000000000000
+      internalID: 5496873875558404652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_38
+      rect:
+        serializedVersion: 2
+        x: 2452
+        y: 9
+        width: 21
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ccd49a71ff0cf670800000000000000
+      internalID: 8573745320424692935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_39
+      rect:
+        serializedVersion: 2
+        x: 2516
+        y: 9
+        width: 21
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 424c861a16ae13070800000000000000
+      internalID: 8084500511147476004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_40
+      rect:
+        serializedVersion: 2
+        x: 2580
+        y: 9
+        width: 21
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df731b1ff7667d9d0800000000000000
+      internalID: -2749616347784595459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_41
+      rect:
+        serializedVersion: 2
+        x: 2642
+        y: 11
+        width: 24
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ee1d9ea9a2236fa0800000000000000
+      internalID: -5808760982203457824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_42
+      rect:
+        serializedVersion: 2
+        x: 2708
+        y: 9
+        width: 21
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d872c117ef03810a0800000000000000
+      internalID: -6910719758822529139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_43
+      rect:
+        serializedVersion: 2
+        x: 2769
+        y: 9
+        width: 25
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 060091f7ee7834720800000000000000
+      internalID: 2829254449323114592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_44
+      rect:
+        serializedVersion: 2
+        x: 2839
+        y: 9
+        width: 21
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab3f7e050ce34cc90800000000000000
+      internalID: -7150521312645483590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_45
+      rect:
+        serializedVersion: 2
+        x: 2902
+        y: 11
+        width: 24
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4ade4d885b4ae950800000000000000
+      internalID: 6479073857625840204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_46
+      rect:
+        serializedVersion: 2
+        x: 2967
+        y: 9
+        width: 21
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bf7c653fe09814c0800000000000000
+      internalID: -4316540885766733902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_47
+      rect:
+        serializedVersion: 2
+        x: 3030
+        y: 9
+        width: 25
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bce92e9570d138220800000000000000
+      internalID: 2486863336648646347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_48
+      rect:
+        serializedVersion: 2
+        x: 3095
+        y: 9
+        width: 21
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d12489c3108f0db80800000000000000
+      internalID: -8371919023086484963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_49
+      rect:
+        serializedVersion: 2
+        x: 3159
+        y: 9
+        width: 21
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba5a4d90c32c29160800000000000000
+      internalID: 7030895531397522859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_50
+      rect:
+        serializedVersion: 2
+        x: 3223
+        y: 9
+        width: 21
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7e61a7c9843a0ae0800000000000000
+      internalID: -1582394552702898564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_51
+      rect:
+        serializedVersion: 2
+        x: 3287
+        y: 9
+        width: 21
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7212b37eeb02e060800000000000000
+      internalID: 6981155491148862074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_52
+      rect:
+        serializedVersion: 2
+        x: 3351
+        y: 8
+        width: 21
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e841ea75929752e0800000000000000
+      internalID: -2137078327454643993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_53
+      rect:
+        serializedVersion: 2
+        x: 3415
+        y: 8
+        width: 21
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea0797f6674ce5f80800000000000000
+      internalID: -8115833465519640402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_54
+      rect:
+        serializedVersion: 2
+        x: 3479
+        y: 8
+        width: 21
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 799e24dea374e78b0800000000000000
+      internalID: -5152602605251008105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_55
+      rect:
+        serializedVersion: 2
+        x: 3543
+        y: 8
+        width: 21
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a0531e3f0c6ce950800000000000000
+      internalID: 6479672776601063593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_56
+      rect:
+        serializedVersion: 2
+        x: 3607
+        y: 8
+        width: 21
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1f3ecede5fb6e280800000000000000
+      internalID: -9014307189949579492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_57
+      rect:
+        serializedVersion: 2
+        x: 3671
+        y: 12
+        width: 23
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 368aa17e1719fd190800000000000000
+      internalID: -7935464100008908701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_58
+      rect:
+        serializedVersion: 2
+        x: 3735
+        y: 8
+        width: 21
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4733ebaaec9590a0800000000000000
+      internalID: -6875416724391119025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_59
+      rect:
+        serializedVersion: 2
+        x: 3795
+        y: 9
+        width: 28
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 562936547ada07c10800000000000000
+      internalID: 2049328764388872805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_60
+      rect:
+        serializedVersion: 2
+        x: 3863
+        y: 8
+        width: 20
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cad03a0597800f90800000000000000
+      internalID: -6989437547488159040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_61
+      rect:
+        serializedVersion: 2
+        x: 3927
+        y: 8
+        width: 20
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 650519abe24934bc0800000000000000
+      internalID: -3800030732151074730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_62
+      rect:
+        serializedVersion: 2
+        x: 3991
+        y: 8
+        width: 20
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3087119496dac58d0800000000000000
+      internalID: -2856217395950684157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_63
+      rect:
+        serializedVersion: 2
+        x: 4055
+        y: 8
+        width: 20
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f84511d71c1d79a20800000000000000
+      internalID: 3069152300033463439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_64
+      rect:
+        serializedVersion: 2
+        x: 4115
+        y: 8
+        width: 29
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48e9db6152e1e7040800000000000000
+      internalID: 4647185010137079428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_65
+      rect:
+        serializedVersion: 2
+        x: 4162
+        y: 8
+        width: 42
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c54e91ff0345e1c80800000000000000
+      internalID: -8350144089683270564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_66
+      rect:
+        serializedVersion: 2
+        x: 4247
+        y: 8
+        width: 20
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ebf9ea6acba83ba0800000000000000
+      internalID: -6108944008662615066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_67
+      rect:
+        serializedVersion: 2
+        x: 4307
+        y: 8
+        width: 29
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9ec2b02e54122e80800000000000000
+      internalID: -8204973176607551842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_68
+      rect:
+        serializedVersion: 2
+        x: 4357
+        y: 7
+        width: 38
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc5f727988c630e40800000000000000
+      internalID: 5621456093795841487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_69
+      rect:
+        serializedVersion: 2
+        x: 4439
+        y: 8
+        width: 20
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c70e368b4ea4a340800000000000000
+      internalID: 4874212336119711685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_70
+      rect:
+        serializedVersion: 2
+        x: 4503
+        y: 8
+        width: 20
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dfd57d9f2f270060800000000000000
+      internalID: 6919551234029772754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_71
+      rect:
+        serializedVersion: 2
+        x: 4566
+        y: 9
+        width: 25
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4898848aa3c5aa10800000000000000
+      internalID: 1920155953278785614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_72
+      rect:
+        serializedVersion: 2
+        x: 4631
+        y: 8
+        width: 20
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89f569285637ae170800000000000000
+      internalID: 8208500150655934360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_73
+      rect:
+        serializedVersion: 2
+        x: 4693
+        y: 9
+        width: 24
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26e2a20fa851a0f80800000000000000
+      internalID: -8139669690039783838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_74
+      rect:
+        serializedVersion: 2
+        x: 4754
+        y: 8
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baa8a319059b69600800000000000000
+      internalID: 474770566419221163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_75
+      rect:
+        serializedVersion: 2
+        x: 4818
+        y: 8
+        width: 26
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b422240108649a740800000000000000
+      internalID: 5163735963599512139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_76
+      rect:
+        serializedVersion: 2
+        x: 4882
+        y: 8
+        width: 26
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2f8de044f6e31910800000000000000
+      internalID: 1807041812241420076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_77
+      rect:
+        serializedVersion: 2
+        x: 4946
+        y: 8
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5ddf0538d1f7a4f0800000000000000
+      internalID: -817418896438993569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_78
+      rect:
+        serializedVersion: 2
+        x: 5012
+        y: 8
+        width: 24
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e4a36c06bbb2e600800000000000000
+      internalID: 496165299530474727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_79
+      rect:
+        serializedVersion: 2
+        x: 5075
+        y: 8
+        width: 25
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88232c25ca4d16b70800000000000000
+      internalID: 8890620975993991816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_80
+      rect:
+        serializedVersion: 2
+        x: 5138
+        y: 8
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89faf826a877b0ac0800000000000000
+      internalID: -3887882417061515368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_81
+      rect:
+        serializedVersion: 2
+        x: 5202
+        y: 8
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 431a2fb4ae88ec2c0800000000000000
+      internalID: -4409436445271219916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_82
+      rect:
+        serializedVersion: 2
+        x: 5266
+        y: 8
+        width: 26
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02905d54f1aa38b30800000000000000
+      internalID: 4288458321479141664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_83
+      rect:
+        serializedVersion: 2
+        x: 5330
+        y: 8
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 128693e8468292a10800000000000000
+      internalID: 1885082331379230753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newjuanSheet_84
+      rect:
+        serializedVersion: 2
+        x: 5395
+        y: 8
+        width: 26
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58b0a523bcb6c95f0800000000000000
+      internalID: -748604917583049851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      newjuanSheet_0: 750936396538958499
+      newjuanSheet_1: 2814349587872267621
+      newjuanSheet_10: 300427630936303821
+      newjuanSheet_11: -1010951498345335371
+      newjuanSheet_12: -4702814037727667748
+      newjuanSheet_13: 534090124362245648
+      newjuanSheet_14: 3964722816720210699
+      newjuanSheet_15: 8367296452004943036
+      newjuanSheet_16: -8685019162268447358
+      newjuanSheet_17: -7254016243146994960
+      newjuanSheet_18: 6291126555406928008
+      newjuanSheet_19: -1480332595579409867
+      newjuanSheet_2: -3015460648093892221
+      newjuanSheet_20: -7322777439331881698
+      newjuanSheet_21: -7528834131402520768
+      newjuanSheet_22: 291499456398632281
+      newjuanSheet_23: -2451636914006152060
+      newjuanSheet_24: 8406875175021250614
+      newjuanSheet_25: -8838024954339110649
+      newjuanSheet_26: 2670405247977238125
+      newjuanSheet_27: -5674083861234294416
+      newjuanSheet_28: 3638081862699411090
+      newjuanSheet_29: 2205364967891164138
+      newjuanSheet_3: -707297832113842824
+      newjuanSheet_30: 5542507159606724659
+      newjuanSheet_31: -1923532135093858964
+      newjuanSheet_32: 3573888419838683467
+      newjuanSheet_33: 8893919511279630378
+      newjuanSheet_34: 3162543162564043895
+      newjuanSheet_35: 6335109010033653469
+      newjuanSheet_36: 1301278785328784475
+      newjuanSheet_37: 5496873875558404652
+      newjuanSheet_38: 8573745320424692935
+      newjuanSheet_39: 8084500511147476004
+      newjuanSheet_4: -1323614407321018466
+      newjuanSheet_40: -2749616347784595459
+      newjuanSheet_41: -5808760982203457824
+      newjuanSheet_42: -6910719758822529139
+      newjuanSheet_43: 2829254449323114592
+      newjuanSheet_44: -7150521312645483590
+      newjuanSheet_45: 6479073857625840204
+      newjuanSheet_46: -4316540885766733902
+      newjuanSheet_47: 2486863336648646347
+      newjuanSheet_48: -8371919023086484963
+      newjuanSheet_49: 7030895531397522859
+      newjuanSheet_5: 1657531976773554186
+      newjuanSheet_50: -1582394552702898564
+      newjuanSheet_51: 6981155491148862074
+      newjuanSheet_52: -2137078327454643993
+      newjuanSheet_53: -8115833465519640402
+      newjuanSheet_54: -5152602605251008105
+      newjuanSheet_55: 6479672776601063593
+      newjuanSheet_56: -9014307189949579492
+      newjuanSheet_57: -7935464100008908701
+      newjuanSheet_58: -6875416724391119025
+      newjuanSheet_59: 2049328764388872805
+      newjuanSheet_6: 4734128782309881971
+      newjuanSheet_60: -6989437547488159040
+      newjuanSheet_61: -3800030732151074730
+      newjuanSheet_62: -2856217395950684157
+      newjuanSheet_63: 3069152300033463439
+      newjuanSheet_64: 4647185010137079428
+      newjuanSheet_65: -8350144089683270564
+      newjuanSheet_66: -6108944008662615066
+      newjuanSheet_67: -8204973176607551842
+      newjuanSheet_68: 5621456093795841487
+      newjuanSheet_69: 4874212336119711685
+      newjuanSheet_7: -3589372345417328267
+      newjuanSheet_70: 6919551234029772754
+      newjuanSheet_71: 1920155953278785614
+      newjuanSheet_72: 8208500150655934360
+      newjuanSheet_73: -8139669690039783838
+      newjuanSheet_74: 474770566419221163
+      newjuanSheet_75: 5163735963599512139
+      newjuanSheet_76: 1807041812241420076
+      newjuanSheet_77: -817418896438993569
+      newjuanSheet_78: 496165299530474727
+      newjuanSheet_79: 8890620975993991816
+      newjuanSheet_8: 4948728980990915034
+      newjuanSheet_80: -3887882417061515368
+      newjuanSheet_81: -4409436445271219916
+      newjuanSheet_82: 4288458321479141664
+      newjuanSheet_83: 1885082331379230753
+      newjuanSheet_84: -748604917583049851
+      newjuanSheet_9: 4992228529313166999
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
