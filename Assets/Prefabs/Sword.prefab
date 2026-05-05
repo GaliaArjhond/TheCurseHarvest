@@ -95,7 +95,7 @@ MonoBehaviour:
   itemType: 5
   isStackable: 0
   amount: 1
-  maxStack: 99
+  maxStack: 1
   amountText: {fileID: 0}
   cropData: {fileID: 0}
 --- !u!114 &7947529825210320926

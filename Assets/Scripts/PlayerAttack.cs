@@ -40,6 +40,23 @@ public class PlayerAttack : MonoBehaviour
         if (!context.performed) return;
         if (!canAttack) return;
 
+        HotbarControler hotbar = FindFirstObjectByType<HotbarControler>();
+        if (hotbar == null) return;
+
+        Item selectedItem = hotbar.GetSelectedItem();
+
+        if (selectedItem == null)
+        {
+            Debug.Log("No item equipped.");
+            return;
+        }
+
+        if (selectedItem.itemType != Item.ItemType.Weapon)
+        {
+            Debug.Log("Selected item is not a weapon.");
+            return;
+        }
+
         StartAttack();
     }
 
