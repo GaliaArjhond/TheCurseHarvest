@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using System.Collections;
 using System.IO;
 using UnityEngine;
 
@@ -26,12 +27,14 @@ public class SaveController : MonoBehaviour
         propsSpawners = FindObjectsByType<PropsSpawner>(FindObjectsSortMode.None);
     }
 
-    void Start()
+    IEnumerator Start()
     {
-        //SaveController.Instance.DeleteSave();
+        // wait 1 frame so inventory/hotbar slots are created first
+        //DeleteSave();
+        yield return null;
         LoadGame();
     }
-    
+
     public void SaveGame()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -75,13 +78,14 @@ public class SaveController : MonoBehaviour
             data.mapBoundaryName = confiner.m_BoundingShape2D.gameObject.name;
         }
 
-        // inventory
-        //if (inventoryController != null)
-         //   data.inventorySaveData = inventoryController.GetInventoryItems();
+        // inventory / hotbar SAVE
+        if (inventoryController != null)
+            data.inventorySaveData = inventoryController.GetInventoryItems();
 
         if (hotbarController != null)
             data.hotbarSaveData = hotbarController.GetHotbarItems();
 
+        // props
         data.forestProps.Clear();
 
         foreach (PropsSpawner spawner in propsSpawners)
@@ -93,16 +97,19 @@ public class SaveController : MonoBehaviour
         File.WriteAllText(saveFilePath, JsonUtility.ToJson(data, true));
 
         Debug.Log("Saved to: " + saveFilePath);
+        Debug.Log("Saving hotbar items: " + data.hotbarSaveData.Count);
+        Debug.Log("Saving backpack items: " + data.inventorySaveData.Count);
     }
 
     public void LoadGame()
     {
         if (!File.Exists(saveFilePath))
-    {
-        Debug.LogWarning("No save found — keeping default scene setup");
-        return;
-    }
-            SaveData data = JsonUtility.FromJson<SaveData>(File.ReadAllText(saveFilePath));
+        {
+            Debug.LogWarning("No save found — keeping default scene setup");
+            return;
+        }
+
+        SaveData data = JsonUtility.FromJson<SaveData>(File.ReadAllText(saveFilePath));
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
@@ -138,9 +145,9 @@ public class SaveController : MonoBehaviour
             statsManager.SetSpeed(data.speed);
         }
 
-        // inventory
-        //if (inventoryController != null && data.inventorySaveData != null)
-         //   inventoryController.SetInventoryItems(data.inventorySaveData);
+        // inventory / hotbar LOAD
+        if (inventoryController != null && data.inventorySaveData != null)
+            inventoryController.SetInventoryItems(data.inventorySaveData);
 
         if (hotbarController != null && data.hotbarSaveData != null)
             hotbarController.SetHotbarItems(data.hotbarSaveData);
@@ -153,6 +160,7 @@ public class SaveController : MonoBehaviour
             DayManager.Instance.UpdateDayUI();
         }
 
+        // props
         foreach (PropsSpawner spawner in propsSpawners)
         {
             if (spawner != null)

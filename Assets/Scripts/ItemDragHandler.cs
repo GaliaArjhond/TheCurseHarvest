@@ -39,28 +39,24 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         Slot dropSlot = eventData.pointerEnter?.GetComponentInParent<Slot>();
 
-        if (dropSlot == null)
+        if (dropSlot == null || dropSlot == originalSlot)
         {
             ReturnToOriginalSlot();
             return;
         }
 
-        // empty slot
+        Item draggedItem = GetComponent<Item>();
+
+        // Empty slot
         if (dropSlot.currentItem == null)
         {
-            originalSlot.currentItem = null;
-
-            transform.SetParent(dropSlot.transform);
-            FitItemToSlot(transform);
-
-            dropSlot.currentItem = gameObject;
+            MoveToSlot(dropSlot);
             return;
         }
 
-        // if same stackable item, merge
-        Item draggedItem = GetComponent<Item>();
         Item targetItem = dropSlot.currentItem.GetComponent<Item>();
 
+        // Merge same stackable item
         if (draggedItem != null && targetItem != null &&
             draggedItem.ID == targetItem.ID &&
             draggedItem.isStackable)
@@ -68,15 +64,20 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             int space = targetItem.maxStack - targetItem.amount;
             int moveAmount = Mathf.Min(space, draggedItem.amount);
 
-            targetItem.amount += moveAmount;
-            draggedItem.amount -= moveAmount;
+            if (moveAmount > 0)
+            {
+                targetItem.amount += moveAmount;
+                draggedItem.amount -= moveAmount;
 
-            targetItem.UpdateAmountText();
-            draggedItem.UpdateAmountText();
+                targetItem.UpdateAmountText();
+                draggedItem.UpdateAmountText();
+            }
 
             if (draggedItem.amount <= 0)
             {
-                originalSlot.currentItem = null;
+                if (originalSlot != null)
+                    originalSlot.currentItem = null;
+
                 Destroy(gameObject);
             }
             else
@@ -87,22 +88,49 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             return;
         }
 
-        // swap different items
+        // Swap different items
+        SwapWithSlot(dropSlot);
+    }
+
+    void MoveToSlot(Slot dropSlot)
+    {
+        if (originalSlot != null)
+            originalSlot.currentItem = null;
+
+        transform.SetParent(dropSlot.transform);
+        transform.SetAsLastSibling();
+
+        dropSlot.currentItem = gameObject;
+
+        FitItemToSlot(transform);
+    }
+
+    void SwapWithSlot(Slot dropSlot)
+    {
         GameObject otherItem = dropSlot.currentItem;
 
-        otherItem.transform.SetParent(originalSlot.transform);
+        if (originalSlot != null)
+            originalSlot.currentItem = otherItem;
+
+        otherItem.transform.SetParent(originalParent);
+        otherItem.transform.SetAsLastSibling();
         FitItemToSlot(otherItem.transform);
 
         transform.SetParent(dropSlot.transform);
+        transform.SetAsLastSibling();
         FitItemToSlot(transform);
 
-        originalSlot.currentItem = otherItem;
         dropSlot.currentItem = gameObject;
     }
 
     void ReturnToOriginalSlot()
     {
         transform.SetParent(originalParent);
+        transform.SetAsLastSibling();
+
+        if (originalSlot != null)
+            originalSlot.currentItem = gameObject;
+
         FitItemToSlot(transform);
     }
 
@@ -130,6 +158,9 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         if (text != null)
         {
+            text.gameObject.SetActive(true);
+            text.transform.SetAsLastSibling();
+
             text.raycastTarget = false;
             text.enableAutoSizing = false;
             text.fontSize = 10;
@@ -146,8 +177,6 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         Item item = itemTransform.GetComponent<Item>();
         if (item != null)
-        {
             item.UpdateAmountText();
-        }
     }
 }

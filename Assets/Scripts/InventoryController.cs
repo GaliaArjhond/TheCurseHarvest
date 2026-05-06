@@ -27,6 +27,7 @@ public class InventoryController : MonoBehaviour
     {
         CreateSlotsIfMissing(hotbarPanel, hotbarSlotCount);
         CreateSlotsIfMissing(backpackPanel, backpackSlotCount);
+        
     }
 
     void CreateSlotsIfMissing(Transform panel, int count)
@@ -39,6 +40,107 @@ public class InventoryController : MonoBehaviour
             {
                 Instantiate(slotPrefab, panel);
             }
+        }
+    }
+    
+    public List<InventorySaveData> GetInventoryItems()
+    {
+        List<InventorySaveData> data = new List<InventorySaveData>();
+
+        foreach (Transform slotTransform in backpackPanel)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+
+            if (slot == null)
+            {
+                Debug.LogWarning(slotTransform.name + " has no Slot component.");
+                continue;
+            }
+
+            // Fix slot reference if item is visually inside slot but currentItem is null
+            if (slot.currentItem == null && slotTransform.childCount > 0)
+            {
+                foreach (Transform child in slotTransform)
+                {
+                    if (child.GetComponent<Item>() != null)
+                    {
+                        slot.currentItem = child.gameObject;
+                        Debug.Log("Fixed missing currentItem on " + slotTransform.name);
+                        break;
+                    }
+                }
+            }
+
+            Debug.Log(slotTransform.name + " currentItem = " +
+                (slot.currentItem != null ? slot.currentItem.name : "NULL"));
+
+            if (slot.currentItem != null)
+            {
+                Item item = slot.currentItem.GetComponent<Item>();
+
+                if (item != null)
+                {
+                    data.Add(new InventorySaveData
+                    {
+                        itemID = item.ID,
+                        slotIndex = slotTransform.GetSiblingIndex(),
+                        amount = item.amount
+                    });
+                }
+            }
+        }
+
+        Debug.Log("BACKPACK SAVED COUNT = " + data.Count);
+        return data;
+    }
+
+    public void SetInventoryItems(List<InventorySaveData> data)
+    {
+        CreateSlotsIfMissing(backpackPanel, backpackSlotCount);
+
+        foreach (Transform slotTransform in backpackPanel)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+
+            if (slot != null && slot.currentItem != null)
+            {
+                Destroy(slot.currentItem);
+                slot.currentItem = null;
+            }
+        }
+
+        if (data == null) return;
+
+        foreach (InventorySaveData saveItem in data)
+        {
+            if (saveItem.slotIndex >= backpackPanel.childCount) continue;
+
+            Slot slot = backpackPanel.GetChild(saveItem.slotIndex).GetComponent<Slot>();
+            if (slot == null) continue;
+
+            GameObject prefab = itemDictionary.GetItemPrefab(saveItem.itemID);
+            if (prefab == null) continue;
+
+            GameObject itemObj = Instantiate(prefab, slot.transform);
+
+            RectTransform rt = itemObj.GetComponent<RectTransform>();
+            if (rt != null)
+            {
+                rt.anchorMin = Vector2.zero;
+                rt.anchorMax = Vector2.one;
+                rt.offsetMin = Vector2.zero;
+                rt.offsetMax = Vector2.zero;
+                rt.localScale = Vector3.one;
+            }
+
+            Item item = itemObj.GetComponent<Item>();
+            if (item != null)
+            {
+                item.amount = saveItem.amount;
+                item.UpdateAmountText();
+            }
+
+            slot.currentItem = itemObj;
         }
     }
 
