@@ -32,7 +32,12 @@ public class HotbarControler : MonoBehaviour
     void Start()
     {
         CreateSlotsIfMissing();
-        GiveStartingItem();
+
+        if (SaveController.Instance == null || !SaveController.Instance.HasSave())
+        {
+            GiveStartingItem();
+        }
+
         SelectSlot(0);
     }
 

@@ -16,6 +16,7 @@ public class FarmTile : MonoBehaviour
     private SpriteRenderer sr;
     private Crop curCrop;
     private bool tilled = false;
+    private bool watered = false;
     private bool playerInRange = false;
 
     void Awake()
@@ -33,7 +34,6 @@ public class FarmTile : MonoBehaviour
     {
         if (!playerInRange) return;
 
-        // press E to harvest when ready
         if (UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame)
         {
             if (HasCrop() && curCrop.CanHarvest())
@@ -44,6 +44,7 @@ public class FarmTile : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+
         playerInRange = true;
 
         if (harvestPrompt != null && HasCrop() && curCrop.CanHarvest())
@@ -53,48 +54,78 @@ public class FarmTile : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+
         playerInRange = false;
 
         if (harvestPrompt != null)
             harvestPrompt.SetActive(false);
     }
 
-    // called by FarmingSystem when player uses equipped item on this tile
     public void Interact(Item equippedItem)
     {
         if (equippedItem == null) return;
 
         if (equippedItem.Name == "Hoe")
         {
-            if (!tilled) Till();
+            if (!tilled)
+                Till();
+
+            return;
         }
-        else if (equippedItem.Name == "WateringCan")
+
+        if (equippedItem.Name == "WateringCan")
         {
-            if (tilled) Water();
+            if (tilled)
+                Water();
+
+            return;
         }
-        else if (equippedItem.itemType == Item.ItemType.Seed)
+
+        if (equippedItem.itemType == Item.ItemType.Seed)
         {
             if (tilled && !HasCrop() && equippedItem.cropData != null)
+            {
                 PlantCrop(equippedItem.cropData);
+
+                equippedItem.amount--;
+                equippedItem.UpdateAmountText();
+
+                if (equippedItem.amount <= 0)
+                {
+                    Slot slot = equippedItem.GetComponentInParent<Slot>();
+                    if (slot != null)
+                        slot.currentItem = null;
+
+                    Destroy(equippedItem.gameObject);
+                }
+                ConsumeSeed(equippedItem);
+            }
+
+            return;
         }
-        else
-        {
-            Debug.Log("This item can't interact with farm tiles: " + equippedItem.Name);
-        }
+
+        Debug.Log("This item can't interact with farm tiles: " + equippedItem.Name);
     }
 
     void Till()
     {
         tilled = true;
+        watered = false;
         sr.sprite = tilledSprite;
+
         Debug.Log("Ground tilled");
     }
 
     void Water()
     {
+        if (!tilled) return;
+
+        watered = true;
         sr.sprite = wateredSprite;
+
         if (HasCrop())
             curCrop.Water();
+
         Debug.Log("Ground watered");
     }
 
@@ -108,34 +139,65 @@ public class FarmTile : MonoBehaviour
 
         GameObject cropObj = Instantiate(cropPrefab, transform.position, Quaternion.identity);
         curCrop = cropObj.GetComponent<Crop>();
+
+        if (curCrop == null)
+        {
+            Debug.LogError("Crop prefab has no Crop script!");
+            Destroy(cropObj);
+            return;
+        }
+
         curCrop.Plant(crop, DayManager.Instance.dayNumber);
 
-        // subscribe to new day
-        DayManager.Instance.onNewDay += OnNewDay;
+        if (DayManager.Instance != null)
+            DayManager.Instance.onNewDay += OnNewDay;
+
         Debug.Log("Planted: " + crop.cropName);
+    }
+
+    void ConsumeSeed(Item seedItem)
+    {
+        seedItem.amount--;
+        seedItem.UpdateAmountText();
+
+        if (seedItem.amount <= 0)
+        {
+            Slot slot = seedItem.GetComponentInParent<Slot>();
+
+            if (slot != null)
+                slot.currentItem = null;
+
+            Destroy(seedItem.gameObject);
+        }
     }
 
     void OnNewDay()
     {
-        // crop was destroyed (died or harvested)
+        watered = false;
+        sr.sprite = tilledSprite;
+
         if (curCrop == null)
         {
             tilled = false;
             sr.sprite = grassSprite;
-            DayManager.Instance.onNewDay -= OnNewDay;
+
+            if (DayManager.Instance != null)
+                DayManager.Instance.onNewDay -= OnNewDay;
 
             if (harvestPrompt != null)
                 harvestPrompt.SetActive(false);
+
             return;
         }
 
-        sr.sprite = tilledSprite; // resets to dry after watering
         curCrop.NewDayCheck(DayManager.Instance.dayNumber);
 
-        // show harvest prompt if ready
-        if (harvestPrompt != null && playerInRange && curCrop != null && curCrop.CanHarvest())
+        if (harvestPrompt != null && playerInRange && curCrop.CanHarvest())
             harvestPrompt.SetActive(true);
     }
 
-    bool HasCrop() { return curCrop != null; }
+    bool HasCrop()
+    {
+        return curCrop != null;
+    }
 }

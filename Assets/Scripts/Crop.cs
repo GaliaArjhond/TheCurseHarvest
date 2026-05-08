@@ -1,79 +1,81 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Crop : MonoBehaviour
 {
-    private CropData curCrop;
-    private int plantDay;
-    private int daysSinceLastWatered;
+    private CropData cropData;
+    private SpriteRenderer sr;
 
-    public SpriteRenderer sr;
+    private int growthStage = 0;
+    private bool wateredToday = false;
+    private bool readyToHarvest = false;
 
-    public static event UnityAction<CropData> onPlantCrop;
-    public static event UnityAction<CropData> onHarvestCrop;
-
-    public void Plant(CropData crop, int currentDay)
+    void Awake()
     {
-        curCrop = crop;
-        plantDay = currentDay;
-        daysSinceLastWatered = 1;
-        UpdateCropSprite();
-        onPlantCrop?.Invoke(crop);
+        sr = GetComponent<SpriteRenderer>();
+    }
+
+    public void Plant(CropData data, int currentDay)
+    {
+        cropData = data;
+        growthStage = 0;
+        wateredToday = false;
+        readyToHarvest = false;
+
+        UpdateSprite();
     }
 
     public void Water()
     {
-        daysSinceLastWatered = 0;
-        Debug.Log("Crop watered");
+        wateredToday = true;
     }
 
-    public void Harvest()
+    public void NewDayCheck(int currentDay)
     {
-        if (!CanHarvest()) return;
-        onHarvestCrop?.Invoke(curCrop);
-        Destroy(gameObject);
+        if (!wateredToday)
+        {
+            Debug.Log(cropData.cropName + " did not grow because it was not watered.");
+            return;
+        }
+
+        wateredToday = false;
+        growthStage++;
+
+        if (growthStage >= cropData.daysToGrow)
+        {
+            readyToHarvest = true;
+            sr.sprite = cropData.readyToHarvestSprite;
+            return;
+        }
+
+        UpdateSprite();
+    }
+
+    void UpdateSprite()
+    {
+        if (cropData == null) return;
+
+        if (cropData.growProgressSprites != null &&
+            cropData.growProgressSprites.Length > 0)
+        {
+            int index = Mathf.Clamp(growthStage, 0, cropData.growProgressSprites.Length - 1);
+            sr.sprite = cropData.growProgressSprites[index];
+        }
     }
 
     public bool CanHarvest()
     {
-        return CropProgress() >= curCrop.daysToGrow;
+        return readyToHarvest;
     }
 
-    // called by FarmTile every new day
-    public void NewDayCheck(int currentDay)
+    public void Harvest()
     {
-        daysSinceLastWatered++;
+        if (!readyToHarvest) return;
 
-        // crop dies if not watered for 3 days
-        if (daysSinceLastWatered > 3)
-        {
-            Debug.Log("Crop died from lack of water!");
-            Destroy(gameObject);
-            return;
-        }
+        int amount = Random.Range(cropData.harvestMin, cropData.harvestMax + 1);
 
-        UpdateCropSprite();
-    }
+        if (InventoryController.Instance != null)
+            InventoryController.Instance.AddItem(cropData.harvestItemID, amount);
 
-    int CropProgress()
-    {
-        return DayManager.Instance.dayNumber - plantDay;
-    }
-
-    void UpdateCropSprite()
-    {
-        if (curCrop == null) return;
-
-        int progress = CropProgress();
-
-        if (progress < curCrop.daysToGrow && curCrop.growProgressSprites.Length > 0)
-        {
-            int index = Mathf.Clamp(progress, 0, curCrop.growProgressSprites.Length - 1);
-            sr.sprite = curCrop.growProgressSprites[index];
-        }
-        else if (curCrop.readyToHarvestSprite != null)
-        {
-            sr.sprite = curCrop.readyToHarvestSprite;
-        }
+        Destroy(gameObject);
     }
 }

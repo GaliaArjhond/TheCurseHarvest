@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4709687642086125233}
   - component: {fileID: 5436195069593557132}
   - component: {fileID: 3817111165515815145}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FarmTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,5 +129,5 @@ MonoBehaviour:
   grassSprite: {fileID: 1802087853, guid: be2943447c558914ba9f2bfaa0ec81bf, type: 3}
   tilledSprite: {fileID: 1155372174, guid: be2943447c558914ba9f2bfaa0ec81bf, type: 3}
   wateredSprite: {fileID: 558816700, guid: be2943447c558914ba9f2bfaa0ec81bf, type: 3}
-  cropPrefab: {fileID: 4099138972872216859, guid: 7f4ced934d0e17246953f94f7f8f30c9, type: 3}
+  cropPrefab: {fileID: 7946615040559340840, guid: 14f066b1643817844b93a3f05233a4e2, type: 3}
   harvestPrompt: {fileID: 0}
