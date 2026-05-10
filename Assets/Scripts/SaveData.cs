@@ -10,6 +10,7 @@ public class SaveData
     public List<InventorySaveData> inventorySaveData = new List<InventorySaveData>();
     public List<InventorySaveData> hotbarSaveData = new List<InventorySaveData>();
     public List<PropSaveData> forestProps = new List<PropSaveData>();
+    public List<InventorySaveData> chestSaveData = new List<InventorySaveData>();
 
 
     // Health & Stamina

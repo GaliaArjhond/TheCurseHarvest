@@ -6,17 +6,19 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
+
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private Animator animator;
-    private PlayerStatsManager playerStats; // ← add this
+    private PlayerStatsManager playerStats;
     private bool canMove = true;
     private Knockback knockback;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        playerStats = GetComponent<PlayerStatsManager>(); 
+        playerStats = GetComponent<PlayerStatsManager>();
         knockback = GetComponent<Knockback>();
     }
 
@@ -25,22 +27,47 @@ public class PlayerMovement : MonoBehaviour
         if (knockback != null && knockback.IsKnockbacking)
             return;
 
+        // stop movement when chest is open
+        if (ChestUIManager.Instance != null &&
+            ChestUIManager.Instance.IsChestOpen())
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
         if (!canMove)
         {
             rb.linearVelocity = Vector2.zero;
             return;
         }
-        // use speed from stats if available, otherwise use moveSpeed
-        float speed = playerStats != null ? playerStats.GetSpeed() : moveSpeed;
+
+        // movement speed
+        float speed = playerStats != null
+            ? playerStats.GetSpeed()
+            : moveSpeed;
+
         rb.linearVelocity = moveInput * speed;
 
-        // drain stamina while walking ← add this
+        // stamina drain
         if (moveInput != Vector2.zero && playerStats != null)
-            playerStats.DrainStamina(playerStats.walkStaminaDrain * Time.fixedDeltaTime);
+        {
+            playerStats.DrainStamina(
+                playerStats.walkStaminaDrain * Time.fixedDeltaTime
+            );
+        }
     }
 
     public void Move(InputAction.CallbackContext context)
     {
+        // stop input when chest open
+        if (ChestUIManager.Instance != null &&
+            ChestUIManager.Instance.IsChestOpen())
+        {
+            moveInput = Vector2.zero;
+            animator.SetBool("isWalking", false);
+            return;
+        }
+
         if (!canMove)
         {
             moveInput = Vector2.zero;
@@ -62,23 +89,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-   public void PlayAxeAnimation(Vector2 direction)
+    public void PlayAxeAnimation(Vector2 direction)
     {
         canMove = false;
         rb.linearVelocity = Vector2.zero;
 
         animator.SetBool("isWalking", false);
+
         animator.SetFloat("InputX", direction.x);
         animator.SetFloat("InputY", direction.y);
+
         animator.SetTrigger("UseAxe");
 
         CancelInvoke(nameof(EndToolAnimation));
         Invoke(nameof(EndToolAnimation), 0.5f);
-    }
-
-    public void EndToolAnimation()
-    {
-        canMove = true;
     }
 
     public void PlayHoeAnimation(Vector2 direction)
@@ -87,8 +111,10 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
 
         animator.SetBool("isWalking", false);
+
         animator.SetFloat("InputX", direction.x);
         animator.SetFloat("InputY", direction.y);
+
         animator.SetTrigger("UseHoe");
 
         CancelInvoke(nameof(EndToolAnimation));
@@ -101,12 +127,18 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
 
         animator.SetBool("isWalking", false);
+
         animator.SetFloat("InputX", direction.x);
         animator.SetFloat("InputY", direction.y);
+
         animator.SetTrigger("UsePickAxe");
 
         CancelInvoke(nameof(EndToolAnimation));
         Invoke(nameof(EndToolAnimation), 0.5f);
-        
+    }
+
+    public void EndToolAnimation()
+    {
+        canMove = true;
     }
 }

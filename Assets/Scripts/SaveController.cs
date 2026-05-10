@@ -6,6 +6,7 @@ using UnityEngine;
 public class SaveController : MonoBehaviour
 {
     public static SaveController Instance;
+    private ChestInventory chestInventory;
 
     private string saveFilePath;
 
@@ -25,6 +26,7 @@ public class SaveController : MonoBehaviour
         confiner = FindFirstObjectByType<CinemachineConfiner2D>();
         statsManager = FindFirstObjectByType<PlayerStatsManager>();
         propsSpawners = FindObjectsByType<PropsSpawner>(FindObjectsSortMode.None);
+        chestInventory = FindFirstObjectByType<ChestInventory>();
     }
 
     IEnumerator Start()
@@ -84,6 +86,10 @@ public class SaveController : MonoBehaviour
 
         if (hotbarController != null)
             data.hotbarSaveData = hotbarController.GetHotbarItems();
+
+        // Chest
+        //if (chestInventory != null)
+         //   data.chestSaveData = chestInventory.GetChestItems();
 
         // props
         data.forestProps.Clear();
@@ -159,6 +165,9 @@ public class SaveController : MonoBehaviour
             DayManager.Instance.seasonIndex = data.seasonIndex;
             DayManager.Instance.UpdateDayUI();
         }
+
+        //if (chestInventory != null && data.chestSaveData != null)
+        //     chestInventory.SetChestItems(data.chestSaveData);
 
         // props
         foreach (PropsSpawner spawner in propsSpawners)
