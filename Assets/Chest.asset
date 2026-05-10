@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb6744b882d203f46aae9d2413be524a, type: 3}
+  m_Name: Chest
+  m_EditorClassIdentifier: Assembly-CSharp::CraftRecipeData
+  recipeName: Chest
+  woodAmount: 10
+  stoneAmount: 5
+  resultPrefab: {fileID: 3125489301339327323, guid: cc5e616452015c54cac91ca37564ab3b, type: 3}
+  resultAmount: 1

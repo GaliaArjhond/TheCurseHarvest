@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class CraftingManager : MonoBehaviour
 {
-    public CraftRecipe chestRecipe;
-
     private InventoryController inventory;
 
     void Start()
@@ -11,64 +9,24 @@ public class CraftingManager : MonoBehaviour
         inventory = FindFirstObjectByType<InventoryController>();
     }
 
-    void Update()
+    public void Craft(CraftRecipeData recipe)
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            CraftChest();
-        }
-    }
+        if (inventory == null || recipe == null) return;
 
-    public void CraftChest()
-    {
-        if (inventory == null || chestRecipe == null)
-            return;
-
-        bool hasWood =
-            inventory.CountItem(
-                chestRecipe.requiredItem1ID
-            ) >= chestRecipe.requiredItem1Amount;
-
-        bool hasStone =
-            inventory.CountItem(
-                chestRecipe.requiredItem2ID
-            ) >= chestRecipe.requiredItem2Amount;
-
-        if (!hasWood || !hasStone)
+        if (inventory.CountItem(2) < recipe.woodAmount ||
+            inventory.CountItem(9) < recipe.stoneAmount)
         {
             Debug.Log("Not enough materials");
             return;
         }
 
-        inventory.RemoveItem(
-            chestRecipe.requiredItem1ID,
-            chestRecipe.requiredItem1Amount
-        );
+        inventory.RemoveItem(2, recipe.woodAmount);
+        inventory.RemoveItem(9, recipe.stoneAmount);
 
-        inventory.RemoveItem(
-            chestRecipe.requiredItem2ID,
-            chestRecipe.requiredItem2Amount
-        );
-
-        Item resultItem =
-            chestRecipe.resultPrefab.GetComponent<Item>();
-
-        if (resultItem == null)
-        {
-            Debug.LogError("Result prefab has no Item component!");
-            return;
-        }
-
-        Debug.Log("Craft result ID: " + resultItem.ID);
-
+        Item resultItem = recipe.resultPrefab.GetComponent<Item>();
         if (resultItem != null)
-        {
-            inventory.AddItem(
-                resultItem.ID,
-                chestRecipe.resultAmount
-            );
-        }
+            inventory.AddItem(resultItem.ID, recipe.resultAmount);
 
-        Debug.Log("Crafted Chest!");
+        Debug.Log("Crafted: " + recipe.recipeName);
     }
 }
