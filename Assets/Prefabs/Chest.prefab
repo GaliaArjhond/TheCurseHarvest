@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6946549822424497932}
   - component: {fileID: 2915301732843887353}
   - component: {fileID: 8822106366667578973}
+  - component: {fileID: -3863537675441189045}
+  - component: {fileID: -6002102632626950420}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -198,3 +200,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ea5d7c177f31764f960d80109cf21b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chest
+--- !u!114 &-3863537675441189045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498316580515986685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff7fa9f3ecd7a344be1ca7c6ce2da6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Item
+  ID: 10
+  Name: Chest
+  itemType: 0
+  isStackable: 1
+  amount: 1
+  maxStack: 999
+  amountText: {fileID: 0}
+  cropData: {fileID: 0}
+--- !u!114 &-6002102632626950420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498316580515986685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87012f7bad4e71b4fb269c1f033904ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDragHandler

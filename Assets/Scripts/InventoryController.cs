@@ -146,29 +146,100 @@ public class InventoryController : MonoBehaviour
 
     public bool AddItem(int itemID, int amount)
     {
-        GameObject itemPrefab = itemDictionary.GetItemPrefab(itemID);
+        GameObject itemPrefab =
+            itemDictionary.GetItemPrefab(itemID);
 
         if (itemPrefab == null)
         {
-            Debug.LogError("No item prefab found for ID: " + itemID);
+            Debug.LogError("Item prefab missing for ID: " + itemID);
             return false;
         }
 
-        int remaining = amount;
+        // try stack first
+        if (TryStackItem(hotbarPanel, itemID, amount))
+            return true;
 
-        // Stack first
-        remaining = AddToExistingStacks(hotbarPanel, itemID, remaining);
-        if (remaining <= 0) return true;
+        if (TryStackItem(backpackPanel, itemID, amount))
+            return true;
 
-        remaining = AddToExistingStacks(backpackPanel, itemID, remaining);
-        if (remaining <= 0) return true;
+        // add to empty slot
+        if (TryAddToEmptySlot(hotbarPanel, itemPrefab, amount))
+            return true;
 
-        // Empty slots only if still has remaining
-        remaining = AddToEmptySlots(hotbarPanel, itemPrefab, itemID, remaining);
-        if (remaining <= 0) return true;
+        if (TryAddToEmptySlot(backpackPanel, itemPrefab, amount))
+            return true;
 
-        remaining = AddToEmptySlots(backpackPanel, itemPrefab, itemID, remaining);
-        if (remaining <= 0) return true;
+        Debug.Log("Inventory Full");
+        return false;
+    }
+
+    bool TryStackItem(Transform panel, int itemID, int amount)
+    {
+        foreach (Transform slotTransform in panel)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+
+            if (slot == null || slot.currentItem == null)
+                continue;
+
+            Item item = slot.currentItem.GetComponent<Item>();
+
+            if (item == null)
+                continue;
+
+            if (item.ID == itemID &&
+                item.isStackable &&
+                item.amount < item.maxStack)
+            {
+                item.amount += amount;
+                item.UpdateAmountText();
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool TryAddToEmptySlot(
+        Transform panel,
+        GameObject itemPrefab,
+        int amount)
+    {
+        foreach (Transform slotTransform in panel)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+
+            if (slot == null || slot.currentItem != null)
+                continue;
+
+            GameObject itemObj =
+                Instantiate(itemPrefab, slot.transform);
+
+            RectTransform rt =
+                itemObj.GetComponent<RectTransform>();
+
+            if (rt != null)
+            {
+                rt.anchorMin = Vector2.zero;
+                rt.anchorMax = Vector2.one;
+                rt.offsetMin = Vector2.zero;
+                rt.offsetMax = Vector2.zero;
+                rt.localScale = Vector3.one;
+            }
+
+            Item item = itemObj.GetComponent<Item>();
+
+            if (item != null)
+            {
+                item.amount = amount;
+                item.UpdateAmountText();
+            }
+
+            slot.currentItem = itemObj;
+
+            return true;
+        }
 
         return false;
     }
@@ -242,6 +313,78 @@ public class InventoryController : MonoBehaviour
                 if (amount <= 0)
                     return 0;
             }
+        }
+
+        return amount;
+    }
+
+    public int CountItem(int itemID)
+    {
+        int total = 0;
+
+        total += CountItemInPanel(hotbarPanel, itemID);
+        total += CountItemInPanel(backpackPanel, itemID);
+
+        return total;
+    }
+
+    int CountItemInPanel(Transform panel, int itemID)
+    {
+        int total = 0;
+
+        foreach (Transform slotTransform in panel)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+
+            if (slot != null && slot.currentItem != null)
+            {
+                Item item = slot.currentItem.GetComponent<Item>();
+
+                if (item != null && item.ID == itemID)
+                    total += item.amount;
+            }
+        }
+
+        return total;
+    }
+
+    public bool RemoveItem(int itemID, int amount)
+    {
+        amount = RemoveItemFromPanel(hotbarPanel, itemID, amount);
+        amount = RemoveItemFromPanel(backpackPanel, itemID, amount);
+
+        return amount <= 0;
+    }
+
+    int RemoveItemFromPanel(Transform panel, int itemID, int amount)
+    {
+        foreach (Transform slotTransform in panel)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+
+            if (slot == null || slot.currentItem == null)
+                continue;
+
+            Item item = slot.currentItem.GetComponent<Item>();
+
+            if (item == null || item.ID != itemID)
+                continue;
+
+            int remove = Mathf.Min(item.amount, amount);
+
+            item.amount -= remove;
+            amount -= remove;
+
+            item.UpdateAmountText();
+
+            if (item.amount <= 0)
+            {
+                Destroy(slot.currentItem);
+                slot.currentItem = null;
+            }
+
+            if (amount <= 0)
+                return 0;
         }
 
         return amount;

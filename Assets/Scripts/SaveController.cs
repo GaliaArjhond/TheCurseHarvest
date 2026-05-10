@@ -32,7 +32,7 @@ public class SaveController : MonoBehaviour
     IEnumerator Start()
     {
         // wait 1 frame so inventory/hotbar slots are created first
-        //DeleteSave();
+        DeleteSave();
         yield return null;
         LoadGame();
     }
