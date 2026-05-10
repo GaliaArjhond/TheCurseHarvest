@@ -1,13 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class FarmingSystem : MonoBehaviour
 {
+    [Header("Settings")]
     [SerializeField] private float interactRange = 3f;
+    [SerializeField] private float toolCooldown = 0.5f;
+    [SerializeField] private float impactDelay = 0.25f;
+
+    [Header("References")]
     [SerializeField] private HotbarControler hotbar;
 
     private Camera mainCamera;
     private PlayerMovement playerMovement;
+    private bool isUsingTool = false;
 
     void Start()
     {
@@ -24,25 +31,13 @@ public class FarmingSystem : MonoBehaviour
             TryInteract();
     }
 
-    private System.Collections.IEnumerator DelayedFarmInteract(FarmTile tile, Item item, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        if (tile != null && item != null)
-            tile.Interact(item);
-    }
-
-    private System.Collections.IEnumerator DelayedPropHit(HarvestableProp prop, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        if (prop != null)
-            prop.HitProp();
-    }
-
     void TryInteract()
     {
-        Debug.Log("CLICKED");
+        if (isUsingTool)
+        {
+            Debug.Log("Still using tool...");
+            return;
+        }
 
         if (hotbar == null)
         {
@@ -58,8 +53,6 @@ public class FarmingSystem : MonoBehaviour
             return;
         }
 
-        Debug.Log("Equipped: " + equippedItem.Name);
-
         Vector2 mouseWorldPos =
             mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
@@ -71,21 +64,11 @@ public class FarmingSystem : MonoBehaviour
             return;
         }
 
-        Vector2 direction = (mouseWorldPos - (Vector2)transform.position).normalized;
-
-        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-            direction = new Vector2(Mathf.Sign(direction.x), 0);
-        else
-            direction = new Vector2(0, Mathf.Sign(direction.y));
+        Vector2 direction = GetDirection(mouseWorldPos);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(mouseWorldPos, 0.25f);
 
-        Debug.Log("Hits: " + hits.Length);
-
-        foreach (Collider2D h in hits)
-            Debug.Log("Hit: " + h.name);
-
-        // AXE
+        // AXE / TREE
         if (equippedItem.Name == "Axe")
         {
             foreach (Collider2D h in hits)
@@ -94,12 +77,12 @@ public class FarmingSystem : MonoBehaviour
 
                 if (prop != null)
                 {
-                    Debug.Log("Axe hit prop: " + prop.name);
+                    StartCoroutine(UseToolCooldown());
 
                     if (playerMovement != null)
                         playerMovement.PlayAxeAnimation(direction);
 
-                    StartCoroutine(DelayedPropHit(prop, 0.25f));
+                    StartCoroutine(DelayedPropHit(prop));
                     return;
                 }
             }
@@ -108,31 +91,61 @@ public class FarmingSystem : MonoBehaviour
             return;
         }
 
+        // FARM TILE
         foreach (Collider2D h in hits)
         {
             FarmTile tile = h.GetComponent<FarmTile>();
 
             if (tile != null)
             {
-                Debug.Log("Farm tile clicked.");
+                StartCoroutine(UseToolCooldown());
 
                 if (playerMovement != null)
                 {
                     if (equippedItem.Name == "Hoe")
-                    {
                         playerMovement.PlayHoeAnimation(direction);
-                    }
                     else if (equippedItem.Name == "WateringCan")
-                    {
                         playerMovement.PlayHoeAnimation(direction);
-                    }
                 }
 
-                StartCoroutine(DelayedFarmInteract(tile, equippedItem, 0.25f));
+                StartCoroutine(DelayedFarmInteract(tile, equippedItem));
                 return;
             }
         }
 
         Debug.Log("No farm tile clicked.");
+    }
+
+    Vector2 GetDirection(Vector2 targetPos)
+    {
+        Vector2 direction = (targetPos - (Vector2)transform.position).normalized;
+
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            return new Vector2(Mathf.Sign(direction.x), 0);
+
+        return new Vector2(0, Mathf.Sign(direction.y));
+    }
+
+    IEnumerator UseToolCooldown()
+    {
+        isUsingTool = true;
+        yield return new WaitForSeconds(toolCooldown);
+        isUsingTool = false;
+    }
+
+    IEnumerator DelayedPropHit(HarvestableProp prop)
+    {
+        yield return new WaitForSeconds(impactDelay);
+
+        if (prop != null)
+            prop.HitProp();
+    }
+
+    IEnumerator DelayedFarmInteract(FarmTile tile, Item item)
+    {
+        yield return new WaitForSeconds(impactDelay);
+
+        if (tile != null && item != null)
+            tile.Interact(item);
     }
 }
