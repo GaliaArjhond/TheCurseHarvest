@@ -88,6 +88,17 @@ public class DayNightCycle : MonoBehaviour
         return string.Format("{0}:{1:00} {2}", displayH, m, period);
     }
 
+    public void ResetToMorning()
+    {
+        currentHour = startHour;
+
+        UpdateLight();
+
+        if (clockText != null)
+            clockText.text = GetFormattedTime(currentHour);
+
+        Debug.Log("Time reset to morning");
+    }
     public float GetCurrentHour() { return currentHour % 24f; }
     public string GetTimeString() { return GetFormattedTime(currentHour); }
 }

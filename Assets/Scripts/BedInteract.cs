@@ -107,6 +107,15 @@ public class BedInteract : MonoBehaviour
         if (DayManager.Instance != null)
             DayManager.Instance.AdvanceDay();
 
+        if (PlayerStatsManager.Instance != null)
+            PlayerStatsManager.Instance.RestoreAll();
+
+        DayNightCycle cycle = FindFirstObjectByType<DayNightCycle>();
+        if (cycle != null)
+             cycle.ResetToMorning();
+
+        yield return null; 
+
         if (SaveController.Instance != null)
             SaveController.Instance.SaveGame();
 
