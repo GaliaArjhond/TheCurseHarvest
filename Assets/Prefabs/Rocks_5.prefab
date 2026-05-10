@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1782551910803454022}
   - component: {fileID: 8877431427858604620}
   - component: {fileID: 7589898240727005568}
+  - component: {fileID: 707245853263994161}
   m_Layer: 0
   m_Name: Rocks_5
   m_TagString: Untagged
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1476752335
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7073761113175812397, guid: 05a87b5e834592342bc4e6f7fe5ecfa2, type: 3}
@@ -124,12 +125,12 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.01956955, y: -0.24611342}
-  m_Size: {x: 0.75864434, y: 0.39778703}
+  m_Offset: {x: 0.079394214, y: 0.114588805}
+  m_Size: {x: 0.75335056, y: 0.62680167}
   m_Direction: 1
 --- !u!114 &8877431427858604620
 MonoBehaviour:
@@ -155,4 +156,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31f11ab96c34124782762cc8400fe8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HarvestableProp
-  propId: 105
+  propId: 5
+  requiredTool: 1
+  hitsToBreak: 3
+  dropItemPrefab: {fileID: 5328139886102811006, guid: 65c3a885386d54f48a903a1997888dd8, type: 3}
+  dropAmount: 2
+--- !u!61 &707245853263994161
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4472107615559357059}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.023009166, y: -0.25885317}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 0.875}
+    newSize: {x: 1, y: 0.875}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.7468991, y: 0.35729367}
+  m_EdgeRadius: 0

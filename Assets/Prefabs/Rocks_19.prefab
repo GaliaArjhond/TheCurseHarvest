@@ -81,7 +81,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1476752335
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1322852665132013782, guid: 05a87b5e834592342bc4e6f7fe5ecfa2, type: 3}
@@ -155,4 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31f11ab96c34124782762cc8400fe8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HarvestableProp
-  propId: 119
+  propId: 19
+  requiredTool: 1
+  hitsToBreak: 3
+  dropItemPrefab: {fileID: 5328139886102811006, guid: 65c3a885386d54f48a903a1997888dd8, type: 3}
+  dropAmount: 2

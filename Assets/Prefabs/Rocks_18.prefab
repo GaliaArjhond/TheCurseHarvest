@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8291789606466376688}
   - component: {fileID: 1164457317488895262}
   - component: {fileID: 5110193134127639386}
+  - component: {fileID: 2672581024744887018}
   - component: {fileID: 7238269236326522705}
   - component: {fileID: 2793167315990963677}
   m_Layer: 0
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1476752335
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 283262918395532950, guid: 05a87b5e834592342bc4e6f7fe5ecfa2, type: 3}
@@ -124,13 +125,59 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.0350147, y: 0.051398892}
+  m_Size: {x: 0.36958188, y: 0.2609624}
+  m_Direction: 1
+--- !u!61 &2672581024744887018
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098959941822510743}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.008882536, y: -0.09690928}
-  m_Size: {x: 0.45737523, y: 0.18158434}
-  m_Direction: 1
+  m_Offset: {x: 0, y: -0.13264185}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.4375, y: 0.375}
+    newSize: {x: 0.4375, y: 0.375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.4375, y: 0.109716296}
+  m_EdgeRadius: 0
 --- !u!114 &7238269236326522705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,4 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31f11ab96c34124782762cc8400fe8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HarvestableProp
-  propId: 118
+  propId: 18
+  requiredTool: 1
+  hitsToBreak: 3
+  dropItemPrefab: {fileID: 5328139886102811006, guid: 65c3a885386d54f48a903a1997888dd8, type: 3}
+  dropAmount: 2

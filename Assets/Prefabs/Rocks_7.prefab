@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 4501709741804967928}
   - component: {fileID: 4500549699328700184}
   - component: {fileID: 2403430737020073793}
+  - component: {fileID: 7573177498620996843}
   - component: {fileID: 8535790586690102030}
+  - component: {fileID: 4842031145478832041}
   m_Layer: 0
   m_Name: Rocks_7
   m_TagString: Untagged
@@ -81,7 +83,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1476752335
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1677260544633098824, guid: 05a87b5e834592342bc4e6f7fe5ecfa2, type: 3}
@@ -124,12 +126,12 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.000000033301546, y: -0.22064647}
-  m_Size: {x: 1.6600004, y: 1.2787158}
+  m_Offset: {x: 0.08350591, y: 0.26026723}
+  m_Size: {x: 1.2639058, y: 1.0183166}
   m_Direction: 1
 --- !u!114 &2403430737020073793
 MonoBehaviour:
@@ -143,6 +145,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d5c13a0b06eba4eac55c46e1aed413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SortingOrderHandler
+--- !u!70 &7573177498620996843
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4074579701961885528}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.040261578, y: -0.5566538}
+  m_Size: {x: 1.2465531, y: 0.5741952}
+  m_Direction: 1
 --- !u!114 &8535790586690102030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,4 +194,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31f11ab96c34124782762cc8400fe8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HarvestableProp
-  propId: 107
+  propId: 7
+  requiredTool: 1
+  hitsToBreak: 3
+  dropItemPrefab: {fileID: 5328139886102811006, guid: 65c3a885386d54f48a903a1997888dd8, type: 3}
+  dropAmount: 2
+--- !u!114 &4842031145478832041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4074579701961885528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae605d6fac6fad04bb696c314dcebe84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HideWhenBehind
+  fadeAlpha: 0.4

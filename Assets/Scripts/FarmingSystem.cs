@@ -53,8 +53,10 @@ public class FarmingSystem : MonoBehaviour
             return;
         }
 
-        Vector2 mouseWorldPos =
-            mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector3 mouseScreen = Mouse.current.position.ReadValue();
+        mouseScreen.z = Mathf.Abs(mainCamera.transform.position.z);
+
+        Vector2 mouseWorldPos = mainCamera.ScreenToWorldPoint(mouseScreen);
 
         float dist = Vector2.Distance(transform.position, mouseWorldPos);
 
@@ -68,28 +70,39 @@ public class FarmingSystem : MonoBehaviour
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(mouseWorldPos, 0.25f);
 
-        // AXE / TREE
-        if (equippedItem.Name == "Axe")
+       // HARVESTABLE PROP
+    if (equippedItem.Name == "Axe" ||
+        equippedItem.Name == "Pickaxe")
+    {
+        foreach (Collider2D h in hits)
         {
-            foreach (Collider2D h in hits)
+            HarvestableProp prop =
+                h.GetComponentInParent<HarvestableProp>();
+
+            if (prop != null)
             {
-                HarvestableProp prop = h.GetComponentInParent<HarvestableProp>();
+                StartCoroutine(UseToolCooldown());
 
-                if (prop != null)
+                if (playerMovement != null)
                 {
-                    StartCoroutine(UseToolCooldown());
-
-                    if (playerMovement != null)
+                    if (equippedItem.Name == "Axe")
                         playerMovement.PlayAxeAnimation(direction);
 
-                    StartCoroutine(DelayedPropHit(prop));
-                    return;
+                    else if (equippedItem.Name == "Pickaxe")
+                        playerMovement.PlayPickAxeAnimation(direction);
                 }
-            }
 
-            Debug.Log("No harvestable prop clicked.");
-            return;
+                StartCoroutine(
+                    DelayedPropHit(prop, equippedItem.Name)
+                );
+
+                return;
+            }
         }
+
+        Debug.Log("No prop clicked.");
+        return;
+    }
 
         // FARM TILE
         foreach (Collider2D h in hits)
@@ -133,13 +146,6 @@ public class FarmingSystem : MonoBehaviour
         isUsingTool = false;
     }
 
-    IEnumerator DelayedPropHit(HarvestableProp prop)
-    {
-        yield return new WaitForSeconds(impactDelay);
-
-        if (prop != null)
-            prop.HitProp();
-    }
 
     IEnumerator DelayedFarmInteract(FarmTile tile, Item item)
     {
@@ -147,5 +153,13 @@ public class FarmingSystem : MonoBehaviour
 
         if (tile != null && item != null)
             tile.Interact(item);
+    }
+
+    IEnumerator DelayedPropHit(HarvestableProp prop, string toolName)
+    {
+        yield return new WaitForSeconds(impactDelay);
+
+        if (prop != null)
+            prop.HitProp(toolName);
     }
 }

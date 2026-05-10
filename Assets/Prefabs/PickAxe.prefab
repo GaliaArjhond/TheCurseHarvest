@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5458255969453526349}
   - component: {fileID: 7795151949158640328}
   m_Layer: 5
-  m_Name: PickAxe
+  m_Name: Pickaxe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 8
-  Name: PickAxe
+  Name: Pickaxe
   itemType: 1
   isStackable: 0
   amount: 1
