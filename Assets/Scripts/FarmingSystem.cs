@@ -3,17 +3,16 @@ using UnityEngine.InputSystem;
 
 public class FarmingSystem : MonoBehaviour
 {
-    [Header("References")]
+    [SerializeField] private float interactRange = 3f;
     [SerializeField] private HotbarControler hotbar;
 
-    [Header("Settings")]
-    [SerializeField] private float interactRange = 3f;
-
-    private Camera cam;
+    private Camera mainCamera;
+    private PlayerMovement playerMovement;
 
     void Start()
     {
-        cam = Camera.main;
+        mainCamera = Camera.main;
+        playerMovement = GetComponent<PlayerMovement>();
 
         if (hotbar == null)
             hotbar = FindFirstObjectByType<HotbarControler>();
@@ -22,52 +21,90 @@ public class FarmingSystem : MonoBehaviour
     void Update()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
             TryInteract();
-        }
     }
 
     void TryInteract()
     {
-        if (hotbar == null) return;
+        Debug.Log("CLICKED");
 
-        Item selectedItem = hotbar.GetSelectedItem();
-
-        if (selectedItem == null)
+        if (hotbar == null)
         {
-            Debug.Log("No selected item");
+            Debug.Log("Hotbar missing");
             return;
         }
 
-        Vector2 mouseWorld =
-            cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Item equippedItem = hotbar.GetSelectedItem();
 
-        Collider2D hit =
-            Physics2D.OverlapCircle(mouseWorld, 0.2f);
-
-        if (hit == null)
+        if (equippedItem == null)
         {
-            Debug.Log("Nothing clicked");
+            Debug.Log("No equipped item");
             return;
         }
 
-        FarmTile tile = hit.GetComponent<FarmTile>();
+        Debug.Log("Equipped: " + equippedItem.Name);
 
-        if (tile == null)
-        {
-            Debug.Log("Not a farm tile");
-            return;
-        }
+        Vector2 mouseWorldPos =
+            mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
-        float dist =
-            Vector2.Distance(transform.position, tile.transform.position);
+        float dist = Vector2.Distance(transform.position, mouseWorldPos);
 
         if (dist > interactRange)
         {
-            Debug.Log("Too far away");
+            Debug.Log("Too far: " + dist);
             return;
         }
 
-        tile.Interact(selectedItem);
+        Vector2 direction = (mouseWorldPos - (Vector2)transform.position).normalized;
+
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            direction = new Vector2(Mathf.Sign(direction.x), 0);
+        else
+            direction = new Vector2(0, Mathf.Sign(direction.y));
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(mouseWorldPos, 0.25f);
+
+        Debug.Log("Hits: " + hits.Length);
+
+        foreach (Collider2D h in hits)
+            Debug.Log("Hit: " + h.name);
+
+        // AXE
+        if (equippedItem.Name == "Axe")
+        {
+            foreach (Collider2D h in hits)
+            {
+                HarvestableProp prop = h.GetComponentInParent<HarvestableProp>();
+
+                if (prop != null)
+                {
+                    Debug.Log("Axe hit prop: " + prop.name);
+
+                    if (playerMovement != null)
+                        playerMovement.PlayAxeAnimation(direction);
+
+                    prop.HitProp();
+                    return;
+                }
+            }
+
+            Debug.Log("No harvestable prop clicked.");
+            return;
+        }
+
+        // FARM TILE
+        foreach (Collider2D h in hits)
+        {
+            FarmTile tile = h.GetComponent<FarmTile>();
+
+            if (tile != null)
+            {
+                Debug.Log("Farm tile clicked.");
+                tile.Interact(equippedItem);
+                return;
+            }
+        }
+
+        Debug.Log("No farm tile clicked.");
     }
 }
