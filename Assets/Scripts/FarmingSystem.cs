@@ -24,6 +24,22 @@ public class FarmingSystem : MonoBehaviour
             TryInteract();
     }
 
+    private System.Collections.IEnumerator DelayedFarmInteract(FarmTile tile, Item item, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (tile != null && item != null)
+            tile.Interact(item);
+    }
+
+    private System.Collections.IEnumerator DelayedPropHit(HarvestableProp prop, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (prop != null)
+            prop.HitProp();
+    }
+
     void TryInteract()
     {
         Debug.Log("CLICKED");
@@ -83,7 +99,7 @@ public class FarmingSystem : MonoBehaviour
                     if (playerMovement != null)
                         playerMovement.PlayAxeAnimation(direction);
 
-                    prop.HitProp();
+                    StartCoroutine(DelayedPropHit(prop, 0.25f));
                     return;
                 }
             }
@@ -92,7 +108,6 @@ public class FarmingSystem : MonoBehaviour
             return;
         }
 
-        // FARM TILE
         foreach (Collider2D h in hits)
         {
             FarmTile tile = h.GetComponent<FarmTile>();
@@ -100,7 +115,20 @@ public class FarmingSystem : MonoBehaviour
             if (tile != null)
             {
                 Debug.Log("Farm tile clicked.");
-                tile.Interact(equippedItem);
+
+                if (playerMovement != null)
+                {
+                    if (equippedItem.Name == "Hoe")
+                    {
+                        playerMovement.PlayHoeAnimation(direction);
+                    }
+                    else if (equippedItem.Name == "WateringCan")
+                    {
+                        playerMovement.PlayHoeAnimation(direction);
+                    }
+                }
+
+                StartCoroutine(DelayedFarmInteract(tile, equippedItem, 0.25f));
                 return;
             }
         }

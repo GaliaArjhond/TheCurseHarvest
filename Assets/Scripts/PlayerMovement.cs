@@ -80,4 +80,18 @@ public class PlayerMovement : MonoBehaviour
     {
         canMove = true;
     }
+
+    public void PlayHoeAnimation(Vector2 direction)
+    {
+        canMove = false;
+        rb.linearVelocity = Vector2.zero;
+
+        animator.SetBool("isWalking", false);
+        animator.SetFloat("InputX", direction.x);
+        animator.SetFloat("InputY", direction.y);
+        animator.SetTrigger("UseHoe");
+
+        CancelInvoke(nameof(EndToolAnimation));
+        Invoke(nameof(EndToolAnimation), 0.5f);
+    }
 }

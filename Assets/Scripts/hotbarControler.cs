@@ -65,7 +65,13 @@ public class HotbarControler : MonoBehaviour
 
         for (int i = 0; i < slotCount; i++)
         {
-            Instantiate(slotPrefab, hotbarPanel.transform);
+            GameObject slotObj = Instantiate(slotPrefab, hotbarPanel.transform);
+
+            HotbarSlotClick click = slotObj.GetComponent<HotbarSlotClick>();
+            if (click == null)
+                click = slotObj.AddComponent<HotbarSlotClick>();
+
+            click.Setup(this, i);
         }
 
         Debug.Log("Hotbar slots created.");
