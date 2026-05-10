@@ -26,13 +26,13 @@ public class SaveController : MonoBehaviour
         confiner = FindFirstObjectByType<CinemachineConfiner2D>();
         statsManager = FindFirstObjectByType<PlayerStatsManager>();
         propsSpawners = FindObjectsByType<PropsSpawner>(FindObjectsSortMode.None);
-        chestInventory = FindFirstObjectByType<ChestInventory>();
+        chestInventory = FindFirstObjectByType<ChestInventory>(FindObjectsInactive.Include);
     }
 
     IEnumerator Start()
     {
         // wait 1 frame so inventory/hotbar slots are created first
-        DeleteSave();
+        //DeleteSave();
         yield return null;
         LoadGame();
     }
@@ -88,8 +88,8 @@ public class SaveController : MonoBehaviour
             data.hotbarSaveData = hotbarController.GetHotbarItems();
 
         // Chest
-        //if (chestInventory != null)
-         //   data.chestSaveData = chestInventory.GetChestItems();
+        if (chestInventory != null)
+            data.chestSaveData = chestInventory.GetChestItems();
 
         // props
         data.forestProps.Clear();
@@ -166,8 +166,8 @@ public class SaveController : MonoBehaviour
             DayManager.Instance.UpdateDayUI();
         }
 
-        //if (chestInventory != null && data.chestSaveData != null)
-        //     chestInventory.SetChestItems(data.chestSaveData);
+        if (chestInventory != null && data.chestSaveData != null)
+            chestInventory.SetChestItems(data.chestSaveData);
 
         // props
         foreach (PropsSpawner spawner in propsSpawners)
