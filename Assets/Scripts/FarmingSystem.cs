@@ -70,6 +70,18 @@ public class FarmingSystem : MonoBehaviour
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(mouseWorldPos, 0.25f);
 
+        // CROP HARVEST
+        foreach (Collider2D h in hits)
+        {
+            Crop crop = h.GetComponent<Crop>();
+
+            if (crop != null && crop.CanHarvest())
+            {
+                crop.Harvest();
+                return;
+            }
+        }
+
        // HARVESTABLE PROP
     if (equippedItem.Name == "Axe" ||
         equippedItem.Name == "Pickaxe")

@@ -35,4 +35,45 @@ public class ShopManager : MonoBehaviour
                 Debug.LogError("Bought seed BUT inventory is full or AddItem failed");
         }
     }
+
+    public void SellSelectedItem()
+    {
+        HotbarControler hotbar =
+            FindFirstObjectByType<HotbarControler>();
+
+        if (hotbar == null) return;
+
+        Item item = hotbar.GetSelectedItem();
+
+        if (item == null)
+        {
+            Debug.Log("No item selected");
+            return;
+        }
+
+        int value = item.sellPrice;
+
+        if (value <= 0)
+        {
+            Debug.Log("Item cannot be sold");
+            return;
+        }
+
+        MoneyManager.Instance.AddMoney(value);
+
+        item.amount--;
+        item.UpdateAmountText();
+
+        if (item.amount <= 0)
+        {
+            Slot slot = item.transform.parent.GetComponent<Slot>();
+
+            if (slot != null)
+                slot.currentItem = null;
+
+            Destroy(item.gameObject);
+        }
+
+        Debug.Log("Sold " + item.Name);
+    }
 }

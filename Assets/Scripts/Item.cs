@@ -12,6 +12,10 @@ public class Item : MonoBehaviour
     public bool isPlaceable = true;
     public GameObject placeablePrefab;
 
+    [Header("Shop")]
+    public int buyPrice = 10;
+    public int sellPrice = 5;
+
     [Header("Stacking")]
     public bool isStackable = true;
     public int amount = 1;

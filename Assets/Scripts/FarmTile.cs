@@ -27,6 +27,22 @@ public class FarmTile : MonoBehaviour
 
     public void Interact(Item item)
     {
+        // HARVEST
+        if (currentCrop != null && currentCrop.CanHarvest())
+        {
+            Debug.Log("Harvesting crop");
+
+            currentCrop.Harvest();
+            currentCrop = null;
+
+            tilled = true;
+            watered = false;
+
+            sr.sprite = tilledSprite;
+
+            return;
+        }
+
         if (item == null) return;
 
         Debug.Log("Using item: " + item.Name);
