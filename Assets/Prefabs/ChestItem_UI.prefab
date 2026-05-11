@@ -68,6 +68,8 @@ MonoBehaviour:
   ID: 10
   Name: Chest
   itemType: 0
+  isPlaceable: 1
+  placeablePrefab: {fileID: 1498316580515986685, guid: a4a07062057ac2a488ab2b85484a8452, type: 3}
   isStackable: 1
   amount: 1
   maxStack: 999

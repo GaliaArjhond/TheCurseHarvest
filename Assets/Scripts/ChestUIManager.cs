@@ -4,32 +4,60 @@ public class ChestUIManager : MonoBehaviour
 {
     public static ChestUIManager Instance;
 
-    [SerializeField] private GameObject chestPanel;
+    [Header("UI")]
+    public GameObject menu;
+    public GameObject inventoryPage;
+    public GameObject chestWindow;
 
     void Awake()
     {
         Instance = this;
 
-        if (chestPanel != null)
-            chestPanel.SetActive(false);
+        if (chestWindow != null)
+            chestWindow.SetActive(false);
     }
 
-    public void ToggleChest()
+    public void OpenChest()
     {
-        if (chestPanel == null) return;
+        Debug.Log("OPEN CHEST");
 
-        chestPanel.SetActive(!chestPanel.activeSelf);
+        if (menu != null)
+            menu.SetActive(true);
+
+        if (inventoryPage != null)
+            inventoryPage.SetActive(true);
+
+        if (chestWindow != null)
+            chestWindow.SetActive(true);
+        else
+            Debug.LogError("Chest Window is NOT assigned!");
     }
 
     public void CloseChest()
     {
-        if (chestPanel == null) return;
+        Debug.Log("CLOSE CHEST: " + (chestWindow != null ? chestWindow.name : "NULL"));
 
-        chestPanel.SetActive(false);
+        if (chestWindow != null)
+            chestWindow.SetActive(false);
+    }
+
+    public void CloseMenuAndChest()
+    {
+        Debug.Log("CLOSE MENU AND CHEST");
+
+        if (chestWindow != null)
+            chestWindow.SetActive(false);
+        else
+            Debug.LogError("Chest Window is NOT assigned!");
+
+        if (menu != null)
+            menu.SetActive(false);
+        else
+            Debug.LogError("Menu is NOT assigned!");
     }
 
     public bool IsChestOpen()
     {
-        return chestPanel.activeSelf;
+        return chestWindow != null && chestWindow.activeSelf;
     }
 }

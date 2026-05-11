@@ -9,26 +9,34 @@ public class Chest : MonoBehaviour
     {
         if (!playerInRange) return;
 
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (Mouse.current.rightButton.wasPressedThisFrame)
         {
             if (ChestUIManager.Instance != null)
-                ChestUIManager.Instance.ToggleChest();
+            {
+                if (ChestUIManager.Instance.IsChestOpen())
+                    ChestUIManager.Instance.CloseChest();
+                else
+                    ChestUIManager.Instance.OpenChest();
+            }
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
+        {
             playerInRange = true;
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
 
-        playerInRange = false;
-
-        if (ChestUIManager.Instance != null)
-            ChestUIManager.Instance.CloseChest();
+            if (ChestUIManager.Instance != null)
+                ChestUIManager.Instance.CloseChest();
+        }
     }
 }

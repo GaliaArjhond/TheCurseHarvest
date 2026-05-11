@@ -8,6 +8,10 @@ public class Item : MonoBehaviour
 
     public ItemType itemType = ItemType.Misc;
 
+    [Header("Placeable")]
+    public bool isPlaceable = true;
+    public GameObject placeablePrefab;
+
     [Header("Stacking")]
     public bool isStackable = true;
     public int amount = 1;
