@@ -13,7 +13,7 @@ TagManager:
   - Water
   - UI
   - FarmTile
-  - 
+  - PlacementBlock
   - 
   - 
   - 
@@ -65,6 +65,9 @@ TagManager:
     locked: 0
   - name: Decor
     uniqueID: 3803474613
+    locked: 0
+  - name: Placed chest
+    uniqueID: 4275078751
     locked: 0
   m_RenderingLayers:
   - Default

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5458020757365948741}
   - component: {fileID: 5907737593474727686}
   - component: {fileID: 5768182180820323276}
+  - component: {fileID: -5724095145409074263}
   m_Layer: 5
   m_Name: Seed
   m_TagString: Untagged
@@ -89,12 +90,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff7fa9f3ecd7a344be1ca7c6ce2da6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  ID: 3
-  Name: Wheat
+  ID: 7
+  Name: Seed
   itemType: 2
+  isPlaceable: 1
+  placeablePrefab: {fileID: 0}
   isStackable: 1
   amount: 1
-  maxStack: 99
+  maxStack: 999
   amountText: {fileID: 0}
   cropData: {fileID: 11400000, guid: ad561e8b0628f69498c2c2406d12610e, type: 2}
 --- !u!114 &5768182180820323276
@@ -109,3 +112,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87012f7bad4e71b4fb269c1f033904ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDragHandler
+--- !u!225 &-5724095145409074263
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8131897834764890220}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

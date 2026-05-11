@@ -18,10 +18,13 @@ public class ItemDictionary : MonoBehaviour
 
             if (item != null)
             {
+                Debug.Log(prefab.name + " registered as ID " + item.ID);
+                
                 if (!itemsDictionary.ContainsKey(item.ID))
                     itemsDictionary.Add(item.ID, prefab);
                 else
                     Debug.LogWarning("Duplicate item ID: " + item.ID);
+                    
             }
         }
     }

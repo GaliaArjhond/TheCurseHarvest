@@ -90,9 +90,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff7fa9f3ecd7a344be1ca7c6ce2da6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  ID: 7
+  ID: 3
   Name: Sword
   itemType: 5
+  isPlaceable: 1
+  placeablePrefab: {fileID: 0}
   isStackable: 0
   amount: 1
   maxStack: 1
