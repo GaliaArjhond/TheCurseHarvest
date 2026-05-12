@@ -24,8 +24,14 @@ public class DayNightCycle : MonoBehaviour
         totalHours = endHour - startHour;
     }
 
-    void Update()
+   void Update()
     {
+        if (PauseManager.Instance != null &&
+            PauseManager.Instance.IsPaused)
+        {
+            return;
+        }
+
         currentHour += (totalHours / dayDuration) * Time.deltaTime;
 
         if (currentHour >= endHour)

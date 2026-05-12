@@ -14,7 +14,12 @@ public class MenuControler : MonoBehaviour
     {
         if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
-            menuCanvas.SetActive(!menuCanvas.activeSelf);
+            bool open = !menuCanvas.activeSelf;
+
+            menuCanvas.SetActive(open);
+
+            if (PauseManager.Instance != null)
+                PauseManager.Instance.SetPaused(open);
         }
     }
 }

@@ -55,19 +55,23 @@ public class TabController : MonoBehaviour
         }
     }
 
-    public void ToggleMenu()
+   public void ToggleMenu()
     {
         Debug.Log("TAB PRESSED");
 
-        if (ChestUIManager.Instance != null &&
-            ChestUIManager.Instance.IsChestOpen())
+        if (menuRoot == null)
         {
-            ChestUIManager.Instance.CloseMenuAndChest();
+            Debug.LogError("Menu Root missing on TabController!");
             return;
         }
 
-        if (menuRoot == null) return;
+        bool open = !menuRoot.activeSelf;
 
-        menuRoot.SetActive(!menuRoot.activeSelf);
+        menuRoot.SetActive(open);
+
+        if (PauseManager.Instance != null)
+            PauseManager.Instance.SetPaused(open);
+        else
+            Debug.LogError("PauseManager missing!");
     }
 }
