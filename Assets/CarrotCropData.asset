@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e16a109f5a5d684db12daeec62343d6, type: 3}
-  m_Name: WheatCropData
+  m_Name: CarrotCropData
   m_EditorClassIdentifier: Assembly-CSharp::CropData
-  cropName: Wheat
+  cropName: Carrot
   daysToGrow: 4
   growProgressSprites:
-  - {fileID: -2206655580924712108, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
-  - {fileID: -62387344811293004, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
-  - {fileID: 6299992369424546210, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
-  readyToHarvestSprite: {fileID: -8186859060342957426, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
-  harvestItemID: 6
-  harvestItemName: Wheat
+  - {fileID: -2007879195102778466, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
+  - {fileID: -4964467975926673830, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
+  - {fileID: 6306059771652365211, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
+  readyToHarvestSprite: {fileID: 7284285715301073151, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
+  harvestItemID: 7
+  harvestItemName: Carrot
   harvestMin: 1
   harvestMax: 3

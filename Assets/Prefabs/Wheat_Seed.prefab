@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 5768182180820323276}
   - component: {fileID: -5724095145409074263}
   m_Layer: 5
-  m_Name: Seed
+  m_Name: Wheat_Seed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5196230094273877852, guid: 043b873e777069347aced29a17f7e04b, type: 3}
+  m_Sprite: {fileID: 3338495331230526703, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 7
-  Name: Seed
+  Name: WheatSeed
   itemType: 2
   isPlaceable: 1
   placeablePrefab: {fileID: 0}

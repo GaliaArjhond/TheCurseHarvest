@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
-    [Header("Shop Items")]
+    [Header("Wheat Seed")]
     public int seedItemID = 7;
     public int seedPrice = 10;
     public int seedAmount = 1;
+
+    [Header("Carrot Seed")]
+    public int carrotSeedItemID = 8;
+    public int carrotSeedPrice = 15;
+    public int carrotSeedAmount = 1;
 
     private InventoryController inventory;
 
@@ -16,6 +21,16 @@ public class ShopManager : MonoBehaviour
 
     public void BuySeed()
     {
+        BuyItem(seedItemID, seedPrice, seedAmount, "Wheat Seed");
+    }
+
+    public void BuyCarrotSeed()
+    {
+        BuyItem(carrotSeedItemID, carrotSeedPrice, carrotSeedAmount, "Carrot Seed");
+    }
+
+    void BuyItem(int itemID, int price, int amount, string itemName)
+    {
         if (inventory == null)
             inventory = InventoryController.Instance;
 
@@ -25,22 +40,20 @@ public class ShopManager : MonoBehaviour
             return;
         }
 
-        if (MoneyManager.Instance.SpendMoney(seedPrice))
+        if (MoneyManager.Instance.SpendMoney(price))
         {
-            bool added = inventory.AddItem(seedItemID, seedAmount);
+            bool added = inventory.AddItem(itemID, amount);
 
             if (added)
-                Debug.Log("Bought seed and added to inventory");
+                Debug.Log("Bought " + itemName);
             else
-                Debug.LogError("Bought seed BUT inventory is full or AddItem failed");
+                Debug.LogError("Bought " + itemName + " BUT inventory is full or AddItem failed");
         }
     }
 
     public void SellSelectedItem()
     {
-        HotbarControler hotbar =
-            FindFirstObjectByType<HotbarControler>();
-
+        HotbarControler hotbar = FindFirstObjectByType<HotbarControler>();
         if (hotbar == null) return;
 
         Item item = hotbar.GetSelectedItem();

@@ -211,10 +211,9 @@ public class PlayerStatsManager : MonoBehaviour
 
     public void RestoreAll()
     {
-        stats.currentHealth = stats.maxHealth;
-        stats.currentStamina = stats.maxStamina;
+        SetHealth(GetMaxHealth());
+        SetStamina(GetMaxStamina());
     }
-
     void Die()
     {
         Debug.Log("Player died!");
