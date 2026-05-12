@@ -219,6 +219,26 @@ public class PlayerStatsManager : MonoBehaviour
         Debug.Log("Player died!");
     }
 
+    public bool UseStamina(float amount)
+    {
+        if (stats.currentStamina < amount)
+        {
+            Debug.Log("Not enough stamina");
+            return false;
+        }
+
+        stats.currentStamina -= amount;
+
+        stats.currentStamina =
+            Mathf.Max(stats.currentStamina, 0);
+
+        staminaRegenTimer = staminaRegenDelay;
+
+        UpdateAllUI();
+
+        return true;
+    }
+
     // ── getters ──
     public float GetHealth() => stats.currentHealth;
     public float GetMaxHealth() => stats.maxHealth;

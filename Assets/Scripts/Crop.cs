@@ -66,11 +66,18 @@ public class Crop : MonoBehaviour
 
         if (InventoryController.Instance != null)
         {
-            InventoryController.Instance.AddItem(
+            bool added = InventoryController.Instance.AddItem(
                 cropData.harvestItemID,
                 amount
             );
 
+            if (added && PickupUI.Instance != null)
+            {
+                PickupUI.Instance.ShowPickup(
+                    cropData.harvestItemID,
+                    amount
+                );
+            }
             Debug.Log(
                 "Harvested " +
                 cropData.cropName +

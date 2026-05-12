@@ -5,7 +5,7 @@ public class MoneyManager : MonoBehaviour
 {
     public static MoneyManager Instance;
 
-    [SerializeField] private int money = 100;
+    [SerializeField] private float money = 100f;
     [SerializeField] private TextMeshProUGUI moneyText;
 
     void Awake()
@@ -18,7 +18,7 @@ public class MoneyManager : MonoBehaviour
         UpdateUI();
     }
 
-    public bool SpendMoney(int amount)
+    public bool SpendMoney(float amount)
     {
         if (money < amount)
         {
@@ -31,13 +31,13 @@ public class MoneyManager : MonoBehaviour
         return true;
     }
 
-    public void AddMoney(int amount)
+    public void AddMoney(float amount)
     {
         money += amount;
         UpdateUI();
     }
 
-    public int GetMoney()
+    public float GetMoney()
     {
         return money;
     }
@@ -45,6 +45,6 @@ public class MoneyManager : MonoBehaviour
     void UpdateUI()
     {
         if (moneyText != null)
-            moneyText.text = money.ToString();
+            moneyText.text = "₱ " + money.ToString("N2");
     }
 }

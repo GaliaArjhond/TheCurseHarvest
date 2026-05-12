@@ -19,7 +19,7 @@ MonoBehaviour:
   - {fileID: -4964467975926673830, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
   - {fileID: 6306059771652365211, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
   readyToHarvestSprite: {fileID: 7284285715301073151, guid: bb7e825055f27eb4f934c9e4232a001c, type: 3}
-  harvestItemID: 7
+  harvestItemID: 11
   harvestItemName: Carrot
   harvestMin: 1
   harvestMax: 3

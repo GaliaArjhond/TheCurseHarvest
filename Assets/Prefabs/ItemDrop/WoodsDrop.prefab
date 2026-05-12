@@ -323,6 +323,10 @@ MonoBehaviour:
   ID: 2
   Name: Wood
   itemType: 4
+  isPlaceable: 1
+  placeablePrefab: {fileID: 0}
+  buyPrice: 10
+  sellPrice: 5
   isStackable: 1
   amount: 1
   maxStack: 999

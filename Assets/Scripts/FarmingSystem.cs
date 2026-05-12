@@ -12,14 +12,24 @@ public class FarmingSystem : MonoBehaviour
     [Header("References")]
     [SerializeField] private HotbarControler hotbar;
 
+    [Header("Stamina Costs")]
+    [SerializeField] private float axeStaminaCost = 8f;
+    [SerializeField] private float pickaxeStaminaCost = 8f;
+    [SerializeField] private float hoeStaminaCost = 5f;
+    [SerializeField] private float wateringStaminaCost = 4f;
+    [SerializeField] private float plantingStaminaCost = 2f;
+    [SerializeField] private float harvestStaminaCost = 1f;
+
     private Camera mainCamera;
     private PlayerMovement playerMovement;
+    private PlayerStatsManager statsManager;
     private bool isUsingTool = false;
 
     void Start()
     {
         mainCamera = Camera.main;
         playerMovement = GetComponent<PlayerMovement>();
+        statsManager = GetComponent<PlayerStatsManager>();
 
         if (hotbar == null)
             hotbar = FindFirstObjectByType<HotbarControler>();
@@ -77,52 +87,61 @@ public class FarmingSystem : MonoBehaviour
 
             if (crop != null && crop.CanHarvest())
             {
+                if (!UseStamina(harvestStaminaCost))
+                    return;
+
                 crop.Harvest();
                 return;
             }
         }
 
-       // HARVESTABLE PROP
-    if (equippedItem.Name == "Axe" ||
-        equippedItem.Name == "Pickaxe")
-    {
-        foreach (Collider2D h in hits)
+        // HARVESTABLE PROP: AXE / PICKAXE
+        if (equippedItem.Name == "Axe" || equippedItem.Name == "Pickaxe")
         {
-            HarvestableProp prop =
-                h.GetComponentInParent<HarvestableProp>();
-
-            if (prop != null)
+            foreach (Collider2D h in hits)
             {
-                StartCoroutine(UseToolCooldown());
+                HarvestableProp prop = h.GetComponentInParent<HarvestableProp>();
 
-                if (playerMovement != null)
+                if (prop != null)
                 {
-                    if (equippedItem.Name == "Axe")
-                        playerMovement.PlayAxeAnimation(direction);
+                    float cost = equippedItem.Name == "Axe"
+                        ? axeStaminaCost
+                        : pickaxeStaminaCost;
 
-                    else if (equippedItem.Name == "Pickaxe")
-                        playerMovement.PlayPickAxeAnimation(direction);
+                    if (!UseStamina(cost))
+                        return;
+
+                    StartCoroutine(UseToolCooldown());
+
+                    if (playerMovement != null)
+                    {
+                        if (equippedItem.Name == "Axe")
+                            playerMovement.PlayAxeAnimation(direction);
+                        else
+                            playerMovement.PlayPickAxeAnimation(direction);
+                    }
+
+                    StartCoroutine(DelayedPropHit(prop, equippedItem.Name));
+                    return;
                 }
-
-                StartCoroutine(
-                    DelayedPropHit(prop, equippedItem.Name)
-                );
-
-                return;
             }
+
+            Debug.Log("No prop clicked.");
+            return;
         }
 
-        Debug.Log("No prop clicked.");
-        return;
-    }
-
-        // FARM TILE
+        // FARM TILE: HOE / WATER / SEED
         foreach (Collider2D h in hits)
         {
             FarmTile tile = h.GetComponent<FarmTile>();
 
             if (tile != null)
             {
+                float cost = GetFarmTileStaminaCost(equippedItem);
+
+                if (!UseStamina(cost))
+                    return;
+
                 StartCoroutine(UseToolCooldown());
 
                 if (playerMovement != null)
@@ -141,6 +160,31 @@ public class FarmingSystem : MonoBehaviour
         Debug.Log("No farm tile clicked.");
     }
 
+    float GetFarmTileStaminaCost(Item item)
+    {
+        if (item.Name == "Hoe")
+            return hoeStaminaCost;
+
+        if (item.Name == "WateringCan")
+            return wateringStaminaCost;
+
+        if (item.itemType == Item.ItemType.Seed)
+            return plantingStaminaCost;
+
+        return 0f;
+    }
+
+    bool UseStamina(float amount)
+    {
+        if (amount <= 0f)
+            return true;
+
+        if (statsManager == null)
+            return true;
+
+        return statsManager.UseStamina(amount);
+    }
+
     Vector2 GetDirection(Vector2 targetPos)
     {
         Vector2 direction = (targetPos - (Vector2)transform.position).normalized;
@@ -157,7 +201,6 @@ public class FarmingSystem : MonoBehaviour
         yield return new WaitForSeconds(toolCooldown);
         isUsingTool = false;
     }
-
 
     IEnumerator DelayedFarmInteract(FarmTile tile, Item item)
     {
