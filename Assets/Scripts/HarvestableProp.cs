@@ -26,7 +26,7 @@ public class HarvestableProp : MonoBehaviour
 
         for (int i = 0; i < dropAmount; i++)
         {
-            Vector3 spawnPos = transform.position + (Vector3)Random.insideUnitCircle * 0.5f;
+            Vector3 spawnPos = transform.position + new Vector3(0f, -1f, 0f);
 
             Instantiate(dropItemPrefab, spawnPos, Quaternion.identity);
         }
