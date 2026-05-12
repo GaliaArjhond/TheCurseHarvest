@@ -114,9 +114,22 @@ public class HotbarControler : MonoBehaviour
         HighlightSlot(index);
 
         Item item = GetSelectedItem();
-        Debug.Log("Equipped: " + (item != null ? item.Name : "None"));
-    }
 
+        if (item != null)
+        {
+            Debug.Log("Equipped: " + item.Name);
+
+            if (EquippedItemUI.Instance != null)
+                EquippedItemUI.Instance.ShowItemName(item.Name);
+        }
+        else
+        {
+            Debug.Log("Equipped: None");
+
+            if (EquippedItemUI.Instance != null)
+                EquippedItemUI.Instance.ShowItemName("Empty");
+        }
+    }
     public Item GetSelectedItem()
     {
         if (hotbarPanel == null) return null;
