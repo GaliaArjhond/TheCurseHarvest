@@ -119,8 +119,8 @@ MonoBehaviour:
   itemType: 1
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
-  buyPrice: 10
-  sellPrice: 5
+  buyPrice: 0
+  sellPrice: 0
   isStackable: 0
   amount: 1
   maxStack: 1
