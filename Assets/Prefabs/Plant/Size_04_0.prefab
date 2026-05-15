@@ -82,8 +82,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 1975166779
-  m_SortingLayer: 3
+  m_SortingLayerID: -1476752335
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -6489005286283933747, guid: 242e45248407b584bac444c440c6e60d, type: 3}
@@ -167,7 +167,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.007789314, y: -3.217074}
+  m_Offset: {x: -0.056720912, y: -3.455265}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -177,7 +177,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.87063277, y: 1.1919546}
+  m_Size: {x: 1.5752822, y: 0.71557236}
   m_EdgeRadius: 0
 --- !u!114 &29843765190142086
 MonoBehaviour:
@@ -204,6 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HarvestableProp
   propId: 40
+  requiredTool: 0
   hitsToBreak: 3
   dropItemPrefab: {fileID: 5328139886102811006, guid: d46746c865862944f8d366c9e579bc62, type: 3}
   dropAmount: 1

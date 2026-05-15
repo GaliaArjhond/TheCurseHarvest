@@ -7,6 +7,13 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
 
+    [Header("Footstep Sound")]
+    [SerializeField] private AudioSource footstepSource;
+    [SerializeField] private AudioClip footstepClip;
+    [SerializeField] private float footstepDelay = 0.35f;
+
+    private float footstepTimer;
+
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private Animator animator;
@@ -32,12 +39,14 @@ public class PlayerMovement : MonoBehaviour
             ChestUIManager.Instance.IsChestOpen())
         {
             rb.linearVelocity = Vector2.zero;
+            footstepTimer = 0f;
             return;
         }
 
         if (!canMove)
         {
             rb.linearVelocity = Vector2.zero;
+            footstepTimer = 0f;
             return;
         }
 
@@ -47,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
             : moveSpeed;
 
         rb.linearVelocity = moveInput * speed;
+
+        HandleFootsteps();
 
         // stamina drain
         if (moveInput != Vector2.zero && playerStats != null)
@@ -140,5 +151,36 @@ public class PlayerMovement : MonoBehaviour
     public void EndToolAnimation()
     {
         canMove = true;
+    }
+
+    private void HandleFootsteps()
+    {
+        bool isMoving = moveInput != Vector2.zero;
+
+        if (!isMoving)
+        {
+            footstepTimer = 0f;
+
+            if (footstepSource != null && footstepSource.isPlaying)
+            {
+                footstepSource.Stop();
+            }
+
+            return;
+        }
+
+        footstepTimer -= Time.fixedDeltaTime;
+
+        if (footstepTimer <= 0f)
+        {
+            if (footstepSource != null && footstepClip != null)
+            {
+                footstepSource.Stop();
+                footstepSource.clip = footstepClip;
+                footstepSource.Play();
+            }
+
+            footstepTimer = footstepDelay;
+        }
     }
 }

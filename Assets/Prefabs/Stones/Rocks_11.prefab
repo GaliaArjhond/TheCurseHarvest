@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2965274465182321400}
   - component: {fileID: 8155101220901067949}
   - component: {fileID: 3116626280239600205}
-  - component: {fileID: 6904513803309638300}
   - component: {fileID: 545544460744038663}
   m_Layer: 0
   m_Name: Rocks_11
@@ -178,18 +177,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.5, y: 0.12667006}
   m_EdgeRadius: 0
---- !u!114 &6904513803309638300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6276236197214765455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5d5c13a0b06eba4eac55c46e1aed413, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SortingOrderHandler
 --- !u!114 &545544460744038663
 MonoBehaviour:
   m_ObjectHideFlags: 0
