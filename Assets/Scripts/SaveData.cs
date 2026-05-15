@@ -24,6 +24,21 @@ public class SaveData
     public int currentExp = 0;
     public int expToNextLevel = 100;
 
+    // Skills
+    public int skillPoints;
+
+    public bool yield1Unlocked;
+    public bool yield2Unlocked;
+    public bool yield3Unlocked;
+
+    public bool water1Unlocked;
+    public bool water2Unlocked;
+    public bool water3Unlocked;
+
+    public bool growth1Unlocked;
+    public bool growth2Unlocked;
+    public bool growth3Unlocked;
+
     // Stats
     public int strength = 5;
     public int defense = 5;
@@ -37,4 +52,6 @@ public class SaveData
     public string playerName = "Player";
     public string lastPlayed = "";
     public string saveFileName = "";
+
+    
 }

@@ -64,6 +64,26 @@ public class Crop : MonoBehaviour
                 cropData.harvestMax + 1
             );
 
+        if (SkillManager.Instance != null &&
+            SkillManager.Instance.yield1Unlocked)
+        {
+            int bonusChance = Random.Range(0, 100);
+
+            if (bonusChance < 25)
+            {
+                amount += 1;
+                Debug.Log("Yield I bonus: +1 crop");
+            }
+        }
+
+        // Yield III
+        if (SkillManager.Instance != null &&
+            SkillManager.Instance.yield3Unlocked)
+        {
+            amount += 1;
+            Debug.Log("Yield III guaranteed bonus");
+        }
+
         if (InventoryController.Instance != null)
         {
             bool added = InventoryController.Instance.AddItem(

@@ -199,6 +199,9 @@ public class PlayerStatsManager : MonoBehaviour
 
         Debug.Log("LEVEL UP! Now level " + stats.level);
 
+        if (SkillManager.Instance != null)
+            SkillManager.Instance.AddSkillPoint(1);
+
         UpdateAllUI();
     }
 

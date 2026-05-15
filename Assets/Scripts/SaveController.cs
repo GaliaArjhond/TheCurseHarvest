@@ -91,6 +91,9 @@ public class SaveController : MonoBehaviour
         if (chestInventory != null)
             data.chestSaveData = chestInventory.GetChestItems();
 
+        if (SkillManager.Instance != null)
+             SkillManager.Instance.SaveToData(data);
+
         // props
         data.forestProps.Clear();
 
@@ -169,6 +172,9 @@ public class SaveController : MonoBehaviour
         if (chestInventory != null && data.chestSaveData != null)
             chestInventory.SetChestItems(data.chestSaveData);
 
+        if (SkillManager.Instance != null)
+            SkillManager.Instance.LoadFromData(data);
+            
         // props
         foreach (PropsSpawner spawner in propsSpawners)
         {

@@ -148,7 +148,7 @@ public class ShopUIManager : MonoBehaviour
         Debug.Log("Bought multiple items for ₱" + totalCost);
     }
 
-    public void SellSelected()
+   public void SellSelected()
     {
         if (selectedPlayerItems.Count == 0)
         {
@@ -169,7 +169,17 @@ public class ShopUIManager : MonoBehaviour
             bool removed = inventory.RemoveItem(selected.itemID, 1);
 
             if (removed)
-                totalSellPrice += item.sellPrice;
+            {
+                int finalPrice = item.sellPrice;
+
+                if (SkillManager.Instance != null &&
+                    SkillManager.Instance.yield2Unlocked)
+                {
+                    finalPrice = Mathf.RoundToInt(finalPrice * 1.10f);
+                }
+
+                totalSellPrice += finalPrice;
+            }
         }
 
         if (totalSellPrice > 0)
