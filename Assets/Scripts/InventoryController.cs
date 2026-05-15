@@ -15,6 +15,8 @@ public class InventoryController : MonoBehaviour
     public int hotbarSlotCount = 8;
     public int backpackSlotCount = 24;
 
+    
+
     void Awake()
     {
         Instance = this;
@@ -43,36 +45,26 @@ public class InventoryController : MonoBehaviour
         }
     }
     
-    public List<InventorySaveData> GetInventoryItems()
+   public List<InventorySaveData> GetInventoryItems()
     {
         List<InventorySaveData> data = new List<InventorySaveData>();
 
-        foreach (Transform slotTransform in backpackPanel)
+        AddPanelItemsToList(hotbarPanel, data, true);
+        AddPanelItemsToList(backpackPanel, data, false);
+
+        Debug.Log("SHOP INVENTORY COUNT = " + data.Count);
+        return data;
+    }
+
+    void AddPanelItemsToList(
+        Transform panel,
+        List<InventorySaveData> data,
+        bool isHotbar)
+    {
+        foreach (Transform slotTransform in panel)
         {
             Slot slot = slotTransform.GetComponent<Slot>();
-
-            if (slot == null)
-            {
-                Debug.LogWarning(slotTransform.name + " has no Slot component.");
-                continue;
-            }
-
-            // Fix slot reference if item is visually inside slot but currentItem is null
-            if (slot.currentItem == null && slotTransform.childCount > 0)
-            {
-                foreach (Transform child in slotTransform)
-                {
-                    if (child.GetComponent<Item>() != null)
-                    {
-                        slot.currentItem = child.gameObject;
-                        Debug.Log("Fixed missing currentItem on " + slotTransform.name);
-                        break;
-                    }
-                }
-            }
-
-            Debug.Log(slotTransform.name + " currentItem = " +
-                (slot.currentItem != null ? slot.currentItem.name : "NULL"));
+            if (slot == null) continue;
 
             if (slot.currentItem != null)
             {
@@ -84,14 +76,12 @@ public class InventoryController : MonoBehaviour
                     {
                         itemID = item.ID,
                         slotIndex = slotTransform.GetSiblingIndex(),
-                        amount = item.amount
+                        amount = item.amount,
+                        isHotbar = isHotbar
                     });
                 }
             }
         }
-
-        Debug.Log("BACKPACK SAVED COUNT = " + data.Count);
-        return data;
     }
 
     public void SetInventoryItems(List<InventorySaveData> data)
@@ -388,5 +378,71 @@ public class InventoryController : MonoBehaviour
         }
 
         return amount;
+    }
+
+    public bool RemoveItemFromSpecificSlot(
+        InventorySaveData data,
+        int amount)
+    {
+        Transform panel =
+            data.isHotbar ? hotbarPanel : backpackPanel;
+
+        if (data.slotIndex >= panel.childCount)
+            return false;
+
+        Slot slot =
+            panel.GetChild(data.slotIndex).GetComponent<Slot>();
+
+        if (slot == null || slot.currentItem == null)
+            return false;
+
+        Item item =
+            slot.currentItem.GetComponent<Item>();
+
+        if (item == null || item.ID != data.itemID)
+            return false;
+
+        int remove = Mathf.Min(item.amount, amount);
+
+        item.amount -= remove;
+
+        item.UpdateAmountText();
+
+        if (item.amount <= 0)
+        {
+            Destroy(slot.currentItem);
+            slot.currentItem = null;
+        }
+
+        return true;
+    }
+
+    public List<InventorySaveData> GetBackpackItemsForShop()
+    {
+        List<InventorySaveData> data =
+            new List<InventorySaveData>();
+
+        foreach (Transform slotTransform in backpackPanel)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+
+            if (slot == null || slot.currentItem == null)
+                continue;
+
+            Item item = slot.currentItem.GetComponent<Item>();
+
+            if (item == null)
+                continue;
+
+            data.Add(new InventorySaveData
+            {
+                itemID = item.ID,
+                slotIndex = slotTransform.GetSiblingIndex(),
+                amount = item.amount,
+                isHotbar = false
+            });
+        }
+
+        return data;
     }
 }

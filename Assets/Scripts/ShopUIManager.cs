@@ -18,7 +18,19 @@ public class ShopUIManager : MonoBehaviour
     private ShopItemData selectedStoreItem;
     private InventorySaveData selectedPlayerItem;
 
+    private List<ShopItemData> selectedStoreItems = new List<ShopItemData>();
+    private List<InventorySaveData> selectedPlayerItems = new List<InventorySaveData>();
+
+    private List<ShopSlotUI> selectedStoreSlots = new List<ShopSlotUI>();
+    private List<ShopSlotUI> selectedPlayerSlots = new List<ShopSlotUI>();
+
     void Start()
+    {
+        itemDictionary = FindFirstObjectByType<ItemDictionary>();
+        inventory = InventoryController.Instance;
+    }
+
+    void OnEnable()
     {
         itemDictionary = FindFirstObjectByType<ItemDictionary>();
         inventory = InventoryController.Instance;
@@ -41,13 +53,13 @@ public class ShopUIManager : MonoBehaviour
             GameObject prefab = itemDictionary.GetItemPrefab(item.itemID);
             if (prefab == null) continue;
 
-            Image img = prefab.GetComponent<Image>();
-            if (img == null) continue;
+            Sprite sprite = GetItemSprite(prefab);
+            if (sprite == null) continue;
 
             GameObject slot = Instantiate(slotPrefab, storeGrid);
             ShopSlotUI ui = slot.GetComponent<ShopSlotUI>();
 
-            ui.SetupStore(img.sprite, item, this);
+            ui.SetupStore(sprite, item, this);
         }
     }
 
@@ -58,21 +70,32 @@ public class ShopUIManager : MonoBehaviour
         if (inventory == null)
             inventory = InventoryController.Instance;
 
-        List<InventorySaveData> items = inventory.GetInventoryItems();
+        List<InventorySaveData> items = inventory.GetBackpackItemsForShop();
 
         foreach (InventorySaveData data in items)
         {
             GameObject prefab = itemDictionary.GetItemPrefab(data.itemID);
             if (prefab == null) continue;
 
-            Image img = prefab.GetComponent<Image>();
-            if (img == null) continue;
+            Sprite sprite = GetItemSprite(prefab);
+            if (sprite == null) continue;
 
             GameObject slot = Instantiate(slotPrefab, playerGrid);
             ShopSlotUI ui = slot.GetComponent<ShopSlotUI>();
 
-            ui.SetupPlayer(img.sprite, data, this);
+            ui.SetupPlayer(sprite, data, this);
         }
+    }
+
+    Sprite GetItemSprite(GameObject prefab)
+    {
+        Image image = prefab.GetComponent<Image>();
+        if (image != null) return image.sprite;
+
+        SpriteRenderer spriteRenderer = prefab.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null) return spriteRenderer.sprite;
+
+        return null;
     }
 
     void ClearGrid(Transform grid)
@@ -85,7 +108,6 @@ public class ShopUIManager : MonoBehaviour
     {
         selectedStoreItem = item;
         selectedPlayerItem = null;
-
         Debug.Log("Selected store item ID: " + item.itemID);
     }
 
@@ -93,51 +115,103 @@ public class ShopUIManager : MonoBehaviour
     {
         selectedPlayerItem = item;
         selectedStoreItem = null;
-
         Debug.Log("Selected player item ID: " + item.itemID);
     }
 
     public void BuySelected()
     {
-        if (selectedStoreItem == null)
+        if (selectedStoreItems.Count == 0)
         {
-            Debug.Log("No store item selected");
+            Debug.Log("No store items selected");
             return;
         }
 
-        if (MoneyManager.Instance.SpendMoney(selectedStoreItem.price))
+        int totalCost = 0;
+
+        foreach (ShopItemData item in selectedStoreItems)
+            totalCost += item.price;
+
+        if (!MoneyManager.Instance.SpendMoney(totalCost))
         {
-            inventory.AddItem(selectedStoreItem.itemID, 1);
-            RefreshShop();
-            Debug.Log("Bought item");
+            Debug.Log("Not enough money");
+            return;
         }
+
+        foreach (ShopItemData item in selectedStoreItems)
+            inventory.AddItem(item.itemID, 1);
+
+        selectedStoreItems.Clear();
+        selectedStoreSlots.Clear();
+
+        RefreshShop();
+
+        Debug.Log("Bought multiple items for ₱" + totalCost);
     }
 
     public void SellSelected()
     {
-        if (selectedPlayerItem == null)
+        if (selectedPlayerItems.Count == 0)
         {
-            Debug.Log("No player item selected");
+            Debug.Log("No player items selected");
             return;
         }
 
-        GameObject prefab = itemDictionary.GetItemPrefab(selectedPlayerItem.itemID);
-        if (prefab == null) return;
+        int totalSellPrice = 0;
 
-        Item item = prefab.GetComponent<Item>();
-        if (item == null || item.sellPrice <= 0)
+        foreach (InventorySaveData selected in selectedPlayerItems)
         {
-            Debug.Log("Item cannot be sold");
-            return;
+            GameObject prefab = itemDictionary.GetItemPrefab(selected.itemID);
+            if (prefab == null) continue;
+
+            Item item = prefab.GetComponent<Item>();
+            if (item == null || item.sellPrice <= 0) continue;
+
+            bool removed = inventory.RemoveItem(selected.itemID, 1);
+
+            if (removed)
+                totalSellPrice += item.sellPrice;
         }
 
-        bool removed = inventory.RemoveItem(selectedPlayerItem.itemID, 1);
+        if (totalSellPrice > 0)
+            MoneyManager.Instance.AddMoney(totalSellPrice);
 
-        if (removed)
+        selectedPlayerItems.Clear();
+        selectedPlayerSlots.Clear();
+
+        RefreshShop();
+
+        Debug.Log("Sold multiple items for ₱" + totalSellPrice);
+    }
+    
+    public void ToggleStoreSelection(ShopItemData item, ShopSlotUI slot)
+    {
+        if (selectedStoreItems.Contains(item))
         {
-            MoneyManager.Instance.AddMoney(item.sellPrice);
-            RefreshShop();
-            Debug.Log("Sold item");
+            selectedStoreItems.Remove(item);
+            selectedStoreSlots.Remove(slot);
+            slot.SetSelected(false);
+        }
+        else
+        {
+            selectedStoreItems.Add(item);
+            selectedStoreSlots.Add(slot);
+            slot.SetSelected(true);
+        }
+    }
+
+    public void TogglePlayerSelection(InventorySaveData item, ShopSlotUI slot)
+    {
+        if (selectedPlayerItems.Contains(item))
+        {
+            selectedPlayerItems.Remove(item);
+            selectedPlayerSlots.Remove(slot);
+            slot.SetSelected(false);
+        }
+        else
+        {
+            selectedPlayerItems.Add(item);
+            selectedPlayerSlots.Add(slot);
+            slot.SetSelected(true);
         }
     }
 }
