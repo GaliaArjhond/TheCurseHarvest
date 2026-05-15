@@ -113,18 +113,35 @@ public class FarmTile : MonoBehaviour
         Debug.Log("Crop planted");
 
         // consume seed
-        seedItem.amount--;
+        bool consumeSeed = true;
 
-        seedItem.UpdateAmountText();
-
-        if (seedItem.amount <= 0)
+        if (SkillManager.Instance != null &&
+            SkillManager.Instance.growth2Unlocked)
         {
-            Slot slot = seedItem.GetComponentInParent<Slot>();
+            int chance = Random.Range(0, 100);
 
-            if (slot != null)
-                slot.currentItem = null;
+            if (chance < 15)
+            {
+                consumeSeed = false;
+                Debug.Log("Growth II seed saved!");
+            }
+        }
 
-            Destroy(seedItem.gameObject);
+        if (consumeSeed)
+        {
+            seedItem.amount--;
+
+            seedItem.UpdateAmountText();
+
+            if (seedItem.amount <= 0)
+            {
+                Slot slot = seedItem.GetComponentInParent<Slot>();
+
+                if (slot != null)
+                    slot.currentItem = null;
+
+                Destroy(seedItem.gameObject);
+            }
         }
     }
 

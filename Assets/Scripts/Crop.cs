@@ -30,7 +30,30 @@ public class Crop : MonoBehaviour
 
         growthDay++;
 
-        if (growthDay >= cropData.daysToGrow)
+        // Growth I: 10% chance to grow extra day
+        if (SkillManager.Instance != null &&
+            SkillManager.Instance.growth1Unlocked)
+        {
+            int chance = Random.Range(0, 100);
+
+            if (chance < 10)
+            {
+                growthDay++;
+                Debug.Log("Growth I bonus growth!");
+            }
+        }
+
+        int requiredDays = cropData.daysToGrow;
+
+        if (SkillManager.Instance != null &&
+            SkillManager.Instance.growth3Unlocked)
+        {
+            requiredDays -= 1;
+        }
+
+        requiredDays = Mathf.Max(1, requiredDays);
+
+        if (growthDay >= requiredDays)
         {
             readyToHarvest = true;
             sr.sprite = cropData.readyToHarvestSprite;
@@ -80,7 +103,7 @@ public class Crop : MonoBehaviour
         if (SkillManager.Instance != null &&
             SkillManager.Instance.yield3Unlocked)
         {
-            amount += 1;
+            amount += 2;
             Debug.Log("Yield III guaranteed bonus");
         }
 
