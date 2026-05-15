@@ -152,7 +152,16 @@ public class FarmingSystem : MonoBehaviour
                         playerMovement.PlayHoeAnimation(direction);
                 }
 
-                StartCoroutine(DelayedFarmInteract(tile, equippedItem));
+                if (equippedItem.Name == "WateringCan" &&
+                    SkillManager.Instance != null &&
+                    SkillManager.Instance.water3Unlocked)
+                {
+                    WaterNearbyTiles(mouseWorldPos, equippedItem);
+                }
+                else
+                {
+                    StartCoroutine(DelayedFarmInteract(tile, equippedItem));
+                }
                 return;
             }
         }
@@ -166,7 +175,17 @@ public class FarmingSystem : MonoBehaviour
             return hoeStaminaCost;
 
         if (item.Name == "WateringCan")
-            return wateringStaminaCost;
+        {
+            float cost = wateringStaminaCost;
+
+            if (SkillManager.Instance != null &&
+                SkillManager.Instance.water1Unlocked)
+            {
+                cost -= 1f;
+            }
+
+            return Mathf.Max(1f, cost);
+        }
 
         if (item.itemType == Item.ItemType.Seed)
             return plantingStaminaCost;
@@ -216,5 +235,33 @@ public class FarmingSystem : MonoBehaviour
 
         if (prop != null)
             prop.HitProp(toolName);
+    }
+
+    void WaterNearbyTiles(Vector2 center, Item item)
+    {
+        Vector2[] offsets =
+        {
+            Vector2.zero,
+            Vector2.up,
+            Vector2.down,
+            Vector2.left,
+            Vector2.right
+        };
+
+        foreach (Vector2 offset in offsets)
+        {
+            Collider2D hit =
+                Physics2D.OverlapCircle(center + offset, 0.2f);
+
+            if (hit == null)
+                continue;
+
+            FarmTile tile = hit.GetComponent<FarmTile>();
+
+            if (tile != null)
+            {
+                tile.Interact(item);
+            }
+        }
     }
 }

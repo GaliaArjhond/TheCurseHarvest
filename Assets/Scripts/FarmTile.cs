@@ -133,11 +133,25 @@ public class FarmTile : MonoBehaviour
         return watered;
     }
 
-    public void NewDay()
+   public void NewDay()
     {
-        watered = false;
+        bool keepWatered = false;
 
-        if (tilled)
+        if (watered &&
+            SkillManager.Instance != null &&
+            SkillManager.Instance.water2Unlocked)
+        {
+            int chance = Random.Range(0, 100);
+
+            if (chance < 25)
+                keepWatered = true;
+        }
+
+        watered = keepWatered;
+
+        if (watered)
+            sr.sprite = wateredSprite;
+        else if (tilled)
             sr.sprite = tilledSprite;
     }
 }
