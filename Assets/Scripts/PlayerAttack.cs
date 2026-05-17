@@ -73,7 +73,16 @@ public class PlayerAttack : MonoBehaviour
         animator.SetTrigger("Attack");
 
         Invoke(nameof(DoDamage), 0.15f);
-        Invoke(nameof(EndAttack), attackCooldown);
+        float finalCooldown = attackCooldown;
+
+        // Agility II
+        if (SkillManager.Instance != null &&
+            SkillManager.Instance.agility2Unlocked)
+        {
+            finalCooldown *= 0.80f;
+        }
+
+        Invoke(nameof(EndAttack), finalCooldown);
     }
 
     void DoDamage()
@@ -132,6 +141,19 @@ public class PlayerAttack : MonoBehaviour
                 criticalHit
             );
 
+            // Agility III
+            if (SkillManager.Instance != null &&
+                SkillManager.Instance.agility3Unlocked)
+            {
+                PlayerMovement movement =
+                    GetComponent<PlayerMovement>();
+
+                if (movement != null)
+                {
+                    movement.ActivateAgilityBoost();
+                }
+            }
+
             // Sword III
             if (SkillManager.Instance != null &&
                 SkillManager.Instance.sword3Unlocked)
@@ -162,6 +184,7 @@ public class PlayerAttack : MonoBehaviour
                             false
                         );
                     }
+                    
                 }
             }
         }

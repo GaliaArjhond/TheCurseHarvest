@@ -12,6 +12,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioClip footstepClip;
     [SerializeField] private float footstepDelay = 0.35f;
 
+    [Header("Agility Boost")]
+    [SerializeField] private float agilityBoostMultiplier = 1.5f;
+    [SerializeField] private float agilityBoostDuration = 1f;
+
+    private bool agilityBoostActive = false;
+
     private float footstepTimer;
 
     private Rigidbody2D rb;
@@ -51,12 +57,26 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // movement speed
-        float speed = playerStats != null
+        float finalSpeed = playerStats != null
             ? playerStats.GetSpeed()
             : moveSpeed;
 
-        rb.linearVelocity = moveInput * speed;
+        // Agility I
+        if (SkillManager.Instance != null &&
+            SkillManager.Instance.agility1Unlocked)
+        {
+            finalSpeed *= 1.10f;
+        }
 
+        // Agility III
+        if (agilityBoostActive)
+        {
+            finalSpeed *= agilityBoostMultiplier;
+        }
+
+        rb.linearVelocity = moveInput * finalSpeed;
+        
+        
         HandleFootsteps();
 
         // stamina drain
@@ -182,5 +202,22 @@ public class PlayerMovement : MonoBehaviour
 
             footstepTimer = footstepDelay;
         }
+    }
+
+    public void ActivateAgilityBoost()
+    {
+        StopCoroutine(nameof(AgilityBoostRoutine));
+        StartCoroutine(nameof(AgilityBoostRoutine));
+    }
+
+    IEnumerator AgilityBoostRoutine()
+    {
+        agilityBoostActive = true;
+
+        Debug.Log("Agility boost active!");
+
+        yield return new WaitForSeconds(agilityBoostDuration);
+
+        agilityBoostActive = false;
     }
 }

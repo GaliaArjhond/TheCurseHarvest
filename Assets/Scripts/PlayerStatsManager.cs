@@ -84,6 +84,21 @@ public class PlayerStatsManager : MonoBehaviour
 
     public void TakeDamage(float amount, Transform attacker)
     {
+
+        // Defense III: ignore damage chance
+        if (SkillManager.Instance != null &&
+            SkillManager.Instance.defense3Unlocked)
+        {
+            int blockChance = Random.Range(0, 100);
+
+            if (blockChance < 15)
+            {
+                Debug.Log("Defense III blocked damage!");
+
+                return;
+            }
+        }
+        
         if (isInvincible) return;
 
         if (CinemachineObjectShake.Instance != null)
@@ -91,7 +106,17 @@ public class PlayerStatsManager : MonoBehaviour
         else
             Debug.LogWarning("No CinemachineObjectShake found");
 
-        float reduced = Mathf.Max(amount - stats.defense * 0.5f, 1f);
+        float reduced =
+            Mathf.Max(amount - stats.defense * 0.5f, 1f);
+
+        // Defense I
+        if (SkillManager.Instance != null &&
+            SkillManager.Instance.defense1Unlocked)
+        {
+            reduced *= 0.90f;
+
+            Debug.Log("Defense I reduced damage!");
+        }
 
         stats.currentHealth -= reduced;
         stats.currentHealth = Mathf.Max(stats.currentHealth, 0);
@@ -201,6 +226,28 @@ public class PlayerStatsManager : MonoBehaviour
 
         if (SkillManager.Instance != null)
             SkillManager.Instance.AddSkillPoint(1);
+
+        UpdateAllUI();
+    }
+
+    public void RefreshSkillBonuses()
+    {
+        float baseMaxHealth = 100f;
+
+        // add normal stat scaling first
+        baseMaxHealth += (stats.level - 1) * 10f;
+
+        // Defense II
+        if (SkillManager.Instance != null &&
+            SkillManager.Instance.defense2Unlocked)
+        {
+            baseMaxHealth += 20f;
+        }
+
+        stats.maxHealth = baseMaxHealth;
+
+        stats.currentHealth =
+            Mathf.Min(stats.currentHealth, stats.maxHealth);
 
         UpdateAllUI();
     }

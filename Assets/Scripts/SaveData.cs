@@ -42,6 +42,14 @@ public class SaveData
     public bool sword2Unlocked;
     public bool sword3Unlocked;
 
+    public bool defense1Unlocked;
+    public bool defense2Unlocked;
+    public bool defense3Unlocked;
+
+    public bool agility1Unlocked;
+    public bool agility2Unlocked;
+    public bool agility3Unlocked;
+
     // Stats
     public int strength = 5;
     public int defense = 5;
