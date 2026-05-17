@@ -26,7 +26,6 @@ public class SaveData
 
     // Skills
     public int skillPoints;
-
     public bool yield1Unlocked;
     public bool yield2Unlocked;
     public bool yield3Unlocked;
@@ -38,6 +37,10 @@ public class SaveData
     public bool growth1Unlocked;
     public bool growth2Unlocked;
     public bool growth3Unlocked;
+
+    public bool sword1Unlocked;
+    public bool sword2Unlocked;
+    public bool sword3Unlocked;
 
     // Stats
     public int strength = 5;

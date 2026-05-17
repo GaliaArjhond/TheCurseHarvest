@@ -40,6 +40,7 @@ public class Crop : MonoBehaviour
             {
                 growthDay++;
                 Debug.Log("Growth I bonus growth!");
+                
             }
         }
 

@@ -16,7 +16,7 @@ public class EnemyHealth : MonoBehaviour
         knockback = GetComponent<Knockback>();
     }
 
-    public void TakeDamage(int damage, Vector2 hitDirection)
+    public void TakeDamage(int damage, Vector2 hitDirection, bool criticalHit = false)
     {
         currentHealth -= damage;
 

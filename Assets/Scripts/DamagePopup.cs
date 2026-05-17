@@ -13,14 +13,25 @@ public class DamagePopup : MonoBehaviour
         text = GetComponent<TextMeshPro>();
     }
 
-    public void Setup(float damage)
+    public void Setup(float damage, bool criticalHit = false)
     {
         text.text = Mathf.CeilToInt(damage).ToString();
+
+        if (criticalHit)
+        {
+            text.text = "CRIT! " + text.text;
+
+            text.color = Color.red;
+
+            transform.localScale = Vector3.one * 1.4f;
+        }
+
         Destroy(gameObject, lifeTime);
     }
 
     void Update()
     {
-        transform.position += Vector3.up * moveSpeed * Time.deltaTime;
+        transform.position +=
+            Vector3.up * moveSpeed * Time.deltaTime;
     }
 }

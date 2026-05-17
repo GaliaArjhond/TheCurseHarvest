@@ -13,6 +13,7 @@ public class PlayerAttack : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rb;
     private PlayerMovement movement;
+    
 
     private bool canAttack = true;
     private Vector2 lastDirection = Vector2.down;
@@ -39,6 +40,8 @@ public class PlayerAttack : MonoBehaviour
     {
         if (!context.performed) return;
         if (!canAttack) return;
+
+        Debug.Log("ATTACK INPUT WORKING");
 
         HotbarControler hotbar = FindFirstObjectByType<HotbarControler>();
         if (hotbar == null) return;
@@ -75,7 +78,8 @@ public class PlayerAttack : MonoBehaviour
 
     void DoDamage()
     {
-        Vector2 attackPos = (Vector2)transform.position + lastDirection * attackRange;
+        Vector2 attackPos =
+            (Vector2)transform.position + lastDirection * attackRange;
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(
             attackPos,
@@ -83,14 +87,82 @@ public class PlayerAttack : MonoBehaviour
             enemyLayer
         );
 
-       foreach (Collider2D hit in hits)
+        Debug.Log("Hits found: " + hits.Length);
+
+        foreach (Collider2D hit in hits)
         {
             EnemyHealth enemy = hit.GetComponent<EnemyHealth>();
 
-            if (enemy != null)
+            if (enemy == null)
+                continue;
+
+            int finalDamage = damage;
+
+            // Sword I
+            if (SkillManager.Instance != null &&
+                SkillManager.Instance.sword1Unlocked)
             {
-                Vector2 hitDirection = (hit.transform.position - transform.position).normalized;
-                enemy.TakeDamage(damage, hitDirection);
+                finalDamage =
+                    Mathf.CeilToInt(finalDamage * 1.10f);
+            }
+
+            bool criticalHit = false;
+
+            // Sword II
+            if (SkillManager.Instance != null &&
+                SkillManager.Instance.sword2Unlocked)
+            {
+                int critChance = Random.Range(0, 100);
+
+                if (critChance < 10)
+                {
+                    finalDamage *= 2;
+                    criticalHit = true;
+
+                    Debug.Log("CRITICAL HIT!");
+                }
+            }
+
+            Vector2 hitDirection =
+                (hit.transform.position - transform.position).normalized;
+
+            enemy.TakeDamage(
+                finalDamage,
+                hitDirection,
+                criticalHit
+            );
+
+            // Sword III
+            if (SkillManager.Instance != null &&
+                SkillManager.Instance.sword3Unlocked)
+            {
+                Collider2D[] nearbyEnemies =
+                    Physics2D.OverlapCircleAll(
+                        enemy.transform.position,
+                        1f,
+                        enemyLayer
+                    );
+
+                foreach (Collider2D nearby in nearbyEnemies)
+                {
+                    if (nearby.gameObject == enemy.gameObject)
+                        continue;
+
+                    EnemyHealth nearbyEnemy =
+                        nearby.GetComponent<EnemyHealth>();
+
+                    if (nearbyEnemy != null)
+                    {
+                        Vector2 splashDirection =
+                            (nearby.transform.position - transform.position).normalized;
+
+                        nearbyEnemy.TakeDamage(
+                            Mathf.Max(1, finalDamage / 2),
+                            splashDirection,
+                            false
+                        );
+                    }
+                }
             }
         }
     }
