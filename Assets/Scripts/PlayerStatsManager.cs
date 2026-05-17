@@ -98,7 +98,7 @@ public class PlayerStatsManager : MonoBehaviour
                 return;
             }
         }
-        
+
         if (isInvincible) return;
 
         if (CinemachineObjectShake.Instance != null)
@@ -195,6 +195,7 @@ public class PlayerStatsManager : MonoBehaviour
         }
     }
 
+
     // ── EXP / Level ──
     public void AddExp(int amount)
     {
@@ -210,6 +211,11 @@ public class PlayerStatsManager : MonoBehaviour
     void LevelUp()
     {
         stats.currentExp -= stats.expToNextLevel;
+        SkillTreeTabController ui =
+            FindFirstObjectByType<SkillTreeTabController>();
+
+        if (ui != null)
+            ui.SendMessage("UpdateCurseUnlock");
         stats.level++;
         stats.expToNextLevel = Mathf.RoundToInt(stats.expToNextLevel * 1.5f);
 
@@ -257,6 +263,19 @@ public class PlayerStatsManager : MonoBehaviour
     {
         stats.currentHealth += amount;
         stats.currentHealth = Mathf.Min(stats.currentHealth, stats.maxHealth);
+    }
+
+    public void RestoreStamina(float amount)
+    {
+        stats.currentStamina += amount;
+
+        stats.currentStamina =
+            Mathf.Min(
+                stats.currentStamina,
+                stats.maxStamina
+            );
+
+        UpdateAllUI();
     }
 
     public void RestoreAll()

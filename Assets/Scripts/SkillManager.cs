@@ -82,6 +82,15 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private Image kulamLine1;
     [SerializeField] private Image kulamLine2;
 
+    [Header("Bangungot Buttons")]
+    [SerializeField] private Button bangungot1Button;
+    [SerializeField] private Button bangungot2Button;
+    [SerializeField] private Button bangungot3Button;
+
+    [Header("Bangungot Lines")]
+    [SerializeField] private Image bangungotLine1;
+    [SerializeField] private Image bangungotLine2;
+
     // ── unlock states ──
     [Header("Sword Skills")]
     public bool sword1Unlocked;
@@ -122,6 +131,11 @@ public class SkillManager : MonoBehaviour
     public bool kulam1Unlocked;
     public bool kulam2Unlocked;
     public bool kulam3Unlocked;
+
+    [Header("bangungot Skills")]
+    public bool bangungot1Unlocked;
+    public bool bangungot2Unlocked;
+    public bool bangungot3Unlocked;
 
     void Awake()
     {
@@ -271,6 +285,20 @@ public class SkillManager : MonoBehaviour
         UnlockSkill(ref anino3Unlocked, anino2Unlocked, 3);
     }
 
+    public void UnlockBangungot1()
+    {
+        UnlockSkill(ref bangungot1Unlocked, true, 1);
+    }
+
+    public void UnlockBangungot2()
+    {
+        UnlockSkill(ref bangungot2Unlocked, bangungot1Unlocked, 2);
+    }
+
+    public void UnlockBangungot3()
+    {
+        UnlockSkill(ref bangungot3Unlocked, bangungot2Unlocked, 3);
+    }
     public void UnlockKulam1()
     {
         UnlockSkill(ref kulam1Unlocked, true, 1);
@@ -379,6 +407,11 @@ public class SkillManager : MonoBehaviour
         SetButton(kulam2Button, kulam2Unlocked, kulam1Unlocked, 2);
         SetButton(kulam3Button, kulam3Unlocked, kulam2Unlocked, 3);
 
+        // Bangungot
+        SetButton(bangungot1Button, bangungot1Unlocked, true, 1);
+        SetButton(bangungot2Button, bangungot2Unlocked, bangungot1Unlocked, 2);
+        SetButton(bangungot3Button, bangungot3Unlocked, bangungot2Unlocked, 3);
+
         // Lines
         SetLine(yieldLine1, yield1Unlocked);
         SetLine(yieldLine2, yield2Unlocked);
@@ -403,6 +436,9 @@ public class SkillManager : MonoBehaviour
 
         SetLine(kulamLine1, kulam1Unlocked);
         SetLine(kulamLine2, kulam2Unlocked);
+
+        SetLine(bangungotLine1, bangungot1Unlocked);
+        SetLine(bangungotLine2, bangungot2Unlocked);
     }
 
     void SetButton(
@@ -483,6 +519,10 @@ public class SkillManager : MonoBehaviour
         data.anino1Unlocked = anino1Unlocked;
         data.anino2Unlocked = anino2Unlocked;
         data.anino3Unlocked = anino3Unlocked;
+
+        data.bangungot1Unlocked = bangungot1Unlocked;
+        data.bangungot2Unlocked = bangungot2Unlocked;
+        data.bangungot3Unlocked = bangungot3Unlocked;
     }
 
     public void LoadFromData(SaveData data)
@@ -516,6 +556,10 @@ public class SkillManager : MonoBehaviour
         anino1Unlocked = data.anino1Unlocked;
         anino2Unlocked = data.anino2Unlocked;
         anino3Unlocked = data.anino3Unlocked;
+
+        bangungot1Unlocked = data.bangungot1Unlocked;
+        bangungot2Unlocked = data.bangungot2Unlocked;
+        bangungot3Unlocked = data.bangungot3Unlocked;
 
         RefreshUI();
     }

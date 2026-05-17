@@ -28,7 +28,8 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(
         int damage,
         Vector2 hitDirection,
-        bool criticalHit = false)
+        bool criticalHit = false,
+        GameObject attacker = null)
     {
         // already dead
         if (isDead)
@@ -44,7 +45,7 @@ public class EnemyHealth : MonoBehaviour
         if (knockback != null)
             knockback.ApplyKnockback(hitDirection);
 
-        // popup
+        // damage popup
         if (damagePopupPrefab != null)
         {
             GameObject popup =
@@ -65,6 +66,22 @@ public class EnemyHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             isDead = true;
+
+            // Bangungot II
+            if (attacker != null &&
+                SkillManager.Instance != null &&
+                SkillManager.Instance.bangungot2Unlocked)
+            {
+                PlayerStatsManager stats =
+                    attacker.GetComponent<PlayerStatsManager>();
+
+                if (stats != null)
+                {
+                    stats.RestoreStamina(10f);
+
+                    Debug.Log("Bangungot II restored stamina!");
+                }
+            }
 
             // Kulam III explosion
             if (isCursed &&

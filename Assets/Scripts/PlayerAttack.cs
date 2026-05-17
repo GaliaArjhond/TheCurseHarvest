@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
     public float attackRadius = 0.35f;
     public float attackCooldown = 0.4f;
     public LayerMask enemyLayer;
-
+    private float berserkDamageMultiplier = 1f;
     private Animator animator;
     private Rigidbody2D rb;
     private PlayerMovement movement;
@@ -75,6 +75,26 @@ public class PlayerAttack : MonoBehaviour
         Invoke(nameof(DoDamage), 0.15f);
         float finalCooldown = attackCooldown;
 
+        // Bangungot III attack speed
+        if (SkillManager.Instance != null &&
+            SkillManager.Instance.bangungot3Unlocked)
+        {
+            PlayerStatsManager stats =
+                GetComponent<PlayerStatsManager>();
+
+            if (stats != null)
+            {
+                float hpPercent =
+                    stats.stats.currentHealth /
+                    stats.stats.maxHealth;
+
+                if (hpPercent <= 0.30f)
+                {
+                    finalCooldown *= 0.7f;
+                }
+            }
+        }
+
         // Agility II
         if (SkillManager.Instance != null &&
             SkillManager.Instance.agility2Unlocked)
@@ -104,8 +124,30 @@ public class PlayerAttack : MonoBehaviour
 
             if (enemy == null)
                 continue;
-
             int finalDamage = damage;
+
+            // Bangungot III Berserk
+            if (SkillManager.Instance != null &&
+                SkillManager.Instance.bangungot3Unlocked)
+            {
+                PlayerStatsManager stats =
+                    GetComponent<PlayerStatsManager>();
+
+                if (stats != null)
+                {
+                    float hpPercent =
+                        stats.stats.currentHealth /
+                        stats.stats.maxHealth;
+
+                    if (hpPercent <= 0.30f)
+                    {
+                        finalDamage =
+                            Mathf.CeilToInt(finalDamage * 1.5f);
+
+                        Debug.Log("BERSERK MODE!");
+                    }
+                }
+            }
 
             // Sword I
             if (SkillManager.Instance != null &&
@@ -116,6 +158,20 @@ public class PlayerAttack : MonoBehaviour
             }
 
             bool criticalHit = false;
+
+            // Bangungot I: madness damage
+            if (SkillManager.Instance != null &&
+                SkillManager.Instance.bangungot1Unlocked)
+            {
+                int madnessChance = Random.Range(0, 100);
+
+                if (madnessChance < 15)
+                {
+                    finalDamage *= 2;
+
+                    Debug.Log("Bangungot frenzy damage!");
+                }
+            }
 
             // Sword II
             if (SkillManager.Instance != null &&

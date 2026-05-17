@@ -58,6 +58,10 @@ public class SaveData
     public bool kulam2Unlocked;
     public bool kulam3Unlocked;
 
+    public bool bangungot1Unlocked;
+    public bool bangungot2Unlocked;
+    public bool bangungot3Unlocked;
+
     // Stats
     public int strength = 5;
     public int defense = 5;

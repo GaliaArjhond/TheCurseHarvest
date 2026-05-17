@@ -1,17 +1,43 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkillTreeTabController : MonoBehaviour
 {
+    [Header("Category Buttons")]
     [SerializeField] private GameObject skillCategoryButtons;
 
+    [Header("Tree Panels")]
     [SerializeField] private GameObject combatTreePanel;
     [SerializeField] private GameObject farmingTreePanel;
     [SerializeField] private GameObject craftingTreePanel;
     [SerializeField] private GameObject curseTreePanel;
 
+    [Header("Curse Unlock")]
+    [SerializeField] private Button curseTabButton;
+
+
     void OnEnable()
     {
+        UpdateCurseUnlock();
         ShowCategories();
+    }
+
+    void UpdateCurseUnlock()
+    {
+        PlayerStatsManager stats =
+            FindFirstObjectByType<PlayerStatsManager>();
+
+        if (stats == null)
+            return;
+
+        bool unlocked = stats.stats.level >= 5;
+
+        // disable tooltip trigger after unlock
+        SkillTooltipTrigger trigger =
+            curseTabButton.GetComponent<SkillTooltipTrigger>();
+
+        if (trigger != null)
+            trigger.enabled = !unlocked;
     }
 
     public void ShowCategories()
@@ -41,6 +67,16 @@ public class SkillTreeTabController : MonoBehaviour
 
     public void ShowCurseTree()
     {
+        PlayerStatsManager stats =
+            FindFirstObjectByType<PlayerStatsManager>();
+
+        if (stats != null &&
+            stats.stats.level < 5)
+        {
+            Debug.Log("Curse tree locked.");
+            return;
+        }
+
         ShowOnly(curseTreePanel);
     }
 
