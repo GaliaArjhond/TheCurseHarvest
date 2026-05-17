@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -7990386572104461118}
   - component: {fileID: 8905604139875244854}
   - component: {fileID: 2794385742406744479}
+  - component: {fileID: 3147216663466026337}
   m_Layer: 3
   m_Name: Enemy
   m_TagString: Enemy
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1476752335
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 5166958929016353594, guid: 1166a67ed52f2324f9a0d9eb2298b933, type: 3}
@@ -174,8 +175,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf42a58f35138954890a8d8c68d0029e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 3
+  maxHealth: 20
   damagePopupPrefab: {fileID: 3328431977247967937, guid: 401fbe949ebc4cc46a4e6a0e53a34a98, type: 3}
+  explosionPrefab: {fileID: 8546634195601215796, guid: 43b3bff885f1b2740b63201e0f7d20ee, type: 3}
+  isCursed: 0
 --- !u!114 &6818309319751767581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,3 +244,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Knockback
   knockbackForce: 5
   knockbackTime: 0.15
+--- !u!114 &3147216663466026337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6806205655768080404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2caeda2644a43ba41a1993074c15bd26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'

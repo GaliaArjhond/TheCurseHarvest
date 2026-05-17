@@ -61,6 +61,27 @@ public class PlayerMovement : MonoBehaviour
             ? playerStats.GetSpeed()
             : moveSpeed;
 
+        // Anino I: faster at night
+        DayNightCycle cycle =
+            FindFirstObjectByType<DayNightCycle>();
+
+        if (cycle != null &&
+            SkillManager.Instance != null &&
+            SkillManager.Instance.anino1Unlocked)
+        {
+            float hour = cycle.GetCurrentHour();
+
+            bool isNight =
+                hour >= 19f || hour <= 5f;
+
+            if (isNight)
+            {
+                finalSpeed *= 1.15f;
+
+                Debug.Log("Anino I night speed active");
+            }
+        }
+
         // Agility I
         if (SkillManager.Instance != null &&
             SkillManager.Instance.agility1Unlocked)

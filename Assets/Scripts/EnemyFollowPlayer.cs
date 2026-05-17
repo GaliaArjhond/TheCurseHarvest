@@ -29,7 +29,7 @@ public class EnemyFollowPlayer : MonoBehaviour
             player = playerObj.transform;
     }
 
-   void FixedUpdate()
+  void FixedUpdate()
     {
         if (knockback != null && knockback.IsKnockbacking)
         {
@@ -43,11 +43,35 @@ public class EnemyFollowPlayer : MonoBehaviour
 
         if (player == null) return;
 
-        float distance = Vector2.Distance(transform.position, player.position);
+        float detectionRange = 6f;
 
+        // Anino II: enemies detect player slower
+        if (SkillManager.Instance != null &&
+            SkillManager.Instance.anino2Unlocked)
+        {
+            detectionRange *= 0.75f;
+        }
+
+        float distance =
+            Vector2.Distance(transform.position, player.position);
+
+        // Player too far
+        if (distance > detectionRange)
+        {
+            rb.linearVelocity = Vector2.zero;
+
+            if (animator != null)
+                animator.SetBool("isMoving", false);
+
+            return;
+        }
+
+        // Follow player
         if (distance > stopDistance)
         {
-            Vector2 direction = (player.position - transform.position).normalized;
+            Vector2 direction =
+                (player.position - transform.position).normalized;
+
             rb.linearVelocity = direction * moveSpeed;
 
             if (animator != null)
@@ -76,7 +100,22 @@ public class EnemyFollowPlayer : MonoBehaviour
 
             if (playerStats != null)
             {
-                playerStats.TakeDamage(1, transform);
+                int finalDamage = 1;
+
+                EnemyHealth hp = GetComponent<EnemyHealth>();
+
+                // Kulam II
+                if (hp != null &&
+                    hp.isCursed &&
+                    SkillManager.Instance != null &&
+                    SkillManager.Instance.kulam2Unlocked)
+                {
+                    finalDamage = Mathf.Max(1, finalDamage - 1);
+
+                    Debug.Log("Kulam II weakened enemy!");
+                }
+
+                playerStats.TakeDamage(finalDamage, transform);
                 lastAttackTime = Time.time;
             }
         }

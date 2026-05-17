@@ -51,6 +51,7 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private Button defense2Button;
     [SerializeField] private Button defense3Button;
 
+    [Header("Defense Lines")]
     [SerializeField] private Image defenseLine1;
     [SerializeField] private Image defenseLine2;
 
@@ -59,35 +60,68 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private Button agility2Button;
     [SerializeField] private Button agility3Button;
 
+    [Header("Agility Lines")]
     [SerializeField] private Image agilityLine1;
     [SerializeField] private Image agilityLine2;
 
+    [Header("Anino Skills")]
+    [SerializeField] private Button anino1Button;
+    [SerializeField] private Button anino2Button;
+    [SerializeField] private Button anino3Button;
+
+    [Header("Anino Lines")]
+    [SerializeField] private Image aninoLine1;
+    [SerializeField] private Image aninoLine2;
+
+    [Header("Kulam Buttons")]
+    [SerializeField] private Button kulam1Button;
+    [SerializeField] private Button kulam2Button;
+    [SerializeField] private Button kulam3Button;
+
+    [Header("Kulam Lines")]
+    [SerializeField] private Image kulamLine1;
+    [SerializeField] private Image kulamLine2;
+
     // ── unlock states ──
+    [Header("Sword Skills")]
     public bool sword1Unlocked;
     public bool sword2Unlocked;
     public bool sword3Unlocked;
 
+    [Header("Yield Skills")]
     public bool yield1Unlocked;
     public bool yield2Unlocked;
     public bool yield3Unlocked;
 
+    [Header("Water Skills")]
     public bool water1Unlocked;
     public bool water2Unlocked;
     public bool water3Unlocked;
 
+    [Header("Growth Skills")]
     public bool growth1Unlocked;
     public bool growth2Unlocked;
     public bool growth3Unlocked;
 
-    // Defense unlocks
+    [Header("Defense Skills")]
     public bool defense1Unlocked;
     public bool defense2Unlocked;
     public bool defense3Unlocked;
 
-    // Agility unlocks
+    [Header("Agility Skills")]
     public bool agility1Unlocked;
     public bool agility2Unlocked;
     public bool agility3Unlocked;
+
+    [Header("Anino Skills")]
+    public bool anino1Unlocked;
+    public bool anino2Unlocked;
+    public bool anino3Unlocked;
+
+    [Header("Kulam Skills")]
+    public bool kulam1Unlocked;
+    public bool kulam2Unlocked;
+    public bool kulam3Unlocked;
 
     void Awake()
     {
@@ -222,6 +256,35 @@ public class SkillManager : MonoBehaviour
         UnlockSkill(ref agility3Unlocked, agility2Unlocked, 3);
     }
 
+    public void UnlockAnino1()
+    {
+        UnlockSkill(ref anino1Unlocked, true, 1);
+    }
+
+    public void UnlockAnino2()
+    {
+        UnlockSkill(ref anino2Unlocked, anino1Unlocked, 2);
+    }
+
+    public void UnlockAnino3()
+    {
+        UnlockSkill(ref anino3Unlocked, anino2Unlocked, 3);
+    }
+
+    public void UnlockKulam1()
+    {
+        UnlockSkill(ref kulam1Unlocked, true, 1);
+    }
+
+    public void UnlockKulam2()
+    {
+        UnlockSkill(ref kulam2Unlocked, kulam1Unlocked, 2);
+    }
+
+    public void UnlockKulam3()
+    {
+        UnlockSkill(ref kulam3Unlocked, kulam2Unlocked, 3);
+    }
     // ─────────────────────────────
     // CORE UNLOCK LOGIC
     // ─────────────────────────────
@@ -306,6 +369,16 @@ public class SkillManager : MonoBehaviour
         SetButton(agility2Button, agility2Unlocked, agility1Unlocked, 2);
         SetButton(agility3Button, agility3Unlocked, agility2Unlocked, 3);
 
+        // Anino
+        SetButton(anino1Button, anino1Unlocked, true, 1);
+        SetButton(anino2Button, anino2Unlocked, anino1Unlocked, 2);
+        SetButton(anino3Button, anino3Unlocked, anino2Unlocked, 3);
+
+        // Kulam
+        SetButton(kulam1Button, kulam1Unlocked, true, 1);
+        SetButton(kulam2Button, kulam2Unlocked, kulam1Unlocked, 2);
+        SetButton(kulam3Button, kulam3Unlocked, kulam2Unlocked, 3);
+
         // Lines
         SetLine(yieldLine1, yield1Unlocked);
         SetLine(yieldLine2, yield2Unlocked);
@@ -324,6 +397,12 @@ public class SkillManager : MonoBehaviour
 
         SetLine(agilityLine1, agility1Unlocked);
         SetLine(agilityLine2, agility2Unlocked);
+
+        SetLine(aninoLine1, anino1Unlocked);
+        SetLine(aninoLine2, anino2Unlocked);
+
+        SetLine(kulamLine1, kulam1Unlocked);
+        SetLine(kulamLine2, kulam2Unlocked);
     }
 
     void SetButton(
@@ -400,6 +479,10 @@ public class SkillManager : MonoBehaviour
         data.agility1Unlocked = agility1Unlocked;
         data.agility2Unlocked = agility2Unlocked;
         data.agility3Unlocked = agility3Unlocked;
+
+        data.anino1Unlocked = anino1Unlocked;
+        data.anino2Unlocked = anino2Unlocked;
+        data.anino3Unlocked = anino3Unlocked;
     }
 
     public void LoadFromData(SaveData data)
@@ -429,6 +512,10 @@ public class SkillManager : MonoBehaviour
         agility1Unlocked = data.agility1Unlocked;
         agility2Unlocked = data.agility2Unlocked;
         agility3Unlocked = data.agility3Unlocked;
+
+        anino1Unlocked = data.anino1Unlocked;
+        anino2Unlocked = data.anino2Unlocked;
+        anino3Unlocked = data.anino3Unlocked;
 
         RefreshUI();
     }

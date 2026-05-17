@@ -50,6 +50,14 @@ public class SaveData
     public bool agility2Unlocked;
     public bool agility3Unlocked;
 
+    public bool anino1Unlocked;
+    public bool anino2Unlocked;
+    public bool anino3Unlocked;
+
+    public bool kulam1Unlocked;
+    public bool kulam2Unlocked;
+    public bool kulam3Unlocked;
+
     // Stats
     public int strength = 5;
     public int defense = 5;

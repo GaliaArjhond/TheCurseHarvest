@@ -140,6 +140,22 @@ public class PlayerAttack : MonoBehaviour
                 hitDirection,
                 criticalHit
             );
+            // Kulam I
+            if (SkillManager.Instance != null &&
+                SkillManager.Instance.kulam1Unlocked)
+            {
+                CurseBurn burn =
+                    enemy.GetComponent<CurseBurn>();
+
+                if (burn != null)
+                {
+                    burn.ApplyBurn(
+                        1,      // damage
+                        4f,     // duration
+                        1f      // tick rate
+                    );
+                }
+            }
 
             // Agility III
             if (SkillManager.Instance != null &&
