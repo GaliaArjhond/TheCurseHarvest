@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Explosion
+  m_Name: ExplodeFX
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -28,9 +28,9 @@ AnimationClip:
       value: {fileID: -6900491720499478986, guid: ad117103de168d642a2380ad42361c7f, type: 3}
     - time: 0.16666667
       value: {fileID: 5038799887763644306, guid: ad117103de168d642a2380ad42361c7f, type: 3}
-    - time: 0.21666667
+    - time: 0.23333333
       value: {fileID: 6797708382031505195, guid: ad117103de168d642a2380ad42361c7f, type: 3}
-    - time: 0.28333333
+    - time: 0.26666668
       value: {fileID: -2407914838633860017, guid: ad117103de168d642a2380ad42361c7f, type: 3}
     - time: 0.33333334
       value: {fileID: 1161709636985009003, guid: ad117103de168d642a2380ad42361c7f, type: 3}
@@ -97,28 +97,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.25
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.51666665
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.51666665
+  - time: 0.5
     functionName: DestroySelf
     data: 
     objectReferenceParameter: {fileID: 0}

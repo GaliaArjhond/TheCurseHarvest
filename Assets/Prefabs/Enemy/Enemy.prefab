@@ -177,7 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 20
   damagePopupPrefab: {fileID: 3328431977247967937, guid: 401fbe949ebc4cc46a4e6a0e53a34a98, type: 3}
-  explosionPrefab: {fileID: 8546634195601215796, guid: 43b3bff885f1b2740b63201e0f7d20ee, type: 3}
+  explosionPrefab: {fileID: 7161281358498841891, guid: 9d9d8caba2b285c449240e5eb309579c, type: 3}
   isCursed: 0
 --- !u!114 &6818309319751767581
 MonoBehaviour:
