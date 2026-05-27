@@ -7333,7 +7333,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 3.4, y: 349.3}
-  m_SizeDelta: {x: 120, y: 50}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &460049223
 MonoBehaviour:
@@ -28540,7 +28540,6 @@ GameObject:
   - component: {fileID: 1460821994}
   - component: {fileID: 1460821993}
   - component: {fileID: 1460821992}
-  - component: {fileID: 1460821995}
   m_Layer: 5
   m_Name: CurseButton
   m_TagString: Untagged
@@ -28662,21 +28661,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1460821990}
   m_CullTransparentMesh: 1
---- !u!114 &1460821995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1460821990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aa16f3cd4b63c747985ef891ad7bec7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SkillTooltipTrigger
-  tooltipText: '??? CURSED POWER ???
-
-    Reach Level 5'
 --- !u!1 &1467077205
 GameObject:
   m_ObjectHideFlags: 0
@@ -28712,7 +28696,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 5.1, y: 349.3}
-  m_SizeDelta: {x: 120, y: 50}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1467077207
 MonoBehaviour:
@@ -34595,7 +34579,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 3.4, y: 349.3}
-  m_SizeDelta: {x: 120, y: 50}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1942724320
 MonoBehaviour:

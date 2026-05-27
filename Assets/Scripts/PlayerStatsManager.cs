@@ -106,56 +106,8 @@ public class PlayerStatsManager : MonoBehaviour
         else
             Debug.LogWarning("No CinemachineObjectShake found");
 
-        float reduced = Mathf.Max(amount - stats.defense * 0.5f, 1f);
-
-        PlayerBlock block = GetComponent<PlayerBlock>();
-
-        // PERFECT PARRY
-        if (block != null && block.IsParrying)
-        {
-            
-
-            if (HitStopManager.Instance != null)
-            {
-                HitStopManager.Instance.Stop(0.08f);
-            }
-
-            Debug.Log("PERFECT PARRY!");
-            
-            // stun attacker
-            if (attacker != null)
-            {
-                EnemyStun stun =
-                    attacker.GetComponent<EnemyStun>();
-
-                if (stun != null)
-                {
-                    stun.Stun(1f);
-                }
-
-                // knockback attacker
-                Rigidbody2D enemyRb =
-                    attacker.GetComponent<Rigidbody2D>();
-
-                if (enemyRb != null)
-                {
-                    Vector2 knockDir =
-                        (attacker.position - transform.position).normalized;
-
-                    enemyRb.linearVelocity = knockDir * 8f;
-                }
-            }
-
-            return;
-        }
-
-        // NORMAL BLOCK
-        if (block != null && block.IsBlocking)
-        {
-            reduced *= (1f - block.DamageReduction);
-
-            Debug.Log("BLOCKED DAMAGE!");
-        }
+        float reduced =
+            Mathf.Max(amount - stats.defense * 0.5f, 1f);
 
         // Defense I
         if (SkillManager.Instance != null &&
