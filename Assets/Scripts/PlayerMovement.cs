@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
@@ -23,10 +24,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveInput;
     private Animator animator;
     private PlayerStatsManager playerStats;
-    private Knockback knockback;
-
     private bool canMove = true;
-    private bool isAttacking = false;
+    private Knockback knockback;
 
     void Awake()
     {
@@ -36,22 +35,12 @@ public class PlayerMovement : MonoBehaviour
         knockback = GetComponent<Knockback>();
     }
 
-    void Start()
-    {
-        animator.Play("Idle");
-
-        animator.ResetTrigger("UseSword");
-        animator.ResetTrigger("UseAxe");
-        animator.ResetTrigger("UseHoe");
-        animator.ResetTrigger("UsePickAxe");
-    }
-
     void FixedUpdate()
     {
         if (knockback != null && knockback.IsKnockbacking)
             return;
 
-        // chest open
+        // stop movement when chest is open
         if (ChestUIManager.Instance != null &&
             ChestUIManager.Instance.IsChestOpen())
         {
@@ -60,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        // movement disabled
         if (!canMove)
         {
             rb.linearVelocity = Vector2.zero;
@@ -68,12 +56,12 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        // speed
+        // movement speed
         float finalSpeed = playerStats != null
             ? playerStats.GetSpeed()
             : moveSpeed;
 
-        // Anino I
+        // Anino I: faster at night
         DayNightCycle cycle =
             FindFirstObjectByType<DayNightCycle>();
 
@@ -89,6 +77,8 @@ public class PlayerMovement : MonoBehaviour
             if (isNight)
             {
                 finalSpeed *= 1.15f;
+
+                Debug.Log("Anino I night speed active");
             }
         }
 
@@ -105,33 +95,23 @@ public class PlayerMovement : MonoBehaviour
             finalSpeed *= agilityBoostMultiplier;
         }
 
-        // Blocking slowdown
-        PlayerBlock block =
-            GetComponent<PlayerBlock>();
-
-        if (block != null && block.IsBlocking)
-        {
-            finalSpeed *= block.MoveSlow;
-        }
-
         rb.linearVelocity = moveInput * finalSpeed;
-
+        
+        
         HandleFootsteps();
 
         // stamina drain
-        if (moveInput != Vector2.zero &&
-            playerStats != null)
+        if (moveInput != Vector2.zero && playerStats != null)
         {
             playerStats.DrainStamina(
-                playerStats.walkStaminaDrain *
-                Time.fixedDeltaTime
+                playerStats.walkStaminaDrain * Time.fixedDeltaTime
             );
         }
     }
 
     public void Move(InputAction.CallbackContext context)
     {
-        // chest open
+        // stop input when chest open
         if (ChestUIManager.Instance != null &&
             ChestUIManager.Instance.IsChestOpen())
         {
@@ -140,7 +120,6 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        // movement disabled
         if (!canMove)
         {
             moveInput = Vector2.zero;
@@ -150,15 +129,7 @@ public class PlayerMovement : MonoBehaviour
 
         moveInput = context.ReadValue<Vector2>();
 
-        if (isAttacking)
-        {
-            moveInput = Vector2.zero;
-        }
-
-        animator.SetBool(
-            "isWalking",
-            moveInput != Vector2.zero
-        );
+        animator.SetBool("isWalking", moveInput != Vector2.zero);
 
         if (moveInput != Vector2.zero)
         {
@@ -172,31 +143,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayAxeAnimation(Vector2 direction)
     {
-        PlayToolAnimation(direction, "UseAxe");
-    }
-
-    public void PlayHoeAnimation(Vector2 direction)
-    {
-        PlayToolAnimation(direction, "UseHoe");
-    }
-
-    public void PlayPickAxeAnimation(Vector2 direction)
-    {
-        PlayToolAnimation(direction, "UsePickAxe");
-    }
-
-    public void PlaySwordAnimation(Vector2 direction)
-    {
-        PlayToolAnimation(direction, "UseSword");
-    }
-
-    void PlayToolAnimation(
-        Vector2 direction,
-        string triggerName)
-    {
         canMove = false;
-        isAttacking = true;
-
         rb.linearVelocity = Vector2.zero;
 
         animator.SetBool("isWalking", false);
@@ -204,12 +151,39 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("InputX", direction.x);
         animator.SetFloat("InputY", direction.y);
 
-        animator.ResetTrigger("UseSword");
-        animator.ResetTrigger("UseAxe");
-        animator.ResetTrigger("UseHoe");
-        animator.ResetTrigger("UsePickAxe");
+        animator.SetTrigger("UseAxe");
 
-        animator.SetTrigger(triggerName);
+        CancelInvoke(nameof(EndToolAnimation));
+        Invoke(nameof(EndToolAnimation), 0.5f);
+    }
+
+    public void PlayHoeAnimation(Vector2 direction)
+    {
+        canMove = false;
+        rb.linearVelocity = Vector2.zero;
+
+        animator.SetBool("isWalking", false);
+
+        animator.SetFloat("InputX", direction.x);
+        animator.SetFloat("InputY", direction.y);
+
+        animator.SetTrigger("UseHoe");
+
+        CancelInvoke(nameof(EndToolAnimation));
+        Invoke(nameof(EndToolAnimation), 0.5f);
+    }
+
+    public void PlayPickAxeAnimation(Vector2 direction)
+    {
+        canMove = false;
+        rb.linearVelocity = Vector2.zero;
+
+        animator.SetBool("isWalking", false);
+
+        animator.SetFloat("InputX", direction.x);
+        animator.SetFloat("InputY", direction.y);
+
+        animator.SetTrigger("UsePickAxe");
 
         CancelInvoke(nameof(EndToolAnimation));
         Invoke(nameof(EndToolAnimation), 0.5f);
@@ -218,18 +192,9 @@ public class PlayerMovement : MonoBehaviour
     public void EndToolAnimation()
     {
         canMove = true;
-        isAttacking = false;
-
-        rb.linearVelocity = Vector2.zero;
-
-        animator.ResetTrigger("UseSword");
-        animator.ResetTrigger("UseAxe");
-        animator.ResetTrigger("UseHoe");
-        animator.ResetTrigger("UsePickAxe");
-
     }
 
-    void HandleFootsteps()
+    private void HandleFootsteps()
     {
         bool isMoving = moveInput != Vector2.zero;
 
@@ -237,8 +202,7 @@ public class PlayerMovement : MonoBehaviour
         {
             footstepTimer = 0f;
 
-            if (footstepSource != null &&
-                footstepSource.isPlaying)
+            if (footstepSource != null && footstepSource.isPlaying)
             {
                 footstepSource.Stop();
             }
@@ -250,8 +214,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (footstepTimer <= 0f)
         {
-            if (footstepSource != null &&
-                footstepClip != null)
+            if (footstepSource != null && footstepClip != null)
             {
                 footstepSource.Stop();
                 footstepSource.clip = footstepClip;
@@ -274,9 +237,7 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.Log("Agility boost active!");
 
-        yield return new WaitForSeconds(
-            agilityBoostDuration
-        );
+        yield return new WaitForSeconds(agilityBoostDuration);
 
         agilityBoostActive = false;
     }

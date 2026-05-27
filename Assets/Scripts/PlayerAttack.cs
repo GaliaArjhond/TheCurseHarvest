@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -39,25 +38,15 @@ public class PlayerAttack : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (!context.started)
-            return;
-
-        if (EventSystem.current.IsPointerOverGameObject())
-            return;
-
-        if (!canAttack)
-            return;
+        if (!context.performed) return;
+        if (!canAttack) return;
 
         Debug.Log("ATTACK INPUT WORKING");
 
-        HotbarControler hotbar =
-            FindFirstObjectByType<HotbarControler>();
+        HotbarControler hotbar = FindFirstObjectByType<HotbarControler>();
+        if (hotbar == null) return;
 
-        if (hotbar == null)
-            return;
-
-        Item selectedItem =
-            hotbar.GetSelectedItem();
+        Item selectedItem = hotbar.GetSelectedItem();
 
         if (selectedItem == null)
         {
@@ -74,17 +63,16 @@ public class PlayerAttack : MonoBehaviour
         StartAttack();
     }
 
-   void StartAttack()
+    void StartAttack()
     {
         canAttack = false;
 
-        if (movement != null)
-        {
-            movement.PlaySwordAnimation(lastDirection);
-        }
+        animator.SetBool("isWalking", false);
+        animator.SetFloat("InputX", lastDirection.x);
+        animator.SetFloat("InputY", lastDirection.y);
+        animator.SetTrigger("Attack");
 
         Invoke(nameof(DoDamage), 0.15f);
-
         float finalCooldown = attackCooldown;
 
         // Bangungot III attack speed
