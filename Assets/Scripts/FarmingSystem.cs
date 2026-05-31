@@ -49,6 +49,18 @@ public class FarmingSystem : MonoBehaviour
             return;
         }
 
+        if (mainCamera == null)
+            mainCamera = Camera.main;
+
+        if (mainCamera == null)
+        {
+            Debug.LogWarning("Main Camera missing.");
+            return;
+        }
+
+        if (hotbar == null)
+            hotbar = FindFirstObjectByType<HotbarControler>();
+
         if (hotbar == null)
         {
             Debug.Log("Hotbar missing");
@@ -66,9 +78,11 @@ public class FarmingSystem : MonoBehaviour
         Vector3 mouseScreen = Mouse.current.position.ReadValue();
         mouseScreen.z = Mathf.Abs(mainCamera.transform.position.z);
 
-        Vector2 mouseWorldPos = mainCamera.ScreenToWorldPoint(mouseScreen);
+        Vector2 mouseWorldPos =
+            mainCamera.ScreenToWorldPoint(mouseScreen);
 
-        float dist = Vector2.Distance(transform.position, mouseWorldPos);
+        float dist =
+            Vector2.Distance(transform.position, mouseWorldPos);
 
         if (dist > interactRange)
         {
@@ -78,7 +92,8 @@ public class FarmingSystem : MonoBehaviour
 
         Vector2 direction = GetDirection(mouseWorldPos);
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(mouseWorldPos, 0.25f);
+        Collider2D[] hits =
+            Physics2D.OverlapCircleAll(mouseWorldPos, 0.25f);
 
         // CROP HARVEST
         foreach (Collider2D h in hits)
@@ -95,18 +110,49 @@ public class FarmingSystem : MonoBehaviour
             }
         }
 
-        // HARVESTABLE PROP: AXE / PICKAXE
-        if (equippedItem.Name == "Axe" || equippedItem.Name == "Pickaxe")
+        // AXE / PICKAXE OBJECTS
+        if (equippedItem.Name == "Axe" ||
+            equippedItem.Name == "Pickaxe")
         {
+            // CAVE ROCK: PICKAXE ONLY
+            if (equippedItem.Name == "Pickaxe")
+            {
+                foreach (Collider2D h in hits)
+                {
+                    CaveRock rock =
+                        h.GetComponent<CaveRock>();
+
+                    if (rock == null)
+                        rock = h.GetComponentInParent<CaveRock>();
+
+                    if (rock != null)
+                    {
+                        if (!UseStamina(pickaxeStaminaCost))
+                            return;
+
+                        StartCoroutine(UseToolCooldown());
+
+                        if (playerMovement != null)
+                            playerMovement.PlayPickAxeAnimation(direction);
+
+                        StartCoroutine(DelayedCaveRockHit(rock));
+                        return;
+                    }
+                }
+            }
+
+            // NORMAL HARVESTABLE PROP
             foreach (Collider2D h in hits)
             {
-                HarvestableProp prop = h.GetComponentInParent<HarvestableProp>();
+                HarvestableProp prop =
+                    h.GetComponentInParent<HarvestableProp>();
 
                 if (prop != null)
                 {
-                    float cost = equippedItem.Name == "Axe"
-                        ? axeStaminaCost
-                        : pickaxeStaminaCost;
+                    float cost =
+                        equippedItem.Name == "Axe"
+                            ? axeStaminaCost
+                            : pickaxeStaminaCost;
 
                     if (!UseStamina(cost))
                         return;
@@ -121,12 +167,15 @@ public class FarmingSystem : MonoBehaviour
                             playerMovement.PlayPickAxeAnimation(direction);
                     }
 
-                    StartCoroutine(DelayedPropHit(prop, equippedItem.Name));
+                    StartCoroutine(
+                        DelayedPropHit(prop, equippedItem.Name)
+                    );
+
                     return;
                 }
             }
 
-            Debug.Log("No prop clicked.");
+            Debug.Log("No rock or prop clicked.");
             return;
         }
 
@@ -137,7 +186,8 @@ public class FarmingSystem : MonoBehaviour
 
             if (tile != null)
             {
-                float cost = GetFarmTileStaminaCost(equippedItem);
+                float cost =
+                    GetFarmTileStaminaCost(equippedItem);
 
                 if (!UseStamina(cost))
                     return;
@@ -160,8 +210,11 @@ public class FarmingSystem : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(DelayedFarmInteract(tile, equippedItem));
+                    StartCoroutine(
+                        DelayedFarmInteract(tile, equippedItem)
+                    );
                 }
+
                 return;
             }
         }
@@ -199,6 +252,9 @@ public class FarmingSystem : MonoBehaviour
             return true;
 
         if (statsManager == null)
+            statsManager = GetComponent<PlayerStatsManager>();
+
+        if (statsManager == null)
             return true;
 
         return statsManager.UseStamina(amount);
@@ -206,7 +262,8 @@ public class FarmingSystem : MonoBehaviour
 
     Vector2 GetDirection(Vector2 targetPos)
     {
-        Vector2 direction = (targetPos - (Vector2)transform.position).normalized;
+        Vector2 direction =
+            (targetPos - (Vector2)transform.position).normalized;
 
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
             return new Vector2(Mathf.Sign(direction.x), 0);
@@ -229,12 +286,22 @@ public class FarmingSystem : MonoBehaviour
             tile.Interact(item);
     }
 
-    IEnumerator DelayedPropHit(HarvestableProp prop, string toolName)
+    IEnumerator DelayedPropHit(
+        HarvestableProp prop,
+        string toolName)
     {
         yield return new WaitForSeconds(impactDelay);
 
         if (prop != null)
             prop.HitProp(toolName);
+    }
+
+    IEnumerator DelayedCaveRockHit(CaveRock rock)
+    {
+        yield return new WaitForSeconds(impactDelay);
+
+        if (rock != null)
+            rock.HitRock();
     }
 
     void WaterNearbyTiles(Vector2 center, Item item)
@@ -251,7 +318,10 @@ public class FarmingSystem : MonoBehaviour
         foreach (Vector2 offset in offsets)
         {
             Collider2D hit =
-                Physics2D.OverlapCircle(center + offset, 0.2f);
+                Physics2D.OverlapCircle(
+                    center + offset,
+                    0.2f
+                );
 
             if (hit == null)
                 continue;
@@ -259,9 +329,7 @@ public class FarmingSystem : MonoBehaviour
             FarmTile tile = hit.GetComponent<FarmTile>();
 
             if (tile != null)
-            {
                 tile.Interact(item);
-            }
         }
     }
 }

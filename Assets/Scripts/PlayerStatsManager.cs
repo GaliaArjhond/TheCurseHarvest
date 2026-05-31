@@ -52,7 +52,15 @@ public class PlayerStatsManager : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+        
         hitFlash = GetComponent<HitFlash>();
         knockback = GetComponent<Knockback>();
     }

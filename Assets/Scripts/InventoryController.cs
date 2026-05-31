@@ -19,10 +19,17 @@ public class InventoryController : MonoBehaviour
 
     void Awake()
     {
-        Instance = this;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         if (itemDictionary == null)
             itemDictionary = FindFirstObjectByType<ItemDictionary>();
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
