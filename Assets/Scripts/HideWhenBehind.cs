@@ -7,30 +7,35 @@ public class HideWhenBehind : MonoBehaviour
 
     [SerializeField] private float fadeAlpha = 0.4f;
 
-    void Start()
+    void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
-        originalColor = sprite.color;
+
+        if (sprite == null)
+            sprite = GetComponentInChildren<SpriteRenderer>();
+
+        if (sprite != null)
+            originalColor = sprite.color;
+        else
+            Debug.LogWarning("No SpriteRenderer found on " + gameObject.name);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-        {
             SetAlpha(fadeAlpha);
-        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-        {
             SetAlpha(1f);
-        }
     }
 
     void SetAlpha(float alpha)
     {
+        if (sprite == null) return;
+
         Color c = sprite.color;
         c.a = alpha;
         sprite.color = c;
