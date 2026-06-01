@@ -12,6 +12,9 @@ public class FarmingSystem : MonoBehaviour
     [Header("References")]
     [SerializeField] private HotbarControler hotbar;
 
+    [Header("Fishing")]
+    [SerializeField] private LayerMask waterLayer;
+
     [Header("Stamina Costs")]
     [SerializeField] private float axeStaminaCost = 8f;
     [SerializeField] private float pickaxeStaminaCost = 8f;
@@ -19,6 +22,7 @@ public class FarmingSystem : MonoBehaviour
     [SerializeField] private float wateringStaminaCost = 4f;
     [SerializeField] private float plantingStaminaCost = 2f;
     [SerializeField] private float harvestStaminaCost = 1f;
+    [SerializeField] private float fishingStaminaCost = 6f;
 
     private Camera mainCamera;
     private PlayerMovement playerMovement;
@@ -46,6 +50,12 @@ public class FarmingSystem : MonoBehaviour
         if (isUsingTool)
         {
             Debug.Log("Still using tool...");
+            return;
+        }
+
+        if (FishingQTEManager.Instance != null &&
+            FishingQTEManager.Instance.IsFishing())
+        {
             return;
         }
 
@@ -94,6 +104,40 @@ public class FarmingSystem : MonoBehaviour
 
         Collider2D[] hits =
             Physics2D.OverlapCircleAll(mouseWorldPos, 0.25f);
+
+        // FISHING ROD + WATER
+        if (equippedItem.Name == "FishingRod")
+        {
+            Collider2D waterHit =
+                Physics2D.OverlapCircle(
+                    mouseWorldPos,
+                    0.25f,
+                    waterLayer
+                );
+
+            if (waterHit != null)
+            {
+                if (!UseStamina(fishingStaminaCost))
+                    return;
+
+                StartCoroutine(UseToolCooldown());
+
+                if (FishingQTEManager.Instance != null)
+                {
+                    FishingQTEManager.Instance.StartFishing();
+                    Debug.Log("Fishing started!");
+                }
+                else
+                {
+                    Debug.LogWarning("FishingQTEManager missing.");
+                }
+
+                return;
+            }
+
+            Debug.Log("You must click water to fish.");
+            return;
+        }
 
         // CROP HARVEST
         foreach (Collider2D h in hits)
