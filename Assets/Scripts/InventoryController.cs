@@ -25,11 +25,13 @@ public class InventoryController : MonoBehaviour
             return;
         }
 
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         if (itemDictionary == null)
             itemDictionary = FindFirstObjectByType<ItemDictionary>();
 
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        
     }
 
     void Start()
@@ -143,14 +145,25 @@ public class InventoryController : MonoBehaviour
 
     public bool AddItem(int itemID, int amount)
     {
-        GameObject itemPrefab =
-            itemDictionary.GetItemPrefab(itemID);
+         if (itemDictionary == null)
+        {
+            itemDictionary = FindFirstObjectByType<ItemDictionary>();
+        }
 
+        if (itemDictionary == null)
+        {
+            Debug.LogError("ItemDictionary missing in this scene.");
+            return false;
+        }
+
+        GameObject itemPrefab = itemDictionary.GetItemPrefab(itemID);
+        
         if (itemPrefab == null)
         {
             Debug.LogError("Item prefab missing for ID: " + itemID);
             return false;
         }
+        
 
         // try stack first
         if (TryStackItem(hotbarPanel, itemID, amount))

@@ -6,6 +6,7 @@ using System.Collections;
 public class PlayerStatsManager : MonoBehaviour
 {
     public static PlayerStatsManager Instance;
+    private bool initialized = false;
     private HitFlash hitFlash;
     private Knockback knockback;
 
@@ -60,15 +61,21 @@ public class PlayerStatsManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        
+
         hitFlash = GetComponent<HitFlash>();
         knockback = GetComponent<Knockback>();
     }
 
     void Start()
     {
+        if (initialized)
+            return;
+
+        initialized = true;
+
         stats.currentHealth = stats.maxHealth;
         stats.currentStamina = stats.maxStamina;
+
         UpdateAllUI();
     }
 
