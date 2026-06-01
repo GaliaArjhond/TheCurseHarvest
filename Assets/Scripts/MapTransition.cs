@@ -56,6 +56,7 @@ public class MapTransition : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         isTransitioning = false;
+        Debug.Log("MapTransition changed bounds to: " + areaBoundary.name);
     }
 
     void UpdatePlayerPosition(GameObject player)

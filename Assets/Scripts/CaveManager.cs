@@ -13,6 +13,7 @@ public class CaveManager : MonoBehaviour
     [Header("Player Spawn")]
     [SerializeField] private Transform caveStartSpawn;
     [SerializeField] private Transform caveReturnSpawn;
+    [SerializeField] private Transform caveLevelSpawn;
 
     [Header("Rock Spawning")]
     [SerializeField] private Transform rockSpawnParent;
@@ -28,7 +29,8 @@ public class CaveManager : MonoBehaviour
     [SerializeField] private GameObject goldNodePrefab;
 
     [Header("Camera")]
-    [SerializeField] private PolygonCollider2D caveBounds;
+    [SerializeField] private PolygonCollider2D startBounds;
+    [SerializeField] private PolygonCollider2D levelBounds;
 
     [Header("Ladder")]
     [SerializeField] private GameObject ladderPrefab;
@@ -44,21 +46,26 @@ public class CaveManager : MonoBehaviour
     void Start()
     {
         GenerateLevel();
+
+        UseStartBounds();
         MoveActivePlayerTo(caveStartSpawn);
+
         UpdateLevelUI();
-        UpdateCameraFollowAndBounds();
+        UpdateCameraFollow();
     }
 
-    public void GoNextLevel()
+   public void GoNextLevel()
     {
         currentCaveLevel++;
 
         GenerateLevel();
-        MoveActivePlayerTo(caveStartSpawn);
-        UpdateLevelUI();
-        UpdateCameraFollowAndBounds();
 
-        Debug.Log("Entered Cave Level " + currentCaveLevel);
+        UseLevelBounds();
+
+        MoveActivePlayerTo(caveLevelSpawn);
+
+        UpdateLevelUI();
+        UpdateCameraFollow();
     }
 
     public void ReturnToCaveStart(Transform playerTransform)
@@ -69,10 +76,12 @@ public class CaveManager : MonoBehaviour
             return;
         }
 
+        UseStartBounds();
+
         playerTransform.position = caveReturnSpawn.position;
         Physics2D.SyncTransforms();
 
-        UpdateCameraFollowAndBounds();
+        UpdateCameraFollow();
 
         Debug.Log("Returned player to cave return spawn.");
     }
@@ -100,10 +109,8 @@ public class CaveManager : MonoBehaviour
                 rockSpawnCenter.position.y + Random.Range(-spawnHeight / 2f, spawnHeight / 2f)
             );
 
-            GameObject rockToSpawn = GetRandomRockPrefab();
-
             Instantiate(
-                rockToSpawn,
+                GetRandomRockPrefab(),
                 randomPos,
                 Quaternion.identity,
                 rockSpawnParent
@@ -165,8 +172,7 @@ public class CaveManager : MonoBehaviour
         if (spawn == null)
             return;
 
-        GameObject player =
-            GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         if (player == null)
         {
@@ -178,10 +184,9 @@ public class CaveManager : MonoBehaviour
         Physics2D.SyncTransforms();
     }
 
-    void UpdateCameraFollowAndBounds()
+    void UpdateCameraFollow()
     {
-        GameObject player =
-            GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         CinemachineVirtualCamera cmcam =
             FindFirstObjectByType<CinemachineVirtualCamera>();
@@ -192,15 +197,34 @@ public class CaveManager : MonoBehaviour
             cmcam.LookAt = player.transform;
             cmcam.PreviousStateIsValid = false;
         }
+    }
 
+    public void UseStartBounds()
+    {
         CinemachineConfiner confiner =
             FindFirstObjectByType<CinemachineConfiner>();
 
-        if (confiner != null && caveBounds != null)
-        {
-            confiner.m_BoundingShape2D = caveBounds;
-            confiner.InvalidatePathCache();
-        }
+        if (confiner == null || startBounds == null)
+            return;
+
+        confiner.m_BoundingShape2D = startBounds;
+        confiner.InvalidatePathCache();
+
+        Debug.Log("Camera using START bounds.");
+    }
+
+    public void UseLevelBounds()
+    {
+        CinemachineConfiner confiner =
+            FindFirstObjectByType<CinemachineConfiner>();
+
+        if (confiner == null || levelBounds == null)
+            return;
+
+        confiner.m_BoundingShape2D = levelBounds;
+        confiner.InvalidatePathCache();
+
+        Debug.Log("Camera using LEVEL bounds.");
     }
 
     void ClearOldLadder()
@@ -218,9 +242,7 @@ public class CaveManager : MonoBehaviour
             return;
 
         foreach (Transform child in rockSpawnParent)
-        {
             Destroy(child.gameObject);
-        }
     }
 
     void UpdateLevelUI()

@@ -5,22 +5,28 @@ public class CameraFollowSetter : MonoBehaviour
 {
     [SerializeField] private PolygonCollider2D sceneBounds;
 
-    private CinemachineVirtualCamera cam;
-    private CinemachineConfiner confiner;
-
     void Start()
     {
-        cam = GetComponent<CinemachineVirtualCamera>();
-        confiner = GetComponent<CinemachineConfiner>();
-
         GameObject player =
             GameObject.FindGameObjectWithTag("Player");
 
-        if (cam != null && player != null)
+        CinemachineVirtualCamera vcam =
+            GetComponent<CinemachineVirtualCamera>();
+
+        CinemachineConfiner confiner =
+            GetComponent<CinemachineConfiner>();
+
+        if (vcam != null && player != null)
         {
-            cam.Follow = player.transform;
-            cam.LookAt = player.transform;
-            cam.PreviousStateIsValid = false;
+            vcam.Priority = 50;
+            vcam.Follow = player.transform;
+            vcam.LookAt = player.transform;
+            vcam.PreviousStateIsValid = false;
+
+            vcam.ForceCameraPosition(
+                player.transform.position + new Vector3(0, 0, -10),
+                Quaternion.identity
+            );
         }
 
         if (confiner != null && sceneBounds != null)
@@ -28,5 +34,7 @@ public class CameraFollowSetter : MonoBehaviour
             confiner.m_BoundingShape2D = sceneBounds;
             confiner.InvalidatePathCache();
         }
+
+        Debug.Log("Cave camera fixed to player.");
     }
 }

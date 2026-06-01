@@ -5357,7 +5357,7 @@ Transform:
   m_GameObject: {fileID: 356357516}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50, y: 36.05, z: 0}
+  m_LocalPosition: {x: 50, y: 38.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5375,7 +5375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fab7b4cc664a7ed48846f910bf8af57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
-  spawnName: CaveEntrance
+  spawnName: CaveSpawn
 --- !u!1 &357078417
 GameObject:
   m_ObjectHideFlags: 0
@@ -19918,7 +19918,7 @@ Transform:
   m_GameObject: {fileID: 831723135}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 84, y: 78.38, z: 0}
+  m_LocalPosition: {x: 84, y: 77.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25132,10 +25132,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 48.56871, y: 41.802906}
-      - {x: 21.87489, y: 41.339622}
-      - {x: 22.148172, y: 21.318033}
-      - {x: 48.30024, y: 20.715952}
+    - - {x: 48.46692, y: 41.497524}
+      - {x: 21.467716, y: 41.543213}
+      - {x: 21.401697, y: 20.571558}
+      - {x: 48.334175, y: 20.478441}
   m_UseDelaunayMesh: 1
 --- !u!1 &970903288
 GameObject:
@@ -28792,6 +28792,7 @@ MonoBehaviour:
   caveLevelText: {fileID: 434454052}
   caveStartSpawn: {fileID: 356357517}
   caveReturnSpawn: {fileID: 1831939200}
+  caveLevelSpawn: {fileID: 831723136}
   rockSpawnParent: {fileID: 1136428243}
   rockSpawnCenter: {fileID: 997674616}
   rocksToSpawn: 12
@@ -28801,9 +28802,10 @@ MonoBehaviour:
   coalNodePrefab: {fileID: 5614363758320358069, guid: d87e8d3a8972cfb44990930b9c026650, type: 3}
   ironNodePrefab: {fileID: 5614363758320358069, guid: 5815003dbcee6c04fb1459ab5702ebbb, type: 3}
   goldNodePrefab: {fileID: 5614363758320358069, guid: 14b62e424e3150b4a879fe9b00bef4e3, type: 3}
-  caveBounds: {fileID: 970375447}
+  startBounds: {fileID: 696761910}
+  levelBounds: {fileID: 970375447}
   ladderPrefab: {fileID: 4987682528519667688, guid: 5bee4fdb1a489484891dd4e981ac7190, type: 3}
-  ladderChance: 1
+  ladderChance: 0.08
 --- !u!4 &1301390478
 Transform:
   m_ObjectHideFlags: 0
@@ -32616,7 +32618,6 @@ GameObject:
   - component: {fileID: 1486770287}
   - component: {fileID: 1486770286}
   - component: {fileID: 1486770285}
-  - component: {fileID: 1486770289}
   m_Layer: 0
   m_Name: CmCam
   m_TagString: Untagged
@@ -32708,19 +32709,6 @@ Transform:
   - {fileID: 1111594632}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1486770289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1486770284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41dc0d42f18f8b3499d0cc8f3d9644d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  sceneBounds: {fileID: 0}
 --- !u!1 &1506510505
 GameObject:
   m_ObjectHideFlags: 0

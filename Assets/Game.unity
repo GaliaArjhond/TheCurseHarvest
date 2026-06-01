@@ -1111,7 +1111,7 @@ Transform:
   m_GameObject: {fileID: 66134747}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 47.36517, y: 39.96791, z: 0}
+  m_LocalPosition: {x: 49.85, y: 38.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4495,7 +4495,7 @@ GameObject:
   - component: {fileID: 278127950}
   - component: {fileID: 278127951}
   m_Layer: 0
-  m_Name: Cave
+  m_Name: CaveBounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29447,7 +29447,7 @@ Transform:
   m_GameObject: {fileID: 1496604281}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.87, y: 14.09, z: 0}
+  m_LocalPosition: {x: -7.87, y: 12.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -34605,7 +34605,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -7.8343163, y: 17.742365}
+  m_Offset: {x: -7.8343163, y: 17.842974}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -34615,7 +34615,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 5.098465, y: 1.8734741}
+  m_Size: {x: 5.098465, y: 0.62589264}
   m_EdgeRadius: 0
 --- !u!1 &1936247869
 GameObject:
