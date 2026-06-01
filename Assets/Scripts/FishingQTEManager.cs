@@ -5,6 +5,8 @@ using TMPro;
 public class FishingQTEManager : MonoBehaviour
 {
     public static FishingQTEManager Instance;
+
+    [Header("Visual Offset")]
     [SerializeField] private float visualOffset = 90f;
 
     [Header("UI")]
@@ -51,14 +53,23 @@ public class FishingQTEManager : MonoBehaviour
 
     void Update()
     {
-        if (!isFishing) return;
+        if (!isFishing)
+            return;
 
         currentAngle += pointerSpeed * Time.deltaTime;
 
         if (currentAngle >= 360f)
             currentAngle -= 360f;
 
-        pointer.localRotation = Quaternion.Euler(0f, 0f, -currentAngle + visualOffset);
+        if (pointer != null)
+        {
+            pointer.localRotation =
+                Quaternion.Euler(
+                    0f,
+                    0f,
+                    -currentAngle + visualOffset
+                );
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
             CheckQTE();
@@ -81,7 +92,10 @@ public class FishingQTEManager : MonoBehaviour
             progressBar.value = 0f;
 
         if (resultText != null)
+        {
+            resultText.color = Color.white;
             resultText.text = "Fish biting...";
+        }
 
         if (fishingPanel != null)
             fishingPanel.SetActive(true);
@@ -91,31 +105,58 @@ public class FishingQTEManager : MonoBehaviour
     {
         targetAngle = Random.Range(0f, 360f);
 
-        yellowZone.localRotation = Quaternion.Euler(0f, 0f, -targetAngle + visualOffset);
+        if (yellowZone != null)
+        {
+            yellowZone.localRotation =
+                Quaternion.Euler(
+                    0f,
+                    0f,
+                    -targetAngle + visualOffset
+                );
+        }
 
-        greenZone.localRotation = Quaternion.Euler(0f, 0f, -targetAngle + visualOffset);
+        if (greenZone != null)
+        {
+            greenZone.localRotation =
+                Quaternion.Euler(
+                    0f,
+                    0f,
+                    -targetAngle + visualOffset
+                );
+        }
     }
 
     void CheckQTE()
     {
         float distance =
-            Mathf.Abs(Mathf.DeltaAngle(currentAngle, targetAngle));
+            Mathf.Abs(
+                Mathf.DeltaAngle(
+                    currentAngle,
+                    targetAngle
+                )
+            );
 
         if (distance <= 10f)
         {
-            progress += 35f;
+            progress += 45f;
 
             if (resultText != null)
+            {
+                resultText.color = Color.green;
                 resultText.text = "Perfect!";
+            }
 
             RandomizeTargetZone();
         }
         else if (distance <= 35f)
         {
-            progress += 15f;
+            progress += 25f;
 
             if (resultText != null)
+            {
+                resultText.color = Color.yellow;
                 resultText.text = "Good!";
+            }
 
             RandomizeTargetZone();
         }
@@ -125,8 +166,11 @@ public class FishingQTEManager : MonoBehaviour
             missCount++;
 
             if (resultText != null)
+            {
+                resultText.color = Color.red;
                 resultText.text =
                     "Miss! " + missCount + "/" + maxMisses;
+            }
         }
 
         progress = Mathf.Clamp(progress, 0f, 100f);
@@ -166,6 +210,66 @@ public class FishingQTEManager : MonoBehaviour
         return goldenFishID;
     }
 
+    string GetFishName(int fishID)
+    {
+        if (fishID == carpID)
+            return "Carp";
+
+        if (fishID == tilapiaID)
+            return "Tilapia";
+
+        if (fishID == catfishID)
+            return "Catfish";
+
+        if (fishID == goldenFishID)
+            return "Golden Fish";
+
+        if (fishID == trashID)
+            return "Trash";
+
+        return "Unknown";
+    }
+
+    string GetFishRarity(int fishID)
+    {
+        if (fishID == carpID)
+            return "Common";
+
+        if (fishID == tilapiaID)
+            return "Uncommon";
+
+        if (fishID == catfishID)
+            return "Rare";
+
+        if (fishID == goldenFishID)
+            return "Legendary";
+
+        if (fishID == trashID)
+            return "Junk";
+
+        return "Unknown";
+    }
+
+    Color GetRarityColor(int fishID)
+    {
+        if (fishID == carpID)
+            return Color.white;
+
+        if (fishID == tilapiaID)
+            return Color.green;
+
+        if (fishID == catfishID)
+            return Color.cyan;
+
+        if (fishID == goldenFishID)
+            return Color.yellow;
+
+        if (fishID == trashID)
+            return Color.gray;
+
+        return Color.white;
+    }
+
     void CatchFish()
     {
         isFishing = false;
@@ -176,10 +280,11 @@ public class FishingQTEManager : MonoBehaviour
 
         if (InventoryController.Instance != null)
         {
-            added = InventoryController.Instance.AddItem(
-                fishID,
-                1
-            );
+            added =
+                InventoryController.Instance.AddItem(
+                    fishID,
+                    1
+                );
         }
 
         if (added &&
@@ -193,32 +298,17 @@ public class FishingQTEManager : MonoBehaviour
 
         if (resultText != null)
         {
-            switch (fishID)
-            {
-                case 17:
-                    resultText.text = "Caught Carp!";
-                    break;
+            string fishName = GetFishName(fishID);
+            string rarity = GetFishRarity(fishID);
 
-                case 18:
-                    resultText.text = "Caught Tilapia!";
-                    break;
+            resultText.color = GetRarityColor(fishID);
 
-                case 19:
-                    resultText.text = "Caught Catfish!";
-                    break;
-
-                case 20:
-                    resultText.text = "Caught Golden Fish!";
-                    break;
-
-                case 21:
-                    resultText.text = "Caught Trash...";
-                    break;
-
-                default:
-                    resultText.text = "Caught Something!";
-                    break;
-            }
+            resultText.text =
+                "Caught " +
+                fishName +
+                "!\n[" +
+                rarity +
+                "]";
         }
 
         Invoke(nameof(CloseFishingPanel), 1f);
@@ -229,7 +319,10 @@ public class FishingQTEManager : MonoBehaviour
         isFishing = false;
 
         if (resultText != null)
+        {
+            resultText.color = Color.red;
             resultText.text = "Fish escaped!";
+        }
 
         Invoke(nameof(CloseFishingPanel), 0.7f);
     }
