@@ -5,6 +5,10 @@ public class Item : MonoBehaviour
 {
     public int ID;
     public string Name;
+    
+    [Header("Description")]
+    [TextArea(3, 5)]
+    public string description;
 
     public ItemType itemType = ItemType.Misc;
 

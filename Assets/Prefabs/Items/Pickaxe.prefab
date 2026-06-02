@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7436129895878858631}
   - component: {fileID: 5458255969453526349}
   - component: {fileID: 7795151949158640328}
+  - component: {fileID: 153310386972149485}
   m_Layer: 5
   m_Name: Pickaxe
   m_TagString: Untagged
@@ -104,6 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 8
   Name: Pickaxe
+  description: Used for mining rocks and ore deposits
   itemType: 1
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
@@ -126,3 +128,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87012f7bad4e71b4fb269c1f033904ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDragHandler
+--- !u!114 &153310386972149485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7903965472483988240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad283850915f54e4ab7a085b3aa5f961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemTooltipTrigger

@@ -92,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 5
   Name: WateringCan
+  description: Used to water crops and help them grow
   itemType: 1
   isPlaceable: 1
   placeablePrefab: {fileID: 0}

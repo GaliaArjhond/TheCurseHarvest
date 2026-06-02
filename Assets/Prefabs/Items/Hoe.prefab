@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7634482996955343991}
   - component: {fileID: 1418387198525731006}
   - component: {fileID: 1304654916498160987}
+  - component: {fileID: -8265204660409801369}
   m_Layer: 5
   m_Name: Hoe
   m_TagString: Untagged
@@ -116,6 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 4
   Name: Hoe
+  description: Used to prepare soil for planting crops
   itemType: 1
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
@@ -126,3 +128,15 @@ MonoBehaviour:
   maxStack: 1
   amountText: {fileID: 0}
   cropData: {fileID: 0}
+--- !u!114 &-8265204660409801369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275108244903308710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad283850915f54e4ab7a085b3aa5f961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemTooltipTrigger
