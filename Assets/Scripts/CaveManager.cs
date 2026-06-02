@@ -5,6 +5,7 @@ using Cinemachine;
 public class CaveManager : MonoBehaviour
 {
     public static CaveManager Instance;
+    [SerializeField] private EnemySpawner enemySpawner;
 
     [Header("Cave Level")]
     [SerializeField] private int currentCaveLevel = 1;
@@ -90,6 +91,11 @@ public class CaveManager : MonoBehaviour
     {
         ClearOldLadder();
         ClearOldRocks();
+
+        if (enemySpawner != null)
+        {
+            enemySpawner.SpawnEnemies(currentCaveLevel);
+        }
 
         if (rockSpawnParent == null ||
             rockSpawnCenter == null ||
