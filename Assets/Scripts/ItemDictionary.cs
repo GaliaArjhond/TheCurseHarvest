@@ -3,11 +3,21 @@ using System.Collections.Generic;
 
 public class ItemDictionary : MonoBehaviour
 {
+    public static ItemDictionary Instance;
     public List<GameObject> itemPrefabs;
     private Dictionary<int, GameObject> itemsDictionary;
 
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        
         itemsDictionary = new Dictionary<int, GameObject>();
 
         foreach (GameObject prefab in itemPrefabs)

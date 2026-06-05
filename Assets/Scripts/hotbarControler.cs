@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class HotbarControler : MonoBehaviour
 {
+    public static HotbarControler Instance;
+
     [Header("Hotbar")]
     public GameObject hotbarPanel;
     public GameObject slotPrefab;
@@ -19,6 +21,15 @@ public class HotbarControler : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        
         itemDictionary = FindFirstObjectByType<ItemDictionary>();
 
         hotbarKeys = new Key[slotCount];

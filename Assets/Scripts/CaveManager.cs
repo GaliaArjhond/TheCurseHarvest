@@ -92,11 +92,6 @@ public class CaveManager : MonoBehaviour
         ClearOldLadder();
         ClearOldRocks();
 
-        if (enemySpawner != null)
-        {
-            enemySpawner.SpawnEnemies(currentCaveLevel);
-        }
-
         if (rockSpawnParent == null ||
             rockSpawnCenter == null ||
             stoneRockPrefab == null ||
@@ -106,6 +101,11 @@ public class CaveManager : MonoBehaviour
         {
             Debug.LogError("Missing cave spawn references or ore prefabs.");
             return;
+        }
+
+        if (enemySpawner != null)
+        {
+            enemySpawner.SpawnEnemies(currentCaveLevel);
         }
 
         for (int i = 0; i < rocksToSpawn; i++)
