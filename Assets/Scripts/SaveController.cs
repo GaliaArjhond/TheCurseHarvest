@@ -31,7 +31,6 @@ public class SaveController : MonoBehaviour
 
     IEnumerator Start()
     {
-        // wait 1 frame so inventory/hotbar slots are created first
         DeleteSave();
         yield return null;
         LoadGame();
@@ -112,6 +111,8 @@ public class SaveController : MonoBehaviour
 
     public void LoadGame()
     {
+        Debug.LogWarning("LoadGame was called");
+        
         if (!File.Exists(saveFilePath))
         {
             Debug.LogWarning("No save found — keeping default scene setup");

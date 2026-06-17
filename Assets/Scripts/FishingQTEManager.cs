@@ -274,6 +274,11 @@ public class FishingQTEManager : MonoBehaviour
     {
         isFishing = false;
 
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.fishCaught++;
+        }
+
         int fishID = GetRandomFish();
 
         bool added = false;

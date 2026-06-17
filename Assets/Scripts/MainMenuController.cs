@@ -133,7 +133,18 @@ public class MainMenuController : MonoBehaviour
         PlayerPrefs.SetString("CurrentSave", data.saveFileName);
         PlayerPrefs.Save();
 
-        StartCoroutine(LoadGameRoutine(data.saveFileName));
+        StartCoroutine(LoadPrologueRoutine(data.saveFileName));
+    }
+
+    IEnumerator LoadPrologueRoutine(string saveFileName)
+    {
+        PlayerPrefs.SetString( "CurrentSave", saveFileName);
+
+        PlayerPrefs.Save();
+
+        yield return StartCoroutine(FadeOut());
+
+        SceneManager.LoadScene("Prologue");
     }
 
     public void OnNewGameBack()

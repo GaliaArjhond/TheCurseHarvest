@@ -67,6 +67,11 @@ public class EnemyHealth : MonoBehaviour
         {
             isDead = true;
 
+            if (QuestManager.Instance != null)
+            {
+                QuestManager.Instance.halimawsKilled++;
+            }
+
             // Bangungot II
             if (attacker != null &&
                 SkillManager.Instance != null &&

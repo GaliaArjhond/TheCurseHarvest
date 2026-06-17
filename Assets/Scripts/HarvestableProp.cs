@@ -67,6 +67,20 @@ public class HarvestableProp : MonoBehaviour
         if (ownerSpawner != null)
             ownerSpawner.MarkDestroyed(propId);
 
+        // QUEST PROGRESS
+        if (QuestManager.Instance != null)
+        {
+            if (requiredTool == ToolType.Axe)
+            {
+                QuestManager.Instance.woodCollected += dropAmount;
+
+                Debug.Log(
+                    "Wood Collected: "
+                    + QuestManager.Instance.woodCollected
+                );
+            }
+        }
+
         DropItems();
 
         Destroy(gameObject);

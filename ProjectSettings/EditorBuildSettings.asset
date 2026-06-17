@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/MainMenu.unity
     guid: 60953b6f84933424ab8316e0ee068ba3
   - enabled: 1
+    path: Assets/Prologue.unity
+    guid: cbcfc5f3cebcb0c418a9c3454685d7aa
+  - enabled: 1
     path: Assets/Game.unity
     guid: d792c6ab9d6d41042bc8decb77636d09
   - enabled: 1
