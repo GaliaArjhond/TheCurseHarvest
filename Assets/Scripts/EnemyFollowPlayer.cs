@@ -10,9 +10,9 @@ public class EnemyFollowPlayer : MonoBehaviour
     private Animator animator;
     private Knockback knockback;
 
+    public int damage = 15;
     private float attackCooldown = 1f;
     private float lastAttackTime;
-    
 
     void Awake()
     {
@@ -100,7 +100,7 @@ public class EnemyFollowPlayer : MonoBehaviour
 
             if (playerStats != null)
             {
-                int finalDamage = 1;
+                int finalDamage = damage;
 
                 EnemyHealth hp = GetComponent<EnemyHealth>();
 

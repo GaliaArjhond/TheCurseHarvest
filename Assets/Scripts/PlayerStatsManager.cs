@@ -1,436 +1,469 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using System.Collections;
+﻿    using UnityEngine;
+    using UnityEngine.UI;
+    using TMPro;
+    using System.Collections;
 
-public class PlayerStatsManager : MonoBehaviour
-{
-    public static PlayerStatsManager Instance;
-    private bool initialized = false;
-    private HitFlash hitFlash;
-    private Knockback knockback;
-
-    [Header("Stats")]
-    public PlayerStatsData stats = new PlayerStatsData();
-
-    [Header("Stamina Drain")]
-    public float walkStaminaDrain = 3f;
-
-    [Header("Stamina Regen")]
-    [SerializeField] private float staminaRegenRate = 5f;
-    [SerializeField] private float staminaRegenDelay = 1f;
-    private float staminaRegenTimer = 0f;
-
-    [Header("Damage I-Frames")]
-    [SerializeField] private float invincibleTime = 1f;
-    private bool isInvincible = false;
-
-    [Header("Health Regen")]
-    [SerializeField] private float healthRegenRate = 2f;
-    [SerializeField] private float healthRegenDelay = 5f;
-    private float healthRegenTimer = 0f;
-
-    [Header("HUD — Health")]
-    [SerializeField] private Slider healthBarHUD;
-    [SerializeField] private TextMeshProUGUI healthTextHUD;
-
-    [Header("HUD — Stamina")]
-    [SerializeField] private Slider staminaBarHUD;
-    [SerializeField] private TextMeshProUGUI staminaTextHUD;
-
-    [Header("HUD — Level & EXP")]
-    [SerializeField] private TextMeshProUGUI levelTextHUD;
-    [SerializeField] private Slider expBarHUD;
-
-    [Header("Book Page — Stats")]
-    [SerializeField] private TextMeshProUGUI bookLevelText;
-    [SerializeField] private TextMeshProUGUI bookExpText;
-    [SerializeField] private TextMeshProUGUI bookStrengthText;
-    [SerializeField] private TextMeshProUGUI bookDefenseText;
-    [SerializeField] private TextMeshProUGUI bookSpeedText;
-    [SerializeField] private TextMeshProUGUI bookHealthText;
-    [SerializeField] private TextMeshProUGUI bookStaminaText;
-
-    void Awake()
+    public class PlayerStatsManager : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
+        public static PlayerStatsManager Instance;
+        private bool initialized = false;
+        private HitFlash hitFlash;
+        private Knockback knockback;
+
+        [Header("Stats")]
+        public PlayerStatsData stats = new PlayerStatsData();
+
+        [Header("Stamina Drain")]
+        public float walkStaminaDrain = 3f;
+
+        [Header("Stamina Regen")]
+        [SerializeField] private float staminaRegenRate = 5f;
+        [SerializeField] private float staminaRegenDelay = 1f;
+        private float staminaRegenTimer = 0f;
+
+        [Header("Damage I-Frames")]
+        [SerializeField] private float invincibleTime = 1f;
+        private bool isInvincible = false;
+
+        [Header("Health Regen")]
+        [SerializeField] private float healthRegenRate = 2f;
+        [SerializeField] private float healthRegenDelay = 5f;
+        private float healthRegenTimer = 0f;
+
+        [Header("HUD — Health")]
+        [SerializeField] private Slider healthBarHUD;
+        [SerializeField] private TextMeshProUGUI healthTextHUD;
+
+        [Header("HUD — Stamina")]
+        [SerializeField] private Slider staminaBarHUD;
+        [SerializeField] private TextMeshProUGUI staminaTextHUD;
+
+        [Header("HUD — Level & EXP")]
+        [SerializeField] private TextMeshProUGUI levelTextHUD;
+        [SerializeField] private Slider expBarHUD;
+
+        [Header("Book Page — Stats")]
+        [SerializeField] private TextMeshProUGUI bookLevelText;
+        [SerializeField] private TextMeshProUGUI bookExpText;
+        [SerializeField] private TextMeshProUGUI bookStrengthText;
+        [SerializeField] private TextMeshProUGUI bookDefenseText;
+        [SerializeField] private TextMeshProUGUI bookSpeedText;
+        [SerializeField] private TextMeshProUGUI bookHealthText;
+        [SerializeField] private TextMeshProUGUI bookStaminaText;
+
+        void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            hitFlash = GetComponent<HitFlash>();
+            knockback = GetComponent<Knockback>();
         }
 
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
-        hitFlash = GetComponent<HitFlash>();
-        knockback = GetComponent<Knockback>();
-    }
-
-    void Start()
-    {
-        if (initialized)
-            return;
-
-        initialized = true;
-
-        stats.currentHealth = stats.maxHealth;
-        stats.currentStamina = stats.maxStamina;
-
-        UpdateAllUI();
-    }
-
-    void Update()
-    {
-        HandleStaminaRegen();
-        HandleHealthRegen();
-        UpdateAllUI();
-    }
-
-    // ── stamina drain ──
-    public void DrainStamina(float amount)
-    {
-        if (stats.currentStamina <= 0) return;
-
-        stats.currentStamina -= amount;
-        stats.currentStamina = Mathf.Max(stats.currentStamina, 0);
-
-        staminaRegenTimer = staminaRegenDelay;
-    }
-
-    public void TakeDamage(float amount, Transform attacker)
-    {
-
-        // Defense III: ignore damage chance
-        if (SkillManager.Instance != null &&
-            SkillManager.Instance.defense3Unlocked)
+        void Start()
         {
-            int blockChance = Random.Range(0, 100);
+            if (initialized)
+                return;
 
-            if (blockChance < 15)
+            initialized = true;
+
+            stats.currentHealth = stats.maxHealth;
+            stats.currentStamina = stats.maxStamina;
+
+            UpdateAllUI();
+        }
+
+        void Update()
+        {
+            HandleStaminaRegen();
+            HandleHealthRegen();
+            UpdateAllUI();
+        }
+
+        // ── stamina drain ──
+        public void DrainStamina(float amount)
+        {
+            if (stats.currentStamina <= 0) return;
+
+            stats.currentStamina -= amount;
+            stats.currentStamina = Mathf.Max(stats.currentStamina, 0);
+
+            staminaRegenTimer = staminaRegenDelay;
+
+            if (stats.currentStamina <= 0)
             {
-                Debug.Log("Defense III blocked damage!");
+                stats.currentStamina = 0;
+
+                ExhaustionUI.Instance.Show();
 
                 return;
             }
         }
 
-        if (isInvincible) return;
-
-        if (CinemachineObjectShake.Instance != null)
-            CinemachineObjectShake.Instance.Shake(0.5f, 1f);
-        else
-            Debug.LogWarning("No CinemachineObjectShake found");
-
-        float reduced = Mathf.Max(amount - stats.defense * 0.5f, 1f);
-
-        PlayerBlock block = GetComponent<PlayerBlock>();
-
-        // PERFECT PARRY
-        if (block != null && block.IsParrying)
+        public void TakeDamage(float amount, Transform attacker)
         {
-            
 
-            if (HitStopManager.Instance != null)
+            // Defense III: ignore damage chance
+            if (SkillManager.Instance != null &&
+                SkillManager.Instance.defense3Unlocked)
             {
-                HitStopManager.Instance.Stop(0.08f);
-            }
+                int blockChance = Random.Range(0, 100);
 
-            Debug.Log("PERFECT PARRY!");
-            
-            // stun attacker
-            if (attacker != null)
-            {
-                EnemyStun stun =
-                    attacker.GetComponent<EnemyStun>();
-
-                if (stun != null)
+                if (blockChance < 15)
                 {
-                    stun.Stun(1f);
-                }
+                    Debug.Log("Defense III blocked damage!");
 
-                // knockback attacker
-                Rigidbody2D enemyRb =
-                    attacker.GetComponent<Rigidbody2D>();
-
-                if (enemyRb != null)
-                {
-                    Vector2 knockDir =
-                        (attacker.position - transform.position).normalized;
-
-                    enemyRb.linearVelocity = knockDir * 8f;
+                    return;
                 }
             }
 
-            return;
+            if (isInvincible) return;
+
+            if (CinemachineObjectShake.Instance != null)
+                CinemachineObjectShake.Instance.Shake(0.5f, 1f);
+            else
+                Debug.LogWarning("No CinemachineObjectShake found");
+
+            float reduced = Mathf.Max(amount - stats.defense * 0.5f, 1f);
+
+            PlayerBlock block = GetComponent<PlayerBlock>();
+
+            // PERFECT PARRY
+            if (block != null && block.IsParrying)
+            {
+                
+
+                if (HitStopManager.Instance != null)
+                {
+                    HitStopManager.Instance.Stop(0.08f);
+                }
+
+                Debug.Log("PERFECT PARRY!");
+                
+                // stun attacker
+                if (attacker != null)
+                {
+                    EnemyStun stun =
+                        attacker.GetComponent<EnemyStun>();
+
+                    if (stun != null)
+                    {
+                        stun.Stun(1f);
+                    }
+
+                    // knockback attacker
+                    Rigidbody2D enemyRb =
+                        attacker.GetComponent<Rigidbody2D>();
+
+                    if (enemyRb != null)
+                    {
+                        Vector2 knockDir =
+                            (attacker.position - transform.position).normalized;
+
+                        enemyRb.linearVelocity = knockDir * 8f;
+                    }
+                }
+
+                return;
+            }
+
+            // NORMAL BLOCK
+            if (block != null && block.IsBlocking)
+            {
+                reduced *= (1f - block.DamageReduction);
+
+                Debug.Log("BLOCKED DAMAGE!");
+            }
+
+            // Defense I
+            if (SkillManager.Instance != null &&
+                SkillManager.Instance.defense1Unlocked)
+            {
+                reduced *= 0.90f;
+
+                Debug.Log("Defense I reduced damage!");
+            }
+
+            stats.currentHealth -= reduced;
+            stats.currentHealth = Mathf.Max(stats.currentHealth, 0);
+
+            healthRegenTimer = healthRegenDelay;
+
+            // HIT FLASH
+            if (hitFlash != null)
+            {
+                Debug.Log("FLASH CALLED");
+                hitFlash.Flash();
+            }
+            else
+            {
+                Debug.LogWarning("HitFlash is missing on Player");
+            }
+
+            // KNOCKBACK
+            if (knockback != null && attacker != null)
+            {
+                Vector2 direction = (transform.position - attacker.position).normalized;
+                knockback.ApplyKnockback(direction);
+            }
+            else
+            {
+                Debug.LogWarning("Knockback missing or attacker missing");
+            }
+
+            Debug.Log("Player HP: " + stats.currentHealth);
+
+            UpdateAllUI();
+
+            StartCoroutine(InvincibilityFrames());
+
+            if (stats.currentHealth <= 0)
+                Die();
         }
 
-        // NORMAL BLOCK
-        if (block != null && block.IsBlocking)
+            private IEnumerator InvincibilityFrames()
         {
-            reduced *= (1f - block.DamageReduction);
+            isInvincible = true;
 
-            Debug.Log("BLOCKED DAMAGE!");
+            yield return new WaitForSeconds(invincibleTime);
+
+            isInvincible = false;
         }
 
-        // Defense I
-        if (SkillManager.Instance != null &&
-            SkillManager.Instance.defense1Unlocked)
+        // ── regen ──
+        void HandleStaminaRegen()
         {
-            reduced *= 0.90f;
+            if (staminaRegenTimer > 0)
+            {
+                staminaRegenTimer -= Time.deltaTime;
+                return;
+            }
 
-            Debug.Log("Defense I reduced damage!");
+            if (stats.currentStamina < stats.maxStamina)
+            {
+                stats.currentStamina += staminaRegenRate * Time.deltaTime;
+                stats.currentStamina = Mathf.Min(stats.currentStamina, stats.maxStamina);
+            }
         }
 
-        stats.currentHealth -= reduced;
-        stats.currentHealth = Mathf.Max(stats.currentHealth, 0);
+        void HandleHealthRegen()
+        {
+            if (healthRegenTimer > 0)
+            {
+                healthRegenTimer -= Time.deltaTime;
+                return;
+            }
 
-        healthRegenTimer = healthRegenDelay;
-
-        // HIT FLASH
-        if (hitFlash != null)
-        {
-            Debug.Log("FLASH CALLED");
-            hitFlash.Flash();
-        }
-        else
-        {
-            Debug.LogWarning("HitFlash is missing on Player");
-        }
-
-        // KNOCKBACK
-        if (knockback != null && attacker != null)
-        {
-            Vector2 direction = (transform.position - attacker.position).normalized;
-            knockback.ApplyKnockback(direction);
-        }
-        else
-        {
-            Debug.LogWarning("Knockback missing or attacker missing");
+            if (stats.currentHealth < stats.maxHealth)
+            {
+                stats.currentHealth += healthRegenRate * Time.deltaTime;
+                stats.currentHealth = Mathf.Min(stats.currentHealth, stats.maxHealth);
+            }
         }
 
-        Debug.Log("Player HP: " + stats.currentHealth);
 
-        UpdateAllUI();
-
-        StartCoroutine(InvincibilityFrames());
-
-        if (stats.currentHealth <= 0)
-            Die();
-    }
-
-        private IEnumerator InvincibilityFrames()
-    {
-        isInvincible = true;
-
-        yield return new WaitForSeconds(invincibleTime);
-
-        isInvincible = false;
-    }
-
-    // ── regen ──
-    void HandleStaminaRegen()
-    {
-        if (staminaRegenTimer > 0)
+        // ── EXP / Level ──
+        public void AddExp(int amount)
         {
-            staminaRegenTimer -= Time.deltaTime;
-            return;
+            stats.currentExp += amount;
+            Debug.Log("+" + amount + " EXP — Total: " + stats.currentExp);
+
+            while (stats.currentExp >= stats.expToNextLevel)
+            {
+                LevelUp();
+            }
         }
 
-        if (stats.currentStamina < stats.maxStamina)
+        void LevelUp()
         {
-            stats.currentStamina += staminaRegenRate * Time.deltaTime;
-            stats.currentStamina = Mathf.Min(stats.currentStamina, stats.maxStamina);
-        }
-    }
+            stats.currentExp -= stats.expToNextLevel;
+            SkillTreeTabController ui =
+                FindFirstObjectByType<SkillTreeTabController>();
 
-    void HandleHealthRegen()
-    {
-        if (healthRegenTimer > 0)
-        {
-            healthRegenTimer -= Time.deltaTime;
-            return;
+            if (ui != null)
+                ui.SendMessage("UpdateCurseUnlock");
+            stats.level++;
+            stats.expToNextLevel = Mathf.RoundToInt(stats.expToNextLevel * 1.5f);
+
+            stats.strength++;
+            stats.defense++;
+            stats.speed += 0.2f;
+            stats.maxHealth += 10f;
+            stats.maxStamina += 5f;
+
+            stats.currentHealth = stats.maxHealth;
+            stats.currentStamina = stats.maxStamina;
+
+            Debug.Log("LEVEL UP! Now level " + stats.level);
+
+            if (SkillManager.Instance != null)
+                SkillManager.Instance.AddSkillPoint(1);
+
+            UpdateAllUI();
         }
 
-        if (stats.currentHealth < stats.maxHealth)
+        public void RefreshSkillBonuses()
         {
-            stats.currentHealth += healthRegenRate * Time.deltaTime;
+            float baseMaxHealth = 100f;
+
+            // add normal stat scaling first
+            baseMaxHealth += (stats.level - 1) * 10f;
+
+            // Defense II
+            if (SkillManager.Instance != null &&
+                SkillManager.Instance.defense2Unlocked)
+            {
+                baseMaxHealth += 20f;
+            }
+
+            stats.maxHealth = baseMaxHealth;
+
+            stats.currentHealth =
+                Mathf.Min(stats.currentHealth, stats.maxHealth);
+
+            UpdateAllUI();
+        }
+
+        // ── healing ──
+        public void Heal(float amount)
+        {
+            stats.currentHealth += amount;
             stats.currentHealth = Mathf.Min(stats.currentHealth, stats.maxHealth);
         }
-    }
 
-
-    // ── EXP / Level ──
-    public void AddExp(int amount)
-    {
-        stats.currentExp += amount;
-        Debug.Log("+" + amount + " EXP — Total: " + stats.currentExp);
-
-        while (stats.currentExp >= stats.expToNextLevel)
+        public void RestoreStamina(float amount)
         {
-            LevelUp();
-        }
-    }
+            stats.currentStamina += amount;
 
-    void LevelUp()
-    {
-        stats.currentExp -= stats.expToNextLevel;
-        SkillTreeTabController ui =
-            FindFirstObjectByType<SkillTreeTabController>();
+            stats.currentStamina =
+                Mathf.Min(
+                    stats.currentStamina,
+                    stats.maxStamina
+                );
 
-        if (ui != null)
-            ui.SendMessage("UpdateCurseUnlock");
-        stats.level++;
-        stats.expToNextLevel = Mathf.RoundToInt(stats.expToNextLevel * 1.5f);
-
-        stats.strength++;
-        stats.defense++;
-        stats.speed += 0.2f;
-        stats.maxHealth += 10f;
-        stats.maxStamina += 5f;
-
-        stats.currentHealth = stats.maxHealth;
-        stats.currentStamina = stats.maxStamina;
-
-        Debug.Log("LEVEL UP! Now level " + stats.level);
-
-        if (SkillManager.Instance != null)
-            SkillManager.Instance.AddSkillPoint(1);
-
-        UpdateAllUI();
-    }
-
-    public void RefreshSkillBonuses()
-    {
-        float baseMaxHealth = 100f;
-
-        // add normal stat scaling first
-        baseMaxHealth += (stats.level - 1) * 10f;
-
-        // Defense II
-        if (SkillManager.Instance != null &&
-            SkillManager.Instance.defense2Unlocked)
-        {
-            baseMaxHealth += 20f;
+            UpdateAllUI();
         }
 
-        stats.maxHealth = baseMaxHealth;
-
-        stats.currentHealth =
-            Mathf.Min(stats.currentHealth, stats.maxHealth);
-
-        UpdateAllUI();
-    }
-
-    // ── healing ──
-    public void Heal(float amount)
-    {
-        stats.currentHealth += amount;
-        stats.currentHealth = Mathf.Min(stats.currentHealth, stats.maxHealth);
-    }
-
-    public void RestoreStamina(float amount)
-    {
-        stats.currentStamina += amount;
-
-        stats.currentStamina =
-            Mathf.Min(
-                stats.currentStamina,
-                stats.maxStamina
-            );
-
-        UpdateAllUI();
-    }
-
-    public void RestoreAll()
-    {
-        SetHealth(GetMaxHealth());
-        SetStamina(GetMaxStamina());
-    }
-    void Die()
-    {
-        Debug.Log("Player died!");
-    }
-
-    public bool UseStamina(float amount)
-    {
-        if (stats.currentStamina < amount)
+        public void RestoreAll()
         {
-            Debug.Log("Not enough stamina");
-            return false;
+            SetHealth(GetMaxHealth());
+            SetStamina(GetMaxStamina());
         }
 
-        stats.currentStamina -= amount;
+        void Die()
+        {
+            Debug.Log("[DIE CALLED] Player died! Current Health: " + stats.currentHealth);
 
-        stats.currentStamina =
-            Mathf.Max(stats.currentStamina, 0);
+            if (GameOverUI.Instance != null)
+            {
+                Debug.Log("[DIE] Calling GameOverUI.Instance.Show()");
+                GameOverUI.Instance.Show();
+            }
+            else
+            {
+                Debug.LogError("[DIE ERROR] GameOverUI.Instance is NULL! Searching scene...");
 
-        staminaRegenTimer = staminaRegenDelay;
+                // Try inactive GameObjects too (in case the panel is disabled)
+                GameOverUI ui = FindAnyObjectByType<GameOverUI>(FindObjectsInactive.Include);
+                if (ui != null)
+                {
+                    Debug.Log("[DIE] Found GameOverUI (including inactive)!");
+                    GameOverUI.Instance = ui;
+                    GameOverUI.Instance.Show();
+                }
+                else
+                {
+                    Debug.LogError("[DIE FATAL ERROR] No GameOverUI found in scene!");
+                }
+            }
+        }
 
-        UpdateAllUI();
+        public bool UseStamina(float amount)
+        {
+            if (stats.currentStamina < amount)
+            {
+                Debug.Log("Not enough stamina");
+                return false;
+            }
 
-        return true;
+            stats.currentStamina -= amount;
+
+            stats.currentStamina =
+                Mathf.Max(stats.currentStamina, 0);
+
+            staminaRegenTimer = staminaRegenDelay;
+
+            UpdateAllUI();
+
+            return true;
+        }
+
+        // ── getters ──
+        public float GetHealth() => stats.currentHealth;
+        public float GetMaxHealth() => stats.maxHealth;
+        public float GetStamina() => stats.currentStamina;
+        public float GetMaxStamina() => stats.maxStamina;
+        public int GetLevel() => stats.level;
+        public int GetExp() => stats.currentExp;
+        public int GetExpToNext() => stats.expToNextLevel;
+        public int GetStrength() => stats.strength;
+        public int GetDefense() => stats.defense;
+        public float GetSpeed() => stats.speed;
+
+        // ── setters ──
+        public void SetHealth(float v) => stats.currentHealth = Mathf.Clamp(v, 0, stats.maxHealth);
+        public void SetStamina(float v) => stats.currentStamina = Mathf.Clamp(v, 0, stats.maxStamina);
+        public void SetLevel(int v) => stats.level = v;
+        public void SetExp(int v) => stats.currentExp = v;
+        public void SetExpToNext(int v) => stats.expToNextLevel = v;
+        public void SetStrength(int v) => stats.strength = v;
+        public void SetDefense(int v) => stats.defense = v;
+        public void SetSpeed(float v) => stats.speed = v;
+        public void SetMaxHealth(float v) => stats.maxHealth = v;
+        public void SetMaxStamina(float v) => stats.maxStamina = v;
+
+        // ── UI ──
+        void UpdateAllUI()
+        {
+            UpdateHUD();
+            UpdateBookPage();
+        }
+
+        void UpdateHUD()
+        {
+            if (healthBarHUD != null)
+                healthBarHUD.value = stats.currentHealth / stats.maxHealth;
+
+            if (staminaBarHUD != null)
+                staminaBarHUD.value = stats.currentStamina / stats.maxStamina;
+
+            if (healthTextHUD != null)
+                healthTextHUD.text = Mathf.CeilToInt(stats.currentHealth) + "/" + (int)stats.maxHealth;
+
+            if (staminaTextHUD != null)
+                staminaTextHUD.text = Mathf.CeilToInt(stats.currentStamina) + "/" + (int)stats.maxStamina;
+
+            if (levelTextHUD != null)
+                levelTextHUD.text = "Lv." + stats.level;
+
+            if (expBarHUD != null)
+                expBarHUD.value = (float)stats.currentExp / stats.expToNextLevel;
+        }
+
+        void UpdateBookPage()
+        {
+            if (bookLevelText != null) bookLevelText.text = "Level: " + stats.level;
+            if (bookExpText != null) bookExpText.text = "EXP: " + stats.currentExp + " / " + stats.expToNextLevel;
+            if (bookStrengthText != null) bookStrengthText.text = "Strength: " + stats.strength;
+            if (bookDefenseText != null) bookDefenseText.text = "Defense: " + stats.defense;
+            if (bookSpeedText != null) bookSpeedText.text = "Speed: " + stats.speed.ToString("F1");
+            if (bookHealthText != null) bookHealthText.text = "Health: " + Mathf.CeilToInt(stats.currentHealth) + " / " + (int)stats.maxHealth;
+            if (bookStaminaText != null) bookStaminaText.text = "Stamina: " + Mathf.CeilToInt(stats.currentStamina) + " / " + (int)stats.maxStamina;
+        }
     }
-
-    // ── getters ──
-    public float GetHealth() => stats.currentHealth;
-    public float GetMaxHealth() => stats.maxHealth;
-    public float GetStamina() => stats.currentStamina;
-    public float GetMaxStamina() => stats.maxStamina;
-    public int GetLevel() => stats.level;
-    public int GetExp() => stats.currentExp;
-    public int GetExpToNext() => stats.expToNextLevel;
-    public int GetStrength() => stats.strength;
-    public int GetDefense() => stats.defense;
-    public float GetSpeed() => stats.speed;
-
-    // ── setters ──
-    public void SetHealth(float v) => stats.currentHealth = Mathf.Clamp(v, 0, stats.maxHealth);
-    public void SetStamina(float v) => stats.currentStamina = Mathf.Clamp(v, 0, stats.maxStamina);
-    public void SetLevel(int v) => stats.level = v;
-    public void SetExp(int v) => stats.currentExp = v;
-    public void SetExpToNext(int v) => stats.expToNextLevel = v;
-    public void SetStrength(int v) => stats.strength = v;
-    public void SetDefense(int v) => stats.defense = v;
-    public void SetSpeed(float v) => stats.speed = v;
-    public void SetMaxHealth(float v) => stats.maxHealth = v;
-    public void SetMaxStamina(float v) => stats.maxStamina = v;
-
-    // ── UI ──
-    void UpdateAllUI()
-    {
-        UpdateHUD();
-        UpdateBookPage();
-    }
-
-    void UpdateHUD()
-    {
-        if (healthBarHUD != null)
-            healthBarHUD.value = stats.currentHealth / stats.maxHealth;
-
-        if (staminaBarHUD != null)
-            staminaBarHUD.value = stats.currentStamina / stats.maxStamina;
-
-        if (healthTextHUD != null)
-            healthTextHUD.text = Mathf.CeilToInt(stats.currentHealth) + "/" + (int)stats.maxHealth;
-
-        if (staminaTextHUD != null)
-            staminaTextHUD.text = Mathf.CeilToInt(stats.currentStamina) + "/" + (int)stats.maxStamina;
-
-        if (levelTextHUD != null)
-            levelTextHUD.text = "Lv." + stats.level;
-
-        if (expBarHUD != null)
-            expBarHUD.value = (float)stats.currentExp / stats.expToNextLevel;
-    }
-
-    void UpdateBookPage()
-    {
-        if (bookLevelText != null) bookLevelText.text = "Level: " + stats.level;
-        if (bookExpText != null) bookExpText.text = "EXP: " + stats.currentExp + " / " + stats.expToNextLevel;
-        if (bookStrengthText != null) bookStrengthText.text = "Strength: " + stats.strength;
-        if (bookDefenseText != null) bookDefenseText.text = "Defense: " + stats.defense;
-        if (bookSpeedText != null) bookSpeedText.text = "Speed: " + stats.speed.ToString("F1");
-        if (bookHealthText != null) bookHealthText.text = "Health: " + Mathf.CeilToInt(stats.currentHealth) + " / " + (int)stats.maxHealth;
-        if (bookStaminaText != null) bookStaminaText.text = "Stamina: " + Mathf.CeilToInt(stats.currentStamina) + " / " + (int)stats.maxStamina;
-    }
-}

@@ -37,6 +37,11 @@ public class BedInteract : MonoBehaviour
 
         if (sleepText != null)
             sleepText.text = "";
+
+        if (wakeUpPosition != null && string.IsNullOrEmpty(SpawnManager.bedSpawnPointName))
+        {
+            SpawnManager.bedSpawnPointName = wakeUpPosition.gameObject.name;
+        }
     }
 
     void Update()
@@ -103,6 +108,7 @@ public class BedInteract : MonoBehaviour
         if (wakeUpPosition != null && player != null)
         {
             player.transform.position = wakeUpPosition.position;
+            SpawnManager.bedSpawnPointName = wakeUpPosition.gameObject.name;
 
             var confiner = FindFirstObjectByType<CinemachineConfiner2D>();
             if (confiner != null)
