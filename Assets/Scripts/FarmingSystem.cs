@@ -49,7 +49,11 @@ public class FarmingSystem : MonoBehaviour
     {
         if (isUsingTool)
         {
-            Debug.Log("Still using tool...");
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.ShowTemporary("Still using tool...");
+            else
+                Debug.Log("Still using tool...");
+
             return;
         }
 
@@ -73,7 +77,11 @@ public class FarmingSystem : MonoBehaviour
 
         if (hotbar == null)
         {
-            Debug.Log("Hotbar missing");
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.ShowTemporary("Hotbar missing");
+            else
+                Debug.Log("Hotbar missing");
+
             return;
         }
 
@@ -81,7 +89,11 @@ public class FarmingSystem : MonoBehaviour
 
         if (equippedItem == null)
         {
-            Debug.Log("No equipped item");
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.ShowTemporary("No equipped item");
+            else
+                Debug.Log("No equipped item");
+
             return;
         }
 
@@ -96,7 +108,11 @@ public class FarmingSystem : MonoBehaviour
 
         if (dist > interactRange)
         {
-            Debug.Log("Too far: " + dist);
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.ShowTemporary("Too far");
+            else
+                Debug.Log("Too far: " + dist);
+
             return;
         }
 
@@ -125,7 +141,10 @@ public class FarmingSystem : MonoBehaviour
                 if (FishingQTEManager.Instance != null)
                 {
                     FishingQTEManager.Instance.StartFishing();
-                    Debug.Log("Fishing started!");
+                    if (InteractionUI.Instance != null)
+                        InteractionUI.Instance.ShowTemporary("Fishing started!");
+                    else
+                        Debug.Log("Fishing started!");
                 }
                 else
                 {
@@ -135,7 +154,10 @@ public class FarmingSystem : MonoBehaviour
                 return;
             }
 
-            Debug.Log("You must click water to fish.");
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.ShowTemporary("Click water to fish");
+            else
+                Debug.Log("You must click water to fish.");
             return;
         }
 
@@ -219,7 +241,10 @@ public class FarmingSystem : MonoBehaviour
                 }
             }
 
-            Debug.Log("No rock or prop clicked.");
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.ShowTemporary("No rock or prop clicked");
+            else
+                Debug.Log("No rock or prop clicked.");
             return;
         }
 
@@ -263,7 +288,10 @@ public class FarmingSystem : MonoBehaviour
             }
         }
 
-        Debug.Log("No farm tile clicked.");
+        if (InteractionUI.Instance != null)
+            InteractionUI.Instance.ShowTemporary("No farm tile clicked");
+        else
+            Debug.Log("No farm tile clicked.");
     }
 
     float GetFarmTileStaminaCost(Item item)

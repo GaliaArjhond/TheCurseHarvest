@@ -30,7 +30,10 @@ public class FarmTile : MonoBehaviour
         // HARVEST
         if (currentCrop != null && currentCrop.CanHarvest())
         {
-            Debug.Log("Harvesting crop");
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.ShowTemporary("Harvesting crop");
+            else
+                Debug.Log("Harvesting crop");
 
             currentCrop.Harvest();
             currentCrop = null;

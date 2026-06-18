@@ -143,10 +143,8 @@ public class QuestNPC : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNear = true;
-
-            Debug.Log(
-                "Press E to talk."
-            );
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.Show("[E] Talk to Maria");
         }
     }
 
@@ -155,6 +153,8 @@ public class QuestNPC : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNear = false;
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.Hide();
         }
     }
 

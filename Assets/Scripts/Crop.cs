@@ -74,6 +74,26 @@ public class Crop : MonoBehaviour
         return readyToHarvest;
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!readyToHarvest) return;
+
+        if (other.CompareTag("Player"))
+        {
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.Show("[E] Harvest");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.Hide();
+        }
+    }
+
     public void Harvest()
     {
         if (!readyToHarvest)

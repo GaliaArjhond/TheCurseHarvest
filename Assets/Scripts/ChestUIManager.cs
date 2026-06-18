@@ -37,8 +37,16 @@ public class ChestUIManager : MonoBehaviour
     {
         Debug.Log("CLOSE CHEST: " + (chestWindow != null ? chestWindow.name : "NULL"));
 
-        if (chestWindow != null)
+        if (chestWindow != null && chestWindow.activeSelf)
+        {
             chestWindow.SetActive(false);
+
+            if (inventoryPage != null)
+                inventoryPage.SetActive(false);
+
+            if (menu != null)
+                menu.SetActive(false);
+        }
     }
 
     public void CloseMenuAndChest()

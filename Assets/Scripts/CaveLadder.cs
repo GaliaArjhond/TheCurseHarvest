@@ -8,6 +8,8 @@ public class CaveLadder : MonoBehaviour
     {
         if (!other.CompareTag("Player"))
             return;
+        if (InteractionUI.Instance != null)
+            InteractionUI.Instance.Show("[E] Climb Ladder");
 
         if (used)
             return;
@@ -18,5 +20,13 @@ public class CaveLadder : MonoBehaviour
         {
             CaveManager.Instance.GoNextLevel();
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
+
+        if (InteractionUI.Instance != null)
+            InteractionUI.Instance.Hide();
     }
 }

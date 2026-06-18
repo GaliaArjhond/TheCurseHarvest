@@ -47,6 +47,8 @@ public class BedInteract : MonoBehaviour
         {
             if (sleepPromptPanel != null)
                 sleepPromptPanel.SetActive(true);
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.Hide();
         }
     }
 
@@ -56,7 +58,8 @@ public class BedInteract : MonoBehaviour
         {
             playerInside = true;
             player = other.gameObject;
-            Debug.Log("Press E to sleep");
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.Show("[E] Sleep");
         }
     }
 
@@ -68,6 +71,8 @@ public class BedInteract : MonoBehaviour
 
             if (sleepPromptPanel != null)
                 sleepPromptPanel.SetActive(false);
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.Hide();
         }
     }
 

@@ -26,7 +26,12 @@ public class ShopInteract : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
+        {
             playerInRange = true;
+
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.Show("[E] Open Shop");
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -37,6 +42,9 @@ public class ShopInteract : MonoBehaviour
 
             if (shopPanel != null)
                 shopPanel.SetActive(false);
+
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.Hide();
         }
     }
 }

@@ -42,13 +42,19 @@ public class HarvestableProp : MonoBehaviour
     {
         if (requiredTool == ToolType.Axe && toolName != "Axe")
         {
-            Debug.Log("Need Axe");
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.ShowTemporary("Need Axe");
+            else
+                Debug.Log("Need Axe");
             return;
         }
 
         if (requiredTool == ToolType.Pickaxe && toolName != "Pickaxe")
         {
-            Debug.Log("Need Pickaxe");
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.ShowTemporary("Need Pickaxe");
+            else
+                Debug.Log("Need Pickaxe");
             return;
         }
 

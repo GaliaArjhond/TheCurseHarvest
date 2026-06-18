@@ -28,7 +28,10 @@ public class WorldItem : MonoBehaviour
         }
         else
         {
-            Debug.Log("Inventory full. Item was not picked up.");
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.ShowTemporary("Inventory full");
+            else
+                Debug.Log("Inventory full. Item was not picked up.");
         }
     }
 }

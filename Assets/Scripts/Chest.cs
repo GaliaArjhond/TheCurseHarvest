@@ -9,7 +9,7 @@ public class Chest : MonoBehaviour
     {
         if (!playerInRange) return;
 
-        if (Mouse.current.rightButton.wasPressedThisFrame)
+        if (Keyboard.current.eKey.wasPressedThisFrame)
         {
             if (ChestUIManager.Instance != null)
             {
@@ -26,6 +26,8 @@ public class Chest : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.Show("[E] Open Chest");
         }
     }
 
@@ -37,6 +39,9 @@ public class Chest : MonoBehaviour
 
             if (ChestUIManager.Instance != null)
                 ChestUIManager.Instance.CloseChest();
+
+            if (InteractionUI.Instance != null)
+                InteractionUI.Instance.Hide();
         }
     }
 }

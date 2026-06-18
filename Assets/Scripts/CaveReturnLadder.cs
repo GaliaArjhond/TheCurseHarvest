@@ -8,6 +8,8 @@ public class CaveReturnLadder : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+        if (InteractionUI.Instance != null)
+            InteractionUI.Instance.Show("[E] Climb Ladder");
         if (used) return;
 
         used = true;
