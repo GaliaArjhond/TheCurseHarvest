@@ -5,34 +5,33 @@ public class QuestManager : MonoBehaviour
     public static QuestManager Instance;
 
     [Header("Quest States")]
-    public bool quest1Accepted;
-    public bool quest1Completed;
-
-    public bool quest2Accepted;
-    public bool quest2Completed;
-
-    public bool quest3Accepted;
-    public bool quest3Completed;
-
-    public bool quest4Accepted;
-    public bool quest4Completed;
-
-    public bool quest5Accepted;
-    public bool quest5Completed;
+    // current quest id mapping:
+    // 0 = Talk to Maria
+    // 1 = Collect 10 Wood
+    // 2 = Collect 5 Stone
+    // 3 = Plant 5 Carrots
+    // 4 = Harvest 5 Carrots
+    // 5 = Defeat 3 Halimaws
+    // 6 = Complete
+    public int currentQuest = 0;
 
     [Header("Quest Progress")]
     public int woodCollected;
     public int stoneCollected;
     public int halimawsKilled;
     public int fishCaught;
+    public int carrotsPlanted;
+    public int carrotsHarvested;
+    // (use existing `halimawsKilled` counter)
 
     public void AcceptQuest1()
     {
-        quest1Accepted = true;
-
-        Debug.Log(
-            "Quest Accepted: A Farmer's Beginning"
-        );
+        // Player accepted the first quest — advance to quest 1
+        if (currentQuest == 0)
+        {
+            currentQuest = 1;
+            Debug.Log("Quest Accepted: A Farmer's Beginning");
+        }
     }
     void Awake()
     {
@@ -47,144 +46,69 @@ public class QuestManager : MonoBehaviour
 
     void Update()
     {
-        CheckQuest1();
-        CheckQuest2();
-        CheckQuest3();
-        CheckQuest4();
-        CheckQuest5();
+        CheckCurrentQuest();
     }
 
-    void CheckQuest1()
+    void CheckCurrentQuest()
     {
-        if(
-            quest1Accepted
-            && !quest1Completed
-            && woodCollected >= 10
-        )
+        switch (currentQuest)
         {
-            CompleteQuest1();
-        }
-    }
-
-    void CompleteQuest1()
-    {
-        quest1Completed = true;
-
-        Debug.Log(
-            "Quest Complete!"
-        );
-
-        if(MoneyManager.Instance != null)
-        {
-            MoneyManager.Instance.AddMoney(
-                100
-            );
-        }
-
-        PlayerStatsManager player =
-            FindFirstObjectByType<PlayerStatsManager>();
-
-        if(player != null)
-        {
-            player.AddExp(
-                25
-            );
-        }
-    }
-
-    void CheckQuest2()
-    {
-        if (
-            quest2Accepted &&
-            !quest2Completed &&
-            stoneCollected >= 10
-        )
-        {
-            quest2Completed = true;
-
-            RewardPlayer(
-                150,
-                35
-            );
-
-            Debug.Log(
-                "Quest 2 Complete!"
-            );
-        }
-    }
-
-    void CheckQuest3()
-    {
-        if (
-            quest3Accepted &&
-            !quest3Completed &&
-            halimawsKilled >= 5
-        )
-        {
-            quest3Completed = true;
-
-            RewardPlayer(
-                200,
-                50
-            );
-
-            Debug.Log(
-                "Quest 3 Complete!"
-            );
-        }
-    }
-
-    void CheckQuest4()
-    {
-        if (
-            quest4Accepted &&
-            !quest4Completed &&
-            fishCaught >= 5
-        )
-        {
-            quest4Completed = true;
-
-            RewardPlayer(
-                250,
-                60
-            );
-
-            Debug.Log(
-                "Quest 4 Complete!"
-            );
-        }
-    }
-
-    void CheckQuest5()
-    {
-        if (
-            quest5Accepted &&
-            !quest5Completed &&
-            woodCollected >= 50 &&
-            stoneCollected >= 25
-        )
-        {
-            quest5Completed = true;
-
-            RewardPlayer(
-                500,
-                100
-            );
-
-            Debug.Log(
-                "Quest 5 Complete!"
-            );
+            case 1: // Collect 10 Wood
+                if (woodCollected >= 10)
+                {
+                    Debug.Log("Quest 1 Complete!");
+                    RewardPlayer(100, 25);
+                    currentQuest = 2;
+                }
+                break;
+            case 2: // Collect 5 Stone
+                if (stoneCollected >= 5)
+                {
+                    Debug.Log("Quest 2 Complete!");
+                    RewardPlayer(150, 35);
+                    currentQuest = 3;
+                }
+                break;
+            case 3: // Plant 5 Carrots
+                if (carrotsPlanted >= 5)
+                {
+                    Debug.Log("Quest 3 Complete!");
+                    RewardPlayer(200, 50);
+                    currentQuest = 4;
+                }
+                break;
+            case 4: // Harvest 5 Carrots
+                if (carrotsHarvested >= 5)
+                {
+                    Debug.Log("Quest 4 Complete!");
+                    RewardPlayer(250, 60);
+                    currentQuest = 5;
+                }
+                break;
+            case 5: // Defeat 3 Halimaws
+                if (halimawsKilled >= 3)
+                {
+                    Debug.Log("Quest 5 Complete!");
+                    RewardPlayer(500, 100);
+                    currentQuest = 6;
+                }
+                break;
+            case 6: // All complete
+                // nothing to check
+                break;
+            default:
+                break;
         }
     }
 
     void RewardPlayer(
-        int gold,
+        int pesos,
         int exp)
     {
         if (MoneyManager.Instance != null)
         {
             MoneyManager.Instance.AddMoney(
-                gold
+                pesos
             );
         }
 
@@ -205,5 +129,8 @@ public class QuestManager : MonoBehaviour
         stoneCollected = 0;
         halimawsKilled = 0;
         fishCaught = 0;
+        carrotsPlanted = 0;
+        carrotsHarvested = 0;
+
     }
 }

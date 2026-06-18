@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CaveRock : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class CaveRock : MonoBehaviour
     [SerializeField] private int stoneID = 1;
     [SerializeField] private int coalID = 9;
     [SerializeField] private int ironID = 10;
-    [SerializeField] private int goldID = 11;
+    [FormerlySerializedAs("goldID")]
+    [SerializeField] private int pesoID = 11;
 
     public void HitRock()
     {
@@ -57,7 +59,7 @@ public class CaveRock : MonoBehaviour
             if (roll < 35) itemToAdd = stoneID;
             else if (roll < 60) itemToAdd = coalID;
             else if (roll < 90) itemToAdd = ironID;
-            else itemToAdd = goldID;
+            else itemToAdd = pesoID;
         }
 
         if (InventoryController.Instance != null)

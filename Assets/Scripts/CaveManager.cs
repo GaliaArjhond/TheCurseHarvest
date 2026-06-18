@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using TMPro;
 using Cinemachine;
 
@@ -27,7 +28,8 @@ public class CaveManager : MonoBehaviour
     [SerializeField] private GameObject stoneRockPrefab;
     [SerializeField] private GameObject coalNodePrefab;
     [SerializeField] private GameObject ironNodePrefab;
-    [SerializeField] private GameObject goldNodePrefab;
+    [FormerlySerializedAs("goldNodePrefab")]
+    [SerializeField] private GameObject pesoNodePrefab;
 
     [Header("Camera")]
     [SerializeField] private PolygonCollider2D startBounds;
@@ -92,12 +94,12 @@ public class CaveManager : MonoBehaviour
         ClearOldLadder();
         ClearOldRocks();
 
-        if (rockSpawnParent == null ||
+            if (rockSpawnParent == null ||
             rockSpawnCenter == null ||
             stoneRockPrefab == null ||
             coalNodePrefab == null ||
             ironNodePrefab == null ||
-            goldNodePrefab == null)
+            pesoNodePrefab == null)
         {
             Debug.LogError("Missing cave spawn references or ore prefabs.");
             return;
@@ -147,7 +149,7 @@ public class CaveManager : MonoBehaviour
         if (roll < 70) return coalNodePrefab;
         if (roll < 90) return ironNodePrefab;
 
-        return goldNodePrefab;
+        return pesoNodePrefab;
     }
 
     public void TrySpawnLadder(Vector3 position)

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -17,7 +18,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float minDistanceFromPlayer = 5f;
 
     [Header("Enemy Prefabs")]
-    [SerializeField] private GameObject slimePrefab;
+    [FormerlySerializedAs("slimePrefab")]
+    [SerializeField] private GameObject halimawPrefab;
     [SerializeField] private GameObject batPrefab;
     [SerializeField] private GameObject skeletonPrefab;
 
@@ -59,8 +61,6 @@ public class EnemySpawner : MonoBehaviour
                 return;
             }
         }
-
-        Debug.Log("SPAWNING ENEMIES FOR LEVEL " + caveLevel);
 
         ClearEnemies();
 
@@ -112,19 +112,19 @@ public class EnemySpawner : MonoBehaviour
 
         if (level <= 5)
         {
-            return slimePrefab;
+            return halimawPrefab;
         }
 
         if (level <= 10)
         {
             if (roll < 70)
-                return slimePrefab;
+                return halimawPrefab;
 
             return batPrefab;
         }
 
         if (roll < 40)
-            return slimePrefab;
+            return halimawPrefab;
 
         if (roll < 80)
             return batPrefab;

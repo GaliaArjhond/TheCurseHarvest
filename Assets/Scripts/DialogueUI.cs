@@ -39,7 +39,7 @@ public class DialogueUI : MonoBehaviour
     {
         dialoguePanel.SetActive(true);
 
-        nameText.text = npcName;
+        nameText.text = "Talk to " + npcName;
 
         dialogueText.text = message;
     }

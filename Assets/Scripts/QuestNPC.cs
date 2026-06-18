@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class QuestNPC : MonoBehaviour
 {
@@ -6,6 +7,26 @@ public class QuestNPC : MonoBehaviour
     private string npcName = "Maria";
 
     private bool playerNear;
+
+    [Header("Quest UI (TextMeshPro)")]
+    [SerializeField] private TMP_Text questTitleTMP;
+    [SerializeField] private TMP_Text questDescriptionTMP;
+    [SerializeField] private TMP_Text questProgressTMP;
+
+    private void SetTitle(string s)
+    {
+        if (questTitleTMP != null) questTitleTMP.text = s;
+    }
+
+    private void SetDescription(string s)
+    {
+        if (questDescriptionTMP != null) questDescriptionTMP.text = s;
+    }
+
+    private void SetProgress(string s)
+    {
+        if (questProgressTMP != null) questProgressTMP.text = s;
+    }
 
     void Update()
     {
@@ -15,7 +36,53 @@ public class QuestNPC : MonoBehaviour
             Talk();
         }
     }
-    
+
+    void UpdateQuestUI()
+    {
+        if (QuestManager.Instance == null)
+        {
+            Debug.LogWarning("QuestManager not found.");
+            return;
+        }
+        switch (QuestManager.Instance.currentQuest)
+        {
+            case 0:
+                SetTitle("A Farmer's Beginning");
+                SetDescription("Talk to Maria");
+                SetProgress("");
+                break;
+            case 1:
+                SetTitle("A Farmer's Beginning");
+                SetDescription("Collect 10 Wood");
+                SetProgress(QuestManager.Instance.woodCollected + " / 10");
+                break;
+            case 2:
+                SetTitle("Stone For Repairs");
+                SetDescription("Collect 5 Stone");
+                SetProgress(QuestManager.Instance.stoneCollected + " / 5");
+                break;
+            case 3:
+                SetTitle("New Beginnings");
+                SetDescription("Plant 5 Carrots");
+                SetProgress(QuestManager.Instance.carrotsPlanted + " / 5");
+                break;
+            case 4:
+                SetTitle("Harvest Time");
+                SetDescription("Harvest 5 Carrots");
+                SetProgress(QuestManager.Instance.carrotsHarvested + " / 5");
+                break;
+            case 5:
+                SetTitle("Protect The Farm");
+                    SetDescription("Defeat 3 Halimaws");
+                    SetProgress(QuestManager.Instance.halimawsKilled + " / 3");
+                break;
+            case 6:
+                SetTitle("QUEST COMPLETE");
+                SetDescription("All beginner quests finished.");
+                SetProgress("");
+                break;
+        }
+    }
 
     void Talk()
     {
@@ -35,8 +102,8 @@ public class QuestNPC : MonoBehaviour
             return;
         }
 
-        // already completed
-        if (QuestManager.Instance.quest1Completed)
+        // already completed (quest 1 finished -> currentQuest > 1)
+        if (QuestManager.Instance.currentQuest > 1)
         {
             Debug.Log(
                 npcName +
@@ -55,11 +122,11 @@ public class QuestNPC : MonoBehaviour
 
         "Can you collect 10 Wood for me?\n\n" +
 
-        "Reward:\n" +
+        "Rewards:\n" +
 
-        "100 Gold\n" +
+        "• 100 Pesos\n" +
 
-        "25 EXP"
+        "• 25 EXP"
 
         );
 
@@ -89,5 +156,10 @@ public class QuestNPC : MonoBehaviour
         {
             playerNear = false;
         }
+    }
+
+    void Start()
+    {
+        UpdateQuestUI();
     }
 }
