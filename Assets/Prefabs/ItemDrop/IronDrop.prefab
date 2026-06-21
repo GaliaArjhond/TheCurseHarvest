@@ -322,6 +322,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 14
   Name: Iron
+  description: A sturdy metal ore used for crafting stronger tools, weapons, and
+    equipment
   itemType: 4
   isPlaceable: 1
   placeablePrefab: {fileID: 0}

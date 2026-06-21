@@ -17,7 +17,11 @@ public class ItemTooltipTrigger :
         PointerEventData eventData)
     {
         if (ItemTooltip.Instance != null)
-            ItemTooltip.Instance.ShowTooltip(item);
+            ItemTooltip.Instance.ShowTooltip(
+                item,
+                eventData.position,
+                GetComponent<RectTransform>()
+            );
     }
 
     public void OnPointerExit(

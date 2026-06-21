@@ -30,7 +30,12 @@ public class QuestNPC : MonoBehaviour
 
     void Update()
     {
+        bool dialogueOpen =
+            DialogueUI.Instance != null &&
+            DialogueUI.Instance.IsDialogueOpen;
+
         if (playerNear &&
+            !dialogueOpen &&
             Input.GetKeyDown(KeyCode.E))
         {
             Talk();
@@ -99,6 +104,11 @@ public class QuestNPC : MonoBehaviour
             Debug.LogWarning(
                 "DialogueUI not found."
             );
+            return;
+        }
+
+        if (DialogueUI.Instance.IsDialogueOpen)
+        {
             return;
         }
 

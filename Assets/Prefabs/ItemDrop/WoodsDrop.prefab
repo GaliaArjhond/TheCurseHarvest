@@ -322,6 +322,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 2
   Name: Wood
+  description: A basic building material gathered from trees. Used for crafting tools,
+    furniture, and repairs
   itemType: 4
   isPlaceable: 1
   placeablePrefab: {fileID: 0}

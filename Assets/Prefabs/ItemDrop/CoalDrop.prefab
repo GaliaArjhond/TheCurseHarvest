@@ -322,6 +322,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 13
   Name: Coal
+  description: A black mineral used as fuel and crafting material. Burns for a long
+    time
   itemType: 4
   isPlaceable: 1
   placeablePrefab: {fileID: 0}

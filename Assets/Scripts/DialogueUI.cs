@@ -4,6 +4,7 @@ using UnityEngine;
 public class DialogueUI : MonoBehaviour
 {
     public static DialogueUI Instance;
+    public bool IsDialogueOpen { get; private set; }
 
     [SerializeField]
     private GameObject dialoguePanel;
@@ -17,7 +18,7 @@ public class DialogueUI : MonoBehaviour
     void Awake()
     {
         Instance = this;
-
+        IsDialogueOpen = false;
         dialoguePanel.SetActive(false);
     }
 
@@ -38,14 +39,26 @@ public class DialogueUI : MonoBehaviour
         string message)
     {
         dialoguePanel.SetActive(true);
+        IsDialogueOpen = true;
+
+        if (PauseManager.Instance != null)
+        {
+            PauseManager.Instance.SetPaused(true);
+        }
 
         nameText.text = "Talk to " + npcName;
-
         dialogueText.text = message;
     }
 
     public void HideDialogue()
     {
         dialoguePanel.SetActive(false);
+        IsDialogueOpen = false;
+
+        if (PauseManager.Instance != null &&
+            PauseManager.Instance.IsPaused)
+        {
+            PauseManager.Instance.SetPaused(false);
+        }
     }
 }
