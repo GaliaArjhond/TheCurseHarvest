@@ -32,13 +32,33 @@ public class Item : MonoBehaviour
     {
         Misc,
         Tool,
+        Weapon,
+        Helmet,
+        Armor,
+        Boots,
+        Charm,
         Seed,
         Food,
-        Resource,
-        Weapon
+        Resource
     }
 
     public CropData cropData;
+
+    [Header("Equipment Stats")]
+
+    public int hpBonus;
+
+    public int attackBonus;
+
+    public int defenseBonus;
+
+    public int staminaBonus;
+
+    public float moveSpeedBonus;
+
+    public float fishingLuckBonus;
+
+    public float miningSpeedBonus;
 
     void Awake()
     {

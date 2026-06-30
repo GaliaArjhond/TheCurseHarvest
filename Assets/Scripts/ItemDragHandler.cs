@@ -47,7 +47,43 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         Item draggedItem = GetComponent<Item>();
 
-        // Empty slot
+        if (draggedItem == null)
+        {
+            ReturnToOriginalSlot();
+            return;
+        }
+
+        if (dropSlot.slotType != Slot.SlotType.Inventory)
+        {
+            if (!IsValidEquipmentDrop(dropSlot, draggedItem))
+            {
+                ReturnToOriginalSlot();
+                return;
+            }
+
+            EquipToSlot(dropSlot);
+            return;
+        }
+
+        if (originalSlot != null &&
+            originalSlot.slotType != Slot.SlotType.Inventory)
+        {
+            MoveToSlot(dropSlot);
+
+            EquipmentManager equipmentManager =
+                EquipmentManager.Instance ??
+                FindFirstObjectByType<EquipmentManager>();
+
+            if (equipmentManager != null)
+            {
+                equipmentManager.Unequip(
+                    GetEquipmentTypeFromSlot(originalSlot)
+                );
+            }
+
+            return;
+        }
+
         if (dropSlot.currentItem == null)
         {
             MoveToSlot(dropSlot);
@@ -56,7 +92,6 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         Item targetItem = dropSlot.currentItem.GetComponent<Item>();
 
-        // Merge same stackable item
         if (draggedItem != null && targetItem != null &&
             draggedItem.ID == targetItem.ID &&
             draggedItem.isStackable)
@@ -88,8 +123,49 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             return;
         }
 
-        // Swap different items
         SwapWithSlot(dropSlot);
+    }
+
+    bool IsValidEquipmentDrop(Slot slot, Item item)
+    {
+        switch (slot.slotType)
+        {
+            case Slot.SlotType.Helmet:
+                return item.itemType == Item.ItemType.Helmet;
+
+            case Slot.SlotType.Armor:
+                return item.itemType == Item.ItemType.Armor;
+
+            case Slot.SlotType.Boots:
+                return item.itemType == Item.ItemType.Boots;
+
+            case Slot.SlotType.Charm:
+                return item.itemType == Item.ItemType.Charm;
+
+            default:
+                return false;
+        }
+    }
+
+    Item.ItemType GetEquipmentTypeFromSlot(Slot slot)
+    {
+        switch (slot.slotType)
+        {
+            case Slot.SlotType.Helmet:
+                return Item.ItemType.Helmet;
+
+            case Slot.SlotType.Armor:
+                return Item.ItemType.Armor;
+
+            case Slot.SlotType.Boots:
+                return Item.ItemType.Boots;
+
+            case Slot.SlotType.Charm:
+                return Item.ItemType.Charm;
+
+            default:
+                return Item.ItemType.Charm;
+        }
     }
 
     void MoveToSlot(Slot dropSlot)
@@ -178,5 +254,46 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         Item item = itemTransform.GetComponent<Item>();
         if (item != null)
             item.UpdateAmountText();
+    }
+
+    void EquipToSlot(Slot slot)
+    {
+        if (slot == null)
+            return;
+
+        GameObject oldItem = slot.currentItem;
+
+        if (originalSlot != null)
+            originalSlot.currentItem = null;
+
+        transform.SetParent(slot.transform);
+        transform.SetAsLastSibling();
+
+        slot.currentItem = gameObject;
+
+        FitItemToSlot(transform);
+
+        if (oldItem != null)
+        {
+            oldItem.transform.SetParent(originalParent);
+            oldItem.transform.SetAsLastSibling();
+
+            if (originalSlot != null)
+                originalSlot.currentItem = oldItem;
+
+            FitItemToSlot(oldItem.transform);
+        }
+
+        EquipmentManager equipmentManager =
+            EquipmentManager.Instance ??
+            FindFirstObjectByType<EquipmentManager>();
+
+        if (equipmentManager != null)
+        {
+            equipmentManager.Equip(
+                GetComponent<Item>(),
+                slot
+            );
+        }
     }
 }

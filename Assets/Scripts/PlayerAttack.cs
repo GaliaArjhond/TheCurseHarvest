@@ -44,20 +44,18 @@ public class PlayerAttack : MonoBehaviour
         Debug.Log("ATTACK INPUT WORKING");
 
         HotbarControler hotbar = FindFirstObjectByType<HotbarControler>();
-        if (hotbar == null) return;
-
-        Item selectedItem = hotbar.GetSelectedItem();
-
-        if (selectedItem == null)
+        if (hotbar != null)
         {
-            Debug.Log("No item equipped.");
-            return;
-        }
+            Item selectedItem = hotbar.GetSelectedItem();
 
-        if (selectedItem.itemType != Item.ItemType.Weapon)
-        {
-            Debug.Log("Selected item is not a weapon.");
-            return;
+            if (selectedItem == null)
+            {
+                Debug.Log("No item equipped; attacking with default swing.");
+            }
+            else if (selectedItem.itemType != Item.ItemType.Weapon)
+            {
+                Debug.Log("Selected item is not a weapon; attacking anyway.");
+            }
         }
 
         StartAttack();
@@ -116,6 +114,23 @@ public class PlayerAttack : MonoBehaviour
             enemyLayer
         );
 
+        if (hits.Length == 0)
+        {
+            Collider2D[] nearbyAll = Physics2D.OverlapCircleAll(
+                attackPos,
+                attackRadius
+            );
+
+            foreach (Collider2D hit in nearbyAll)
+            {
+                if (hit.GetComponent<EnemyHealth>() != null)
+                {
+                    System.Array.Resize(ref hits, hits.Length + 1);
+                    hits[hits.Length - 1] = hit;
+                }
+            }
+        }
+
         Debug.Log("Hits found: " + hits.Length);
 
         foreach (Collider2D hit in hits)
@@ -123,7 +138,14 @@ public class PlayerAttack : MonoBehaviour
             EnemyHealth enemy = hit.GetComponent<EnemyHealth>();
 
             if (enemy == null)
+                enemy = hit.GetComponentInParent<EnemyHealth>();
+
+            if (enemy == null)
+                enemy = hit.GetComponentInChildren<EnemyHealth>();
+
+            if (enemy == null)
                 continue;
+
             int finalDamage = damage;
 
             // Bangungot III Berserk

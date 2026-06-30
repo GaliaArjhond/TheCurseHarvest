@@ -32,6 +32,14 @@ public class PickupUI : MonoBehaviour
             StartCoroutine(ShowRoutine(itemID, amount));
     }
 
+    public void ShowReward(string message)
+    {
+        if (popupRoutine != null)
+            StopCoroutine(popupRoutine);
+
+        popupRoutine = StartCoroutine(ShowTextRoutine(message));
+    }
+
     IEnumerator ShowRoutine(int itemID, int amount)
     {
         string itemName = "Unknown";
@@ -50,12 +58,16 @@ public class PickupUI : MonoBehaviour
             }
         }
 
+        yield return StartCoroutine(ShowTextRoutine("+" + amount + " " + itemName));
+    }
+
+    IEnumerator ShowTextRoutine(string message)
+    {
         if (popupRoot != null)
             popupRoot.SetActive(true);
 
         if (pickupText != null)
-            pickupText.text =
-                "+" + amount + " " + itemName;
+            pickupText.text = message;
 
         yield return new WaitForSeconds(1.5f);
 

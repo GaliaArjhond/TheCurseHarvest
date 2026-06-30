@@ -4,6 +4,10 @@ public class EnemyHealth : MonoBehaviour
 {
     public int maxHealth = 3;
 
+    [Header("Rewards")]
+    public int expReward = 10;
+    public int pesosReward = 5;
+
     [Header("Effects")]
     public GameObject damagePopupPrefab;
     [SerializeField] private GameObject explosionPrefab;
@@ -89,6 +93,12 @@ public class EnemyHealth : MonoBehaviour
             }
 
             // Kulam III explosion
+            if (PlayerCurrency.Instance != null)
+            {
+                PlayerCurrency.Instance.AddExperience(expReward);
+                PlayerCurrency.Instance.AddPesos(pesosReward);
+            }
+
             if (isCursed &&
                 SkillManager.Instance != null &&
                 SkillManager.Instance.kulam3Unlocked)

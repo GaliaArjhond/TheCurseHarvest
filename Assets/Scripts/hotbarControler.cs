@@ -44,6 +44,13 @@ public class HotbarControler : MonoBehaviour
     {
         CreateSlotsIfMissing();
 
+        InventoryController inventory =
+            InventoryController.Instance ??
+            FindFirstObjectByType<InventoryController>();
+
+        if (inventory != null)
+            inventory.EnsureSlotsCreated();
+
         if (SaveController.Instance == null || !SaveController.Instance.HasSave())
         {
             GiveStartingItem();
@@ -88,35 +95,53 @@ public class HotbarControler : MonoBehaviour
         Debug.Log("Hotbar slots created.");
     }
 
-   void GiveStartingItem()
+    void GiveStartingItem()
     {
         if (hotbarPanel == null) return;
         if (hotbarPanel.transform.childCount == 0) return;
 
+        InventoryController inventory =
+            InventoryController.Instance ??
+            FindFirstObjectByType<InventoryController>();
+
         for (int i = 0; i < startingItemPrefabs.Count; i++)
         {
-            if (i >= hotbarPanel.transform.childCount) break;
+            GameObject startingPrefab = startingItemPrefabs[i];
+            if (startingPrefab == null) continue;
 
-            Slot slot = hotbarPanel.transform.GetChild(i).GetComponent<Slot>();
-
-            if (slot == null) continue;
-            if (slot.currentItem != null) continue;
-            if (startingItemPrefabs[i] == null) continue;
-
-            GameObject item = Instantiate(startingItemPrefabs[i], slot.transform);
-
-            RectTransform rt = item.GetComponent<RectTransform>();
-            if (rt != null)
+            if (i < hotbarPanel.transform.childCount)
             {
-                rt.anchorMin = Vector2.zero;
-                rt.anchorMax = Vector2.one;
-                rt.offsetMin = Vector2.zero;
-                rt.offsetMax = Vector2.zero;
-                rt.localScale = Vector3.one;
-            }
+                Slot slot = hotbarPanel.transform.GetChild(i).GetComponent<Slot>();
+                if (slot == null || slot.currentItem != null) continue;
 
-            slot.currentItem = item;
+                GameObject item = Instantiate(startingPrefab, slot.transform);
+                CopyRectTransform(item);
+                slot.currentItem = item;
+            }
+            else if (inventory != null)
+            {
+                Item itemComponent = startingPrefab.GetComponent<Item>();
+                if (itemComponent == null) continue;
+
+                bool added = inventory.AddItem(itemComponent.ID, itemComponent.amount);
+                if (!added)
+                {
+                    Debug.LogWarning("Starting item overflow could not be added to inventory: " + itemComponent.Name);
+                }
+            }
         }
+    }
+
+    void CopyRectTransform(GameObject item)
+    {
+        RectTransform rt = item.GetComponent<RectTransform>();
+        if (rt == null) return;
+
+        rt.anchorMin = Vector2.zero;
+        rt.anchorMax = Vector2.one;
+        rt.offsetMin = Vector2.zero;
+        rt.offsetMax = Vector2.zero;
+        rt.localScale = Vector3.one;
     }
 
     public void SelectSlot(int index)

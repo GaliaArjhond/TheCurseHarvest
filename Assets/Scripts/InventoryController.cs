@@ -38,7 +38,12 @@ public class InventoryController : MonoBehaviour
     {
         CreateSlotsIfMissing(hotbarPanel, hotbarSlotCount);
         CreateSlotsIfMissing(backpackPanel, backpackSlotCount);
-        
+    }
+
+    public void EnsureSlotsCreated()
+    {
+        CreateSlotsIfMissing(hotbarPanel, hotbarSlotCount);
+        CreateSlotsIfMissing(backpackPanel, backpackSlotCount);
     }
 
     void CreateSlotsIfMissing(Transform panel, int count)

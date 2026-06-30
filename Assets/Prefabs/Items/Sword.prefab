@@ -92,7 +92,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 3
   Name: Sword
-  itemType: 5
+  description: 
+  itemType: 1
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
   buyPrice: 0
@@ -102,6 +103,13 @@ MonoBehaviour:
   maxStack: 0
   amountText: {fileID: 0}
   cropData: {fileID: 0}
+  hpBonus: 0
+  attackBonus: 0
+  defenseBonus: 0
+  staminaBonus: 0
+  moveSpeedBonus: 0
+  fishingLuckBonus: 0
+  miningSpeedBonus: 0
 --- !u!114 &7947529825210320926
 MonoBehaviour:
   m_ObjectHideFlags: 0
