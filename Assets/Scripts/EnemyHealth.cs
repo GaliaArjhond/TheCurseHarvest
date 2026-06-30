@@ -92,11 +92,15 @@ public class EnemyHealth : MonoBehaviour
                 }
             }
 
-            // Kulam III explosion
+            // reward grant
             if (PlayerCurrency.Instance != null)
             {
                 PlayerCurrency.Instance.AddExperience(expReward);
                 PlayerCurrency.Instance.AddPesos(pesosReward);
+            }
+            else
+            {
+                Debug.LogWarning("Enemy died but no PlayerCurrency instance exists in the scene.");
             }
 
             if (isCursed &&
