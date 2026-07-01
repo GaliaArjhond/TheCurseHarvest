@@ -26,9 +26,7 @@ public class RecipeEntryUI : MonoBehaviour
             recipeNameText.text = recipe.recipeName;
 
         if (requirementText != null)
-            requirementText.text =
-                recipe.woodAmount + " Wood\n" +
-                recipe.stoneAmount + " Stone";
+            requirementText.text = recipe.GetRequirementsText();
 
         if (craftButton != null)
         {
@@ -42,7 +40,6 @@ public class RecipeEntryUI : MonoBehaviour
         {
             Debug.LogWarning("RecipeEntryUI: Craft Button is not assigned.");
         }
-        
     }
 
     

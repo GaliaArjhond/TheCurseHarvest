@@ -323,7 +323,7 @@ MonoBehaviour:
   ID: 9
   Name: Stone
   description: A common stone gathered from boulders. Useful for crafting and construction
-  itemType: 4
+  itemType: 9
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
   buyPrice: 10
@@ -333,6 +333,13 @@ MonoBehaviour:
   maxStack: 999
   amountText: {fileID: 1798830004869781876}
   cropData: {fileID: 0}
+  hpBonus: 0
+  attackBonus: 0
+  defenseBonus: 0
+  staminaBonus: 0
+  moveSpeedBonus: 0
+  fishingLuckBonus: 0
+  miningSpeedBonus: 0
 --- !u!1 &5417218511384363908
 GameObject:
   m_ObjectHideFlags: 0

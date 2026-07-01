@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CraftRecipeData
   recipeName: Chest
   recipeIcon: {fileID: -5281422124547630143, guid: 9b4e3b9f49d8a3e4c93693579c15f782, type: 3}
+  ingredients:
+  - itemID: 2
+    amount: 10
+  - itemID: 9
+    amount: 5
   woodAmount: 10
   stoneAmount: 5
   resultPrefab: {fileID: 3125489301339327323, guid: cc5e616452015c54cac91ca37564ab3b, type: 3}

@@ -67,14 +67,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 10
   Name: Chest
+  description: 
   itemType: 0
   isPlaceable: 1
   placeablePrefab: {fileID: 1498316580515986685, guid: a4a07062057ac2a488ab2b85484a8452, type: 3}
+  buyPrice: 10
+  sellPrice: 5
   isStackable: 1
   amount: 1
   maxStack: 999
   amountText: {fileID: 3617207381900983612}
+  worldPrefab: {fileID: 1498316580515986685, guid: a4a07062057ac2a488ab2b85484a8452, type: 3}
   cropData: {fileID: 0}
+  hpBonus: 0
+  attackBonus: 0
+  defenseBonus: 0
+  staminaBonus: 0
+  moveSpeedBonus: 0
+  fishingLuckBonus: 0
+  miningSpeedBonus: 0
 --- !u!114 &5989733248632658006
 MonoBehaviour:
   m_ObjectHideFlags: 0

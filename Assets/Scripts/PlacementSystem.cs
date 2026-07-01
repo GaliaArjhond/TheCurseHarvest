@@ -61,7 +61,11 @@ public class PlacementSystem : MonoBehaviour
 
     void CreateGhost(Item item)
     {
-        ghostObject = Instantiate(item.placeablePrefab);
+        GameObject prefab = item.worldPrefab != null ? item.worldPrefab : item.placeablePrefab;
+        if (prefab == null)
+            return;
+
+        ghostObject = Instantiate(prefab);
         ghostObject.name = "PlacementGhost";
 
         foreach (Collider2D col in ghostObject.GetComponentsInChildren<Collider2D>())
@@ -96,7 +100,14 @@ public class PlacementSystem : MonoBehaviour
             return;
         }
 
-        Instantiate(item.placeablePrefab, placePos, Quaternion.identity);
+        GameObject prefab = item.worldPrefab != null ? item.worldPrefab : item.placeablePrefab;
+        if (prefab == null)
+        {
+            Debug.LogWarning("No prefab assigned for placeable item: " + item.Name);
+            return;
+        }
+
+        Instantiate(prefab, placePos, Quaternion.identity);
 
         item.amount--;
         item.UpdateAmountText();
@@ -124,7 +135,7 @@ public class PlacementSystem : MonoBehaviour
 
         if (item == null) return null;
         if (!item.isPlaceable) return null;
-        if (item.placeablePrefab == null) return null;
+        if (item.worldPrefab == null && item.placeablePrefab == null) return null;
 
         return item;
     }

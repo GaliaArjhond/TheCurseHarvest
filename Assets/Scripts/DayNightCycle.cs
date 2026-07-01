@@ -4,6 +4,8 @@ using TMPro;
 
 public class DayNightCycle : MonoBehaviour
 {
+    public static DayNightCycle Instance;
+
     [Header("Light Reference")]
     [SerializeField] private Light2D globalLight;
 
@@ -17,6 +19,14 @@ public class DayNightCycle : MonoBehaviour
 
     private float currentHour;
     private float totalHours;
+
+    void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Debug.LogWarning("Multiple DayNightCycle instances detected.");
+    }
 
     void Start()
     {
@@ -188,6 +198,12 @@ public class DayNightCycle : MonoBehaviour
     public float GetCurrentHour()
     {
         return currentHour % 24f;
+    }
+
+    public bool IsNight()
+    {
+        float hour = GetCurrentHour();
+        return hour >= 18f || hour < 6f;
     }
 
     public string GetTimeString()

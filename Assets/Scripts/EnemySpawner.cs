@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -6,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform spawnCenter;
     [SerializeField] private Transform enemyParent;
+    [SerializeField] private Transform[] spawnPoints;
 
     private Transform player;
 
@@ -13,21 +15,78 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnWidth = 15f;
     [SerializeField] private float spawnHeight = 10f;
 
-    [Header("Settings")]
+    [Header("Night Spawn Settings")]
+    [SerializeField] private int maxNightEnemies = 10;
+    [SerializeField] private float spawnInterval = 5f;
     [SerializeField] private int enemiesToSpawn = 4;
     [SerializeField] private float minDistanceFromPlayer = 5f;
 
     [Header("Enemy Prefabs")]
-    [FormerlySerializedAs("slimePrefab")]
-    [SerializeField] private GameObject halimawPrefab;
-    [SerializeField] private GameObject batPrefab;
-    [SerializeField] private GameObject skeletonPrefab;
+    [FormerlySerializedAs("halimawPrefab")]
+    [SerializeField] private GameObject kaprePrefab;
+    [FormerlySerializedAs("batPrefab")]
+    [SerializeField] private GameObject tikbalangPrefab;
+    [FormerlySerializedAs("skeletonPrefab")]
+    [SerializeField] private GameObject bakunawaPrefab;
+    [SerializeField] private GameObject manananggalPrefab;
+
+    [Header("Spawn Chances")]
+    [Range(0, 100)]
+    [SerializeField] private int kapreChance = 35;
+    [Range(0, 100)]
+    [SerializeField] private int tikbalangChance = 30;
+    [Range(0, 100)]
+    [SerializeField] private int bakunawaChance = 20;
+    [Range(0, 100)]
+    [SerializeField] private int manananggalChance = 15;
+
+    private float timer;
+    private List<GameObject> spawnedEnemies = new List<GameObject>();
+    private bool spawnedThisNight = false;
 
     void Start()
     {
         Debug.Log("EnemySpawner Started");
         FindPlayer();
-        SpawnEnemies(1);
+    }
+
+    void Update()
+    {
+        if (PauseManager.Instance != null &&
+            PauseManager.Instance.IsPaused)
+        {
+            return;
+        }
+
+        if (DayNightCycle.Instance == null)
+            return;
+
+        bool isNight = DayNightCycle.Instance.IsNight();
+
+        if (isNight)
+        {
+            if (!spawnedThisNight)
+            {
+                spawnedThisNight = true;
+                timer = spawnInterval;
+            }
+
+            timer -= Time.deltaTime;
+
+            if (timer <= 0f && spawnedEnemies.Count < maxNightEnemies)
+            {
+                SpawnNightEnemy();
+                timer = spawnInterval;
+            }
+        }
+        else
+        {
+            if (spawnedThisNight)
+            {
+                spawnedThisNight = false;
+                RemoveNightEnemies();
+            }
+        }
     }
 
     void FindPlayer()
@@ -38,7 +97,6 @@ public class EnemySpawner : MonoBehaviour
         if (playerObj != null)
         {
             player = playerObj.transform;
-
             Debug.Log("Player Found: " + player.name);
         }
         else
@@ -67,10 +125,24 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             Vector2 pos = GetValidSpawnPosition();
+            GameObject prefab = GetEnemyPrefab(caveLevel);
+
+            if (prefab == null)
+            {
+                prefab = GetFirstAvailableEnemyPrefab();
+
+                if (prefab == null)
+                {
+                    Debug.LogError("EnemySpawner: No enemy prefabs are assigned. Cannot spawn enemies.");
+                    return;
+                }
+
+                Debug.LogWarning("EnemySpawner: GetEnemyPrefab returned null, falling back to " + prefab.name);
+            }
 
             GameObject enemy =
                 Instantiate(
-                    GetEnemyPrefab(caveLevel),
+                    prefab,
                     pos,
                     Quaternion.identity,
                     enemyParent
@@ -78,6 +150,63 @@ public class EnemySpawner : MonoBehaviour
 
             Debug.Log("Spawned: " + enemy.name);
         }
+    }
+
+    void SpawnNightEnemy()
+    {
+        if (spawnedEnemies.Count >= maxNightEnemies)
+            return;
+
+        GameObject prefab = GetNightEnemyPrefab();
+
+        if (prefab == null)
+            return;
+
+        Transform point = GetRandomSpawnPoint();
+        Vector2 spawnPosition = GetSpawnPosition(point);
+
+        GameObject enemy = Instantiate(
+            prefab,
+            spawnPosition,
+            Quaternion.identity,
+            enemyParent
+        );
+
+        spawnedEnemies.Add(enemy);
+        Debug.Log("Night enemy spawned: " + prefab.name);
+    }
+
+    Transform GetRandomSpawnPoint()
+    {
+        if (spawnPoints != null && spawnPoints.Length > 0)
+            return spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+        return spawnCenter;
+    }
+
+    Vector2 GetSpawnPosition(Transform point)
+    {
+        if (point != null)
+            return point.position;
+
+        if (spawnCenter == null)
+            return Vector2.zero;
+
+        return new Vector2(
+            spawnCenter.position.x + Random.Range(-spawnWidth / 2f, spawnWidth / 2f),
+            spawnCenter.position.y + Random.Range(-spawnHeight / 2f, spawnHeight / 2f)
+        );
+    }
+
+    void RemoveNightEnemies()
+    {
+        for (int i = spawnedEnemies.Count - 1; i >= 0; i--)
+        {
+            if (spawnedEnemies[i] != null)
+                Destroy(spawnedEnemies[i]);
+        }
+
+        spawnedEnemies.Clear();
     }
 
     Vector2 GetValidSpawnPosition()
@@ -106,30 +235,91 @@ public class EnemySpawner : MonoBehaviour
         return pos;
     }
 
+    GameObject GetNightEnemyPrefab()
+    {
+        int roll = Random.Range(0, 100);
+        int threshold = 0;
+
+        threshold += kapreChance;
+        if (roll < threshold && kaprePrefab != null)
+            return kaprePrefab;
+
+        threshold += tikbalangChance;
+        if (roll < threshold && tikbalangPrefab != null)
+            return tikbalangPrefab;
+
+        threshold += bakunawaChance;
+        if (roll < threshold && bakunawaPrefab != null)
+            return bakunawaPrefab;
+
+        threshold += manananggalChance;
+        if (roll < threshold && manananggalPrefab != null)
+            return manananggalPrefab;
+
+        GameObject fallback = GetFirstAvailableEnemyPrefab();
+        if (fallback == null)
+        {
+            Debug.LogError("EnemySpawner: No night enemy prefabs are assigned.");
+        }
+
+        return fallback;
+    }
+
+    GameObject GetFirstAvailableEnemyPrefab()
+    {
+        if (kaprePrefab != null)
+            return kaprePrefab;
+
+        if (tikbalangPrefab != null)
+            return tikbalangPrefab;
+
+        if (bakunawaPrefab != null)
+            return bakunawaPrefab;
+
+        if (manananggalPrefab != null)
+            return manananggalPrefab;
+
+        return null;
+    }
+
     GameObject GetEnemyPrefab(int level)
     {
         int roll = Random.Range(0, 100);
 
         if (level <= 5)
         {
-            return halimawPrefab;
+            return kaprePrefab;
         }
 
         if (level <= 10)
         {
             if (roll < 70)
-                return halimawPrefab;
+                return kaprePrefab;
 
-            return batPrefab;
+            return tikbalangPrefab;
         }
 
-        if (roll < 40)
-            return halimawPrefab;
+        if (level <= 15)
+        {
+            if (roll < 40)
+                return kaprePrefab;
 
-        if (roll < 80)
-            return batPrefab;
+            if (roll < 80)
+                return tikbalangPrefab;
 
-        return skeletonPrefab;
+            return bakunawaPrefab;
+        }
+
+        if (roll < 30)
+            return kaprePrefab;
+
+        if (roll < 60)
+            return tikbalangPrefab;
+
+        if (roll < 85)
+            return bakunawaPrefab;
+
+        return manananggalPrefab;
     }
 
     void ClearEnemies()

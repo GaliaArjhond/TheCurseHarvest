@@ -323,7 +323,7 @@ MonoBehaviour:
   ID: 15
   Name: Gold
   description: Valuable currency used to buy items, seeds, and equipment
-  itemType: 4
+  itemType: 9
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
   buyPrice: 100
@@ -333,6 +333,13 @@ MonoBehaviour:
   maxStack: 999
   amountText: {fileID: 1798830004869781876}
   cropData: {fileID: 0}
+  hpBonus: 0
+  attackBonus: 0
+  defenseBonus: 0
+  staminaBonus: 0
+  moveSpeedBonus: 0
+  fishingLuckBonus: 0
+  miningSpeedBonus: 0
 --- !u!1 &5417218511384363908
 GameObject:
   m_ObjectHideFlags: 0

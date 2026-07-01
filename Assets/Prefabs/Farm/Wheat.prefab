@@ -93,7 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 6
   Name: Wheat
-  itemType: 4
+  description: 
+  itemType: 9
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
   buyPrice: 10
@@ -103,6 +104,13 @@ MonoBehaviour:
   maxStack: 999
   amountText: {fileID: 914204916903424506}
   cropData: {fileID: 0}
+  hpBonus: 0
+  attackBonus: 0
+  defenseBonus: 0
+  staminaBonus: 0
+  moveSpeedBonus: 0
+  fishingLuckBonus: 0
+  miningSpeedBonus: 0
 --- !u!114 &3394487444212982107
 MonoBehaviour:
   m_ObjectHideFlags: 0

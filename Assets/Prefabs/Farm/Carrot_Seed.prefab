@@ -230,7 +230,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 12
   Name: Carrot
-  itemType: 2
+  description: 
+  itemType: 7
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
   buyPrice: 10
@@ -240,6 +241,13 @@ MonoBehaviour:
   maxStack: 999
   amountText: {fileID: 4350042064125750188}
   cropData: {fileID: 11400000, guid: 1c2401b64ba10654690cb64e8f7c0c2d, type: 2}
+  hpBonus: 0
+  attackBonus: 0
+  defenseBonus: 0
+  staminaBonus: 0
+  moveSpeedBonus: 0
+  fishingLuckBonus: 0
+  miningSpeedBonus: 0
 --- !u!114 &5768182180820323276
 MonoBehaviour:
   m_ObjectHideFlags: 0

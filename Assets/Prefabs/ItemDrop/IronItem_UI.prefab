@@ -68,6 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 14
   Name: Iron
+  description: 
   itemType: 4
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
@@ -78,6 +79,13 @@ MonoBehaviour:
   maxStack: 999
   amountText: {fileID: 1798830004869781876, guid: 0b69e3098b7790c489ed5a086797dc8c, type: 3}
   cropData: {fileID: 0}
+  hpBonus: 0
+  attackBonus: 0
+  defenseBonus: 0
+  staminaBonus: 0
+  moveSpeedBonus: 0
+  fishingLuckBonus: 0
+  miningSpeedBonus: 0
 --- !u!114 &5989733248632658006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,7 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 14
   Name: Iron
-  itemType: 4
+  description: 
+  itemType: 9
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
   buyPrice: 50
@@ -152,6 +161,13 @@ MonoBehaviour:
   maxStack: 999
   amountText: {fileID: 1798830004869781876, guid: 0b69e3098b7790c489ed5a086797dc8c, type: 3}
   cropData: {fileID: 0}
+  hpBonus: 0
+  attackBonus: 0
+  defenseBonus: 0
+  staminaBonus: 0
+  moveSpeedBonus: 0
+  fishingLuckBonus: 0
+  miningSpeedBonus: 0
 --- !u!1 &4750740645874979809
 GameObject:
   m_ObjectHideFlags: 0

@@ -65,14 +65,50 @@ public class CraftingBookUI : MonoBehaviour
 
     void BuildRecipeList()
     {
+        if (recipeContent == null)
+        {
+            Debug.LogError("CraftingBookUI: recipeContent is not assigned.");
+            return;
+        }
+
+        if (recipeEntryPrefab == null)
+        {
+            Debug.LogError("CraftingBookUI: recipeEntryPrefab is not assigned.");
+            return;
+        }
+
         foreach (Transform child in recipeContent)
             Destroy(child.gameObject);
 
+        if (recipes == null || recipes.Length == 0)
+        {
+            Debug.LogWarning("CraftingBookUI: No recipes assigned to the crafting book.");
+            return;
+        }
+
+        int createdCount = 0;
+
         foreach (CraftRecipeData recipe in recipes)
         {
-            GameObject entry = Instantiate(recipeEntryPrefab, recipeContent);
+            if (recipe == null)
+                continue;
+
+            GameObject entry = Instantiate(recipeEntryPrefab, recipeContent, false);
+            entry.transform.localScale = Vector3.one;
+
             RecipeEntryUI ui = entry.GetComponent<RecipeEntryUI>();
-            ui.Setup(recipe, craftingManager);
+            if (ui != null)
+                ui.Setup(recipe, craftingManager);
+            else
+                Debug.LogWarning("CraftingBookUI: Recipe entry prefab does not contain RecipeEntryUI.");
+
+            createdCount++;
         }
+
+        Debug.Log($"CraftingBookUI: Built {createdCount} recipe entries.");
+
+        RectTransform contentRect = recipeContent as RectTransform;
+        if (contentRect != null)
+            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(contentRect);
     }
 }

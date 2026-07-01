@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CraftingManager : MonoBehaviour
@@ -13,15 +14,19 @@ public class CraftingManager : MonoBehaviour
     {
         if (inventory == null || recipe == null) return;
 
-        if (inventory.CountItem(2) < recipe.woodAmount ||
-            inventory.CountItem(9) < recipe.stoneAmount)
+        foreach (CraftIngredient ingredient in recipe.GetIngredients())
         {
-            Debug.Log("Not enough materials");
-            return;
+            if (inventory.CountItem(ingredient.itemID) < ingredient.amount)
+            {
+                Debug.Log("Not enough materials for: " + ingredient.itemID);
+                return;
+            }
         }
 
-        inventory.RemoveItem(2, recipe.woodAmount);
-        inventory.RemoveItem(9, recipe.stoneAmount);
+        foreach (CraftIngredient ingredient in recipe.GetIngredients())
+        {
+            inventory.RemoveItem(ingredient.itemID, ingredient.amount);
+        }
 
         Item resultItem = recipe.resultPrefab.GetComponent<Item>();
         if (resultItem != null)

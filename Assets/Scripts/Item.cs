@@ -39,8 +39,11 @@ public class Item : MonoBehaviour
         Charm,
         Seed,
         Food,
-        Resource
+        Resource,
+        Placeable
     }
+
+    public GameObject worldPrefab;
 
     public CropData cropData;
 

@@ -11288,7 +11288,7 @@ MonoBehaviour:
   stoneRockPrefab: {fileID: 6094988260527495716, guid: d9bdc7b30677f1848ae50a7c3f0bd22f, type: 3}
   coalNodePrefab: {fileID: 5614363758320358069, guid: d87e8d3a8972cfb44990930b9c026650, type: 3}
   ironNodePrefab: {fileID: 5614363758320358069, guid: 5815003dbcee6c04fb1459ab5702ebbb, type: 3}
-  goldNodePrefab: {fileID: 5614363758320358069, guid: 14b62e424e3150b4a879fe9b00bef4e3, type: 3}
+  pesoNodePrefab: {fileID: 5614363758320358069, guid: 14b62e424e3150b4a879fe9b00bef4e3, type: 3}
   startBounds: {fileID: 696761910}
   levelBounds: {fileID: 970375447}
   ladderPrefab: {fileID: 4987682528519667688, guid: 5bee4fdb1a489484891dd4e981ac7190, type: 3}
@@ -12495,13 +12495,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   spawnCenter: {fileID: 1813853219}
   enemyParent: {fileID: 1648680080}
+  spawnPoints:
+  - {fileID: 1813853219}
   spawnWidth: 15
   spawnHeight: 10
+  maxNightEnemies: 10
+  spawnInterval: 5
   enemiesToSpawn: 4
   minDistanceFromPlayer: 5
-  slimePrefab: {fileID: 6806205655768080404, guid: b94cbff12b1529046bd9147d082f66ff, type: 3}
-  batPrefab: {fileID: 6806205655768080404, guid: b94cbff12b1529046bd9147d082f66ff, type: 3}
-  skeletonPrefab: {fileID: 6806205655768080404, guid: b94cbff12b1529046bd9147d082f66ff, type: 3}
+  kaprePrefab: {fileID: 6806205655768080404, guid: b94cbff12b1529046bd9147d082f66ff, type: 3}
+  tikbalangPrefab: {fileID: 6806205655768080404, guid: 1ec1b8b98b5e2f840924ffbd023b4e92, type: 3}
+  bakunawaPrefab: {fileID: 6806205655768080404, guid: 3bd1f28ecd019c54284c7fd0336f8f87, type: 3}
+  manananggalPrefab: {fileID: 6806205655768080404, guid: 0b14a8abe5ae52d48aa92eaf5b3d6e5d, type: 3}
+  kapreChance: 35
+  tikbalangChance: 30
+  bakunawaChance: 0
+  manananggalChance: 0
 --- !u!4 &2069465570
 Transform:
   m_ObjectHideFlags: 0

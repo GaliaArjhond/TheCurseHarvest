@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb6744b882d203f46aae9d2413be524a, type: 3}
+  m_Name: Torch
+  m_EditorClassIdentifier: Assembly-CSharp::CraftRecipeData
+  recipeName: Chest
+  recipeIcon: {fileID: 6761164967045977113, guid: f66dfe056f0c014459a2fce3d10c8259, type: 3}
+  ingredients:
+  - itemID: 2
+    amount: 2
+  - itemID: 13
+    amount: 1
+  woodAmount: 10
+  stoneAmount: 5
+  resultPrefab: {fileID: 3125489301339327323, guid: 28b901b0ed990e347a2190ae45d8176d, type: 3}
+  resultAmount: 1

@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 3147216663466026337}
   - component: {fileID: 3906532728913386098}
   m_Layer: 3
-  m_Name: Enemy
+  m_Name: Bakunawa
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 5166958929016353594, guid: 1166a67ed52f2324f9a0d9eb2298b933, type: 3}
+  m_Sprite: {fileID: -1392924380675824978, guid: 1f443f41f80907847b55ca003da18357, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -161,9 +161,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.062654495, y: -0.5180149}
-  m_Size: {x: 0.9718056, y: 1.9101067}
-  m_Direction: 0
+  m_Offset: {x: 0.24923137, y: 0.05274556}
+  m_Size: {x: 7.4442787, y: 3.3801603}
+  m_Direction: 1
 --- !u!114 &5247427515896335476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,7 +176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf42a58f35138954890a8d8c68d0029e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 20
+  maxHealth: 150
+  expReward: 200
+  pesosReward: 500
   damagePopupPrefab: {fileID: 3328431977247967937, guid: 401fbe949ebc4cc46a4e6a0e53a34a98, type: 3}
   explosionPrefab: {fileID: 7161281358498841891, guid: 9d9d8caba2b285c449240e5eb309579c, type: 3}
   isCursed: 0
@@ -194,6 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFollowPlayer
   moveSpeed: 2
   stopDistance: 0.6
+  damage: 15
 --- !u!114 &-7990386572104461118
 MonoBehaviour:
   m_ObjectHideFlags: 0
