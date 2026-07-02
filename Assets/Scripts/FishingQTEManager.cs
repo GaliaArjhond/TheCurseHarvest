@@ -33,6 +33,8 @@ public class FishingQTEManager : MonoBehaviour
     private float targetAngle = 0f;
     private float progress = 0f;
     private int missCount = 0;
+    private PlayerMovement playerMovement;
+    private bool movementLockedByFishing = false;
 
     void Awake()
     {
@@ -47,6 +49,8 @@ public class FishingQTEManager : MonoBehaviour
 
     void Start()
     {
+        playerMovement = FindFirstObjectByType<PlayerMovement>();
+
         if (fishingPanel != null)
             fishingPanel.SetActive(false);
     }
@@ -83,6 +87,12 @@ public class FishingQTEManager : MonoBehaviour
         isFishing = true;
         progress = 0f;
         missCount = 0;
+
+        if (playerMovement != null)
+        {
+            playerMovement.SetMovementEnabled(false);
+            movementLockedByFishing = true;
+        }
 
         currentAngle = Random.Range(0f, 360f);
 
@@ -336,6 +346,12 @@ public class FishingQTEManager : MonoBehaviour
     {
         if (fishingPanel != null)
             fishingPanel.SetActive(false);
+
+        if (movementLockedByFishing && playerMovement != null)
+        {
+            playerMovement.SetMovementEnabled(true);
+            movementLockedByFishing = false;
+        }
     }
 
     public bool IsFishing()

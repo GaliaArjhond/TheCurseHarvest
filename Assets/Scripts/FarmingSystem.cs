@@ -27,6 +27,7 @@ public class FarmingSystem : MonoBehaviour
     private Camera mainCamera;
     private PlayerMovement playerMovement;
     private PlayerStatsManager statsManager;
+    private ToolSFX toolSFX;
     private bool isUsingTool = false;
 
     void Start()
@@ -34,6 +35,10 @@ public class FarmingSystem : MonoBehaviour
         mainCamera = Camera.main;
         playerMovement = GetComponent<PlayerMovement>();
         statsManager = GetComponent<PlayerStatsManager>();
+        toolSFX = GetComponent<ToolSFX>();
+
+        if (toolSFX == null)
+            toolSFX = FindFirstObjectByType<ToolSFX>();
 
         if (hotbar == null)
             hotbar = FindFirstObjectByType<HotbarControler>();
@@ -199,6 +204,9 @@ public class FarmingSystem : MonoBehaviour
                         if (playerMovement != null)
                             playerMovement.PlayPickAxeAnimation(direction);
 
+                        if (toolSFX != null)
+                            toolSFX.PlayPickaxe();
+
                         StartCoroutine(DelayedCaveRockHit(rock));
                         return;
                     }
@@ -226,9 +234,19 @@ public class FarmingSystem : MonoBehaviour
                     if (playerMovement != null)
                     {
                         if (equippedItem.Name == "Axe")
+                        {
                             playerMovement.PlayAxeAnimation(direction);
+
+                            if (toolSFX != null)
+                                toolSFX.PlayAxe();
+                        }
                         else
+                        {
                             playerMovement.PlayPickAxeAnimation(direction);
+
+                            if (toolSFX != null)
+                                toolSFX.PlayPickaxe();
+                        }
                     }
 
                     StartCoroutine(
@@ -264,9 +282,19 @@ public class FarmingSystem : MonoBehaviour
                 if (playerMovement != null)
                 {
                     if (equippedItem.Name == "Hoe")
+                    {
                         playerMovement.PlayHoeAnimation(direction);
+
+                        if (toolSFX != null)
+                            toolSFX.PlayHoe();
+                    }
                     else if (equippedItem.Name == "WateringCan")
+                    {
                         playerMovement.PlayHoeAnimation(direction);
+
+                        if (toolSFX != null)
+                            toolSFX.PlayWater();
+                    }
                 }
 
                 if (equippedItem.Name == "WateringCan" &&

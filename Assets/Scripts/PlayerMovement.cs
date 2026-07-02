@@ -27,6 +27,20 @@ public class PlayerMovement : MonoBehaviour
     private bool canMove = true;
     private Knockback knockback;
 
+    public void SetMovementEnabled(bool enabled)
+    {
+        canMove = enabled;
+
+        if (!enabled)
+        {
+            moveInput = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
+
+            if (animator != null)
+                animator.SetBool("isWalking", false);
+        }
+    }
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
