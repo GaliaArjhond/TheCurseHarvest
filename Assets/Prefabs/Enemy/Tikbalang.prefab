@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf42a58f35138954890a8d8c68d0029e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  halimawEntry: {fileID: 11400000, guid: c59b669160683064c94cd49a897e1cfb, type: 2}
   maxHealth: 70
   expReward: 70
   pesosReward: 100

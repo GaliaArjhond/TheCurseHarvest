@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8f0e900c607c640bdbb989ccaffeab, type: 3}
+  m_Name: mananangal
+  m_EditorClassIdentifier: Assembly-CSharp::HalimawEntry
+  monsterName: Mananangal
+  lore: A feared creature that appears as a beautiful woman by day but transforms
+    at night by separating her upper body from her lower half. With enormous bat-like
+    wings, she silently flies across villages in search of prey. The Manananggal
+    feeds on the blood and organs of sleeping victims, especially pregnant women.
+    Before dawn, it must reunite with its lower body or risk perishing in the sunlight
+  weakness: 'Salt
+
+    Holy Water'
+  icon: {fileID: -4765054573305696270, guid: f7ee743af4f8c9e48b562a4a5b1b4ad9, type: 3}

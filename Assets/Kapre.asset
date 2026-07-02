@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8f0e900c607c640bdbb989ccaffeab, type: 3}
+  m_Name: Kapre
+  m_EditorClassIdentifier: Assembly-CSharp::HalimawEntry
+  monsterName: Kapre
+  lore: 'A giant spirit that lives inside ancient balete trees
+
+    It enjoys smoking
+    tobacco and watching travelers from abov
+
+    Many villagers believe respecting
+    old trees keeps the Kapre calm'
+  weakness: Fire
+  icon: {fileID: 5166958929016353594, guid: 1166a67ed52f2324f9a0d9eb2298b933, type: 3}

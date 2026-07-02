@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    public HalimawEntry halimawEntry;
+    public float discoveryRange = 5f;
+
     public int maxHealth = 3;
 
     [Header("Rewards")]
@@ -20,6 +23,8 @@ public class EnemyHealth : MonoBehaviour
     private Knockback knockback;
 
     private bool isDead = false;
+    private bool discovered = false;
+    private Transform player;
 
     void Awake()
     {
@@ -27,6 +32,30 @@ public class EnemyHealth : MonoBehaviour
 
         hitFlash = GetComponent<HitFlash>();
         knockback = GetComponent<Knockback>();
+    }
+
+    private void Start()
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject != null)
+            player = playerObject.transform;
+    }
+
+    private void Update()
+    {
+        if (discovered || player == null)
+            return;
+
+        float distance = Vector2.Distance(transform.position, player.position);
+
+        if (distance <= discoveryRange)
+        {
+            discovered = true;
+
+            if (HalimawLogManager.Instance != null)
+                HalimawLogManager.Instance.Unlock(halimawEntry);
+        }
     }
 
     public void TakeDamage(

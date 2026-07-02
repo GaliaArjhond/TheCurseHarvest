@@ -68,7 +68,6 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("isWalking", false);
         animator.SetFloat("InputX", lastDirection.x);
         animator.SetFloat("InputY", lastDirection.y);
-        animator.SetTrigger("Attack");
 
         Invoke(nameof(DoDamage), 0.15f);
         float finalCooldown = attackCooldown;

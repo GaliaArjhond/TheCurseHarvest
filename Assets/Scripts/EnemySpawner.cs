@@ -18,8 +18,10 @@ public class EnemySpawner : MonoBehaviour
     [Header("Night Spawn Settings")]
     [SerializeField] private int maxNightEnemies = 10;
     [SerializeField] private float spawnInterval = 5f;
+    [SerializeField] private float daytimeSpawnInterval = 2f;
     [SerializeField] private int enemiesToSpawn = 4;
     [SerializeField] private float minDistanceFromPlayer = 5f;
+    [SerializeField] private bool allowDaytimeTesting = true;
 
     [Header("Enemy Prefabs")]
     [FormerlySerializedAs("halimawPrefab")]
@@ -42,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
 
     private float timer;
     private List<GameObject> spawnedEnemies = new List<GameObject>();
-    private bool spawnedThisNight = false;
+    private bool spawnCycleActive = false;
 
     void Start()
     {
@@ -62,30 +64,31 @@ public class EnemySpawner : MonoBehaviour
             return;
 
         bool isNight = DayNightCycle.Instance.IsNight();
+        bool shouldSpawn = isNight || allowDaytimeTesting;
 
-        if (isNight)
+        if (!shouldSpawn)
         {
-            if (!spawnedThisNight)
+            if (spawnCycleActive)
             {
-                spawnedThisNight = true;
-                timer = spawnInterval;
-            }
-
-            timer -= Time.deltaTime;
-
-            if (timer <= 0f && spawnedEnemies.Count < maxNightEnemies)
-            {
-                SpawnNightEnemy();
-                timer = spawnInterval;
-            }
-        }
-        else
-        {
-            if (spawnedThisNight)
-            {
-                spawnedThisNight = false;
+                spawnCycleActive = false;
                 RemoveNightEnemies();
             }
+
+            return;
+        }
+
+        if (!spawnCycleActive)
+        {
+            spawnCycleActive = true;
+            timer = isNight ? spawnInterval : daytimeSpawnInterval;
+        }
+
+        timer -= Time.deltaTime;
+
+        if (timer <= 0f && spawnedEnemies.Count < maxNightEnemies)
+        {
+            SpawnNightEnemy();
+            timer = isNight ? spawnInterval : daytimeSpawnInterval;
         }
     }
 

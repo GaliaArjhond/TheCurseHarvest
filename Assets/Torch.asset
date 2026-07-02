@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb6744b882d203f46aae9d2413be524a, type: 3}
   m_Name: Torch
   m_EditorClassIdentifier: Assembly-CSharp::CraftRecipeData
-  recipeName: Chest
+  recipeName: Torch
   recipeIcon: {fileID: 6761164967045977113, guid: f66dfe056f0c014459a2fce3d10c8259, type: 3}
   ingredients:
   - itemID: 2

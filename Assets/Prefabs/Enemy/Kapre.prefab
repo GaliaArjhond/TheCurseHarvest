@@ -176,7 +176,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf42a58f35138954890a8d8c68d0029e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  halimawEntry: {fileID: 11400000, guid: ac3bb8927a2547a4bba1201bc72b16f6, type: 2}
   maxHealth: 20
+  expReward: 10
+  pesosReward: 5
   damagePopupPrefab: {fileID: 3328431977247967937, guid: 401fbe949ebc4cc46a4e6a0e53a34a98, type: 3}
   explosionPrefab: {fileID: 7161281358498841891, guid: 9d9d8caba2b285c449240e5eb309579c, type: 3}
   isCursed: 0
@@ -194,6 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFollowPlayer
   moveSpeed: 2
   stopDistance: 0.6
+  damage: 15
 --- !u!114 &-7990386572104461118
 MonoBehaviour:
   m_ObjectHideFlags: 0
