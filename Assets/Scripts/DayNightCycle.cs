@@ -23,9 +23,14 @@ public class DayNightCycle : MonoBehaviour
     void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+        }
         else
-            Debug.LogWarning("Multiple DayNightCycle instances detected.");
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
     void Start()
@@ -33,7 +38,12 @@ public class DayNightCycle : MonoBehaviour
         currentHour = startHour;
         totalHours = endHour - startHour;
 
-        FindLightIfMissing();
+        if (globalLight == null)
+        {
+            Debug.LogError("Global Light is not assigned!");
+            return;
+        }
+
         UpdateLight();
     }
 
@@ -52,21 +62,11 @@ public class DayNightCycle : MonoBehaviour
         if (currentHour >= endHour)
             currentHour = startHour;
 
-        FindLightIfMissing();
         UpdateLight();
 
         if (clockText != null)
             clockText.text =
                 GetFormattedTime(currentHour);
-    }
-
-    void FindLightIfMissing()
-    {
-        if (globalLight != null)
-            return;
-
-        globalLight =
-            FindFirstObjectByType<Light2D>();
     }
 
     void UpdateLight()
@@ -185,7 +185,6 @@ public class DayNightCycle : MonoBehaviour
     {
         currentHour = startHour;
 
-        FindLightIfMissing();
         UpdateLight();
 
         if (clockText != null)
