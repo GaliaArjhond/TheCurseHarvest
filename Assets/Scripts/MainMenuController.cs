@@ -42,6 +42,10 @@ public class MainMenuController : MonoBehaviour
 
     void Start()
     {
+        Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
+
+        Debug.Log(Screen.width + " x " + Screen.height);
+
         saveFolderPath = Path.Combine(Application.persistentDataPath, "Saves");
 
         // create saves folder if it doesn't exist
@@ -62,6 +66,17 @@ public class MainMenuController : MonoBehaviour
 
         // start faded in
         StartCoroutine(FadeIn());
+
+        Debug.Log(Screen.currentResolution);
+        Debug.Log(Screen.width + " x " + Screen.height);
+        Debug.Log("Screen: " + Screen.width + " x " + Screen.height);
+        Debug.Log("Fullscreen: " + Screen.fullScreen);
+        Debug.Log("Mode: " + Screen.fullScreenMode);
+    }
+
+    void Update()
+    {
+        Debug.Log(Screen.width + " x " + Screen.height);
     }
 
     // ── panel navigation ──

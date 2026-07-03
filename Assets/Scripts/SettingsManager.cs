@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.Audio;
+using System.Collections;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -29,12 +30,10 @@ public class SettingsManager : MonoBehaviour
 
     void Start()
     {
+
         SetupResolutionDropdown();
 
-        pendingResolutionIndex = PlayerPrefs.GetInt(
-            "ResolutionIndex",
-            resolutionDropdown.value
-        );
+        pendingResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex", 1);
 
         pendingFullscreen = PlayerPrefs.GetInt(
             "Fullscreen",
@@ -64,51 +63,39 @@ public class SettingsManager : MonoBehaviour
         brightnessSlider.onValueChanged.AddListener(SetPendingBrightness);
 
         ConfirmSettings();
+
+        Debug.Log(Screen.currentResolution);
+        Debug.Log(Screen.width + " x " + Screen.height);
     }
 
     void SetupResolutionDropdown()
     {
-        resolutions = Screen.resolutions;
-
         resolutionDropdown.ClearOptions();
 
-        List<string> options = new List<string>();
-        List<Resolution> uniqueResolutions = new List<Resolution>();
-
-        int currentIndex = 0;
-
-        foreach (Resolution res in resolutions)
+        List<string> options = new List<string>()
         {
-            bool exists = false;
-
-            foreach (Resolution unique in uniqueResolutions)
-            {
-                if (unique.width == res.width &&
-                    unique.height == res.height)
-                {
-                    exists = true;
-                    break;
-                }
-            }
-
-            if (!exists)
-            {
-                uniqueResolutions.Add(res);
-
-                options.Add($"{res.width} x {res.height}");
-
-                if (res.width == Screen.currentResolution.width &&
-                    res.height == Screen.currentResolution.height)
-                {
-                    currentIndex = uniqueResolutions.Count - 1;
-                }
-            }
-        }
-
-        resolutions = uniqueResolutions.ToArray();
+            "1280 x 720",
+            "1920 x 1080",
+            "2560 x 1440"
+        };
 
         resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentIndex;
+
+        resolutions = new Resolution[3];
+
+        resolutions[0].width = 1280;
+        resolutions[0].height = 720;
+
+        resolutions[1].width = 1920;
+        resolutions[1].height = 1080;
+
+        resolutions[2].width = 2560;
+        resolutions[2].height = 1440;
+
+        pendingResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex", 1);
+
+        resolutionDropdown.value = pendingResolutionIndex;
+        resolutionDropdown.RefreshShownValue();
     }
 
     public void QuitGame()
@@ -166,13 +153,10 @@ public class SettingsManager : MonoBehaviour
                 ? FullScreenMode.FullScreenWindow
                 : FullScreenMode.Windowed;
 
-            Screen.SetResolution(
-                res.width,
-                res.height,
-                mode
-            );
+             Screen.SetResolution(res.width, res.height, mode);
+             
+             StartCoroutine(CheckResolution());
 
-            Screen.fullScreenMode = mode;
         }
 
         ApplyMusicVolume(pendingMusic);
@@ -245,6 +229,16 @@ public class SettingsManager : MonoBehaviour
     void ApplyBrightness(float value)
     {
         if (brightnessOverlay != null)
-            brightnessOverlay.alpha = value;
+        {
+            brightnessOverlay.alpha = 1f - value;
+        }
+    }
+
+    IEnumerator CheckResolution()
+    {
+        yield return new WaitForSeconds(1f);
+
+        Debug.Log("Screen: " + Screen.width + " x " + Screen.height);
+        Debug.Log("Current Resolution: " + Screen.currentResolution);
     }
 }
