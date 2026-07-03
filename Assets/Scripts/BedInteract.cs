@@ -5,6 +5,7 @@ using TMPro;
 using Cinemachine;
 using UnityEngine.InputSystem;
 
+
 public class BedInteract : MonoBehaviour
 {
     [SerializeField] private GameObject sleepPromptPanel;
@@ -17,6 +18,7 @@ public class BedInteract : MonoBehaviour
     [SerializeField] private float blackScreenTime = 1.2f;
 
     private bool playerInside = false;
+    private PlayerInput playerInput;
     private bool sleeping = false;
     private GameObject player;
     private CinemachineConfiner2D confiner;
@@ -24,6 +26,8 @@ public class BedInteract : MonoBehaviour
     void Start()
     {
         confiner = FindFirstObjectByType<CinemachineConfiner2D>();
+
+        playerInput = FindFirstObjectByType<PlayerInput>();
 
         if (sleepPromptPanel != null)
             sleepPromptPanel.SetActive(false);

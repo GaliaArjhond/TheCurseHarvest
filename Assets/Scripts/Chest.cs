@@ -3,13 +3,18 @@ using UnityEngine.InputSystem;
 
 public class Chest : MonoBehaviour
 {
+    private PlayerInput playerInput;
     private bool playerInRange;
 
+    void Start()
+    {
+        playerInput = FindFirstObjectByType<PlayerInput>();
+    }
     void Update()
     {
         if (!playerInRange) return;
 
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (playerInput.actions["Interact"].WasPressedThisFrame())
         {
             if (ChestUIManager.Instance != null)
             {

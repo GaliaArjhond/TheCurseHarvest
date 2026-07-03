@@ -4,11 +4,13 @@ using UnityEngine.InputSystem;
 public class ShopInteract : MonoBehaviour
 {
     [SerializeField] private GameObject shopPanel;
-
+    private PlayerInput playerInput;
     private bool playerInRange;
 
     void Start()
     {
+        playerInput = FindFirstObjectByType<PlayerInput>();
+
         if (shopPanel != null)
             shopPanel.SetActive(false);
     }
@@ -17,7 +19,7 @@ public class ShopInteract : MonoBehaviour
     {
         if (!playerInRange) return;
 
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (playerInput.actions["Interact"].WasPressedThisFrame())
         {
             shopPanel.SetActive(true);
         }
