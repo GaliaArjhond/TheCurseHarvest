@@ -113,9 +113,6 @@ public class FarmingSystem : MonoBehaviour
 
         if (dist > interactRange)
         {
-            if (InteractionUI.Instance != null)
-                InteractionUI.Instance.ShowTemporary("Too far");
-
             return;
         }
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using TMPro;
+using System;
 
 public class DayNightCycle : MonoBehaviour
 {
@@ -20,6 +21,12 @@ public class DayNightCycle : MonoBehaviour
     private float currentHour;
     private float totalHours;
 
+    private bool wasNight;
+    private int dayCount = 1;
+
+    public event Action<int> OnNightStarted;
+    public event Action<int> OnDayStarted;
+
     void Awake()
     {
         if (Instance == null)
@@ -38,13 +45,15 @@ public class DayNightCycle : MonoBehaviour
         currentHour = startHour;
         totalHours = endHour - startHour;
 
+        wasNight = IsNight();
+
         if (globalLight == null)
         {
-            Debug.LogError("Global Light is not assigned!");
             return;
         }
 
         UpdateLight();
+        Debug.Log("Day: " + DayNightCycle.Instance.GetCurrentDay());
     }
 
     void Update()
@@ -61,6 +70,23 @@ public class DayNightCycle : MonoBehaviour
 
         if (currentHour >= endHour)
             currentHour = startHour;
+
+        bool isNight = IsNight();
+
+        if (isNight && !wasNight)
+        {
+            // Just became night
+            BakunawaSpawner.Instance?.OnNightStarted(dayCount);
+        }
+
+        if (!isNight && wasNight)
+        {
+            // Just became day
+            dayCount++;
+            BakunawaSpawner.Instance?.OnDayStarted();
+        }
+
+        wasNight = isNight;
 
         UpdateLight();
 
@@ -208,5 +234,10 @@ public class DayNightCycle : MonoBehaviour
     public string GetTimeString()
     {
         return GetFormattedTime(currentHour);
+    }
+
+    public int GetCurrentDay()
+    {
+        return dayCount;
     }
 }

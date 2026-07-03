@@ -43780,12 +43780,14 @@ MonoBehaviour:
   - {fileID: 1532281004}
   spawnWidth: 15
   spawnHeight: 10
-  maxNightEnemies: 10
-  spawnInterval: 5
-  daytimeSpawnInterval: 2
   enemiesToSpawn: 4
   minDistanceFromPlayer: 5
-  allowDaytimeTesting: 0
+  allowDaySpawns: 1
+  maxDayEnemies: 2
+  daySpawnInterval: 25
+  daySpawnChance: 30
+  maxNightEnemies: 10
+  nightSpawnInterval: 4
   kaprePrefab: {fileID: 6806205655768080404, guid: b94cbff12b1529046bd9147d082f66ff, type: 3}
   tikbalangPrefab: {fileID: 6806205655768080404, guid: 1ec1b8b98b5e2f840924ffbd023b4e92, type: 3}
   bakunawaPrefab: {fileID: 6806205655768080404, guid: 3bd1f28ecd019c54284c7fd0336f8f87, type: 3}
@@ -48455,6 +48457,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619916876}
   m_CullTransparentMesh: 1
+--- !u!1 &1641011924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1641011926}
+  - component: {fileID: 1641011925}
+  m_Layer: 0
+  m_Name: BakunawaSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1641011925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641011924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519727a51197cdc449305e2884790bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BakunawaSpawner
+  bakunawaPrefab: {fileID: 6806205655768080404, guid: 3bd1f28ecd019c54284c7fd0336f8f87, type: 3}
+  spawnPoint: {fileID: 1641011926}
+--- !u!4 &1641011926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641011924}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 100.38, y: -3.93106, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1654819993
 GameObject:
   m_ObjectHideFlags: 0
@@ -103828,3 +103876,4 @@ SceneRoots:
   - {fileID: 908304448}
   - {fileID: 1178281523}
   - {fileID: 1351576847}
+  - {fileID: 1641011926}
