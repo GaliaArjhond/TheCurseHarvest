@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 5247427515896335476}
   - component: {fileID: 6818309319751767581}
   - component: {fileID: -7990386572104461118}
-  - component: {fileID: 8905604139875244854}
   - component: {fileID: 2794385742406744479}
   - component: {fileID: 3147216663466026337}
   - component: {fileID: 3906532728913386098}
@@ -177,6 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   halimawEntry: {fileID: 11400000, guid: 726f65c005765324589823db5ee67906, type: 2}
+  discoveryRange: 5
   maxHealth: 150
   expReward: 200
   pesosReward: 500
@@ -213,28 +213,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8315268049573483844}
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashDuration: 0.1
---- !u!95 &8905604139875244854
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6806205655768080404}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c5a068c45e487ec458ef3b3e5e6493df, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2794385742406744479
 MonoBehaviour:
   m_ObjectHideFlags: 0

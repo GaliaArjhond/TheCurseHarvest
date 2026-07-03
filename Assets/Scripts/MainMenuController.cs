@@ -264,6 +264,14 @@ public class MainMenuController : MonoBehaviour
 
         if (resolutionDropdown != null)
             resolutionDropdown.value = PlayerPrefs.GetInt("Resolution", 0);
+
+        bool fullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+
+        Screen.fullScreenMode = fullscreen
+            ? FullScreenMode.FullScreenWindow
+            : FullScreenMode.Windowed;
+
+        Screen.fullScreen = fullscreen;
     }
 
     public void OnSettingsBack()

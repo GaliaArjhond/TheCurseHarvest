@@ -31,7 +31,7 @@ public class SaveController : MonoBehaviour
 
     IEnumerator Start()
     {
-        DeleteSave();
+        //DeleteSave();
         yield return null;
         LoadGame();
     }

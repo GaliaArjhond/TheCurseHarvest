@@ -5,13 +5,14 @@ public class MusicManager : MonoBehaviour
 {
     public AudioSource dayMusic;
     public AudioSource nightMusic;
+    
 
     [SerializeField] private float fadeDuration = 2f;
     [SerializeField] private float sunsetHour = 18f;
     [SerializeField] private float sunriseHour = 6f;
 
     private bool wasNight;
-
+    private float masterVolume = 1f;
     void Start()
     {
         if (!ValidateAudioSources())
@@ -63,7 +64,7 @@ public class MusicManager : MonoBehaviour
         {
             if (isNight)
             {
-                nightMusic.volume = 1f;
+                nightMusic.volume = masterVolume;
                 dayMusic.volume = 0f;
 
                 if (!nightMusic.isPlaying)
@@ -74,7 +75,7 @@ public class MusicManager : MonoBehaviour
             }
             else
             {
-                dayMusic.volume = 1f;
+                dayMusic.volume = masterVolume;
                 nightMusic.volume = 0f;
 
                 if (!dayMusic.isPlaying)
@@ -86,6 +87,11 @@ public class MusicManager : MonoBehaviour
 
             return;
         }
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        masterVolume = volume;
     }
 
     IEnumerator CrossFade(AudioSource from, AudioSource to)
@@ -107,8 +113,8 @@ public class MusicManager : MonoBehaviour
 
             float t = timer / fadeDuration;
 
-            from.volume = Mathf.Lerp(1f, 0f, t);
-            to.volume = Mathf.Lerp(0f, 1f, t);
+            from.volume = Mathf.Lerp(masterVolume, 0f, t);
+            to.volume = Mathf.Lerp(0f, masterVolume, t);
 
             yield return null;
         }
@@ -120,7 +126,7 @@ public class MusicManager : MonoBehaviour
         }
 
         if (to != null)
-            to.volume = 1f;
+            to.volume = masterVolume;
     }
 
     bool ValidateAudioSources()

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -13,8 +14,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Slider brightnessSlider;
 
     [Header("Audio")]
-    [SerializeField] private AudioSource musicSource;
-    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioMixer audioMixer;
 
     [Header("Brightness")]
     [SerializeField] private CanvasGroup brightnessOverlay;
@@ -62,6 +62,8 @@ public class SettingsManager : MonoBehaviour
         musicSlider.onValueChanged.AddListener(SetPendingMusic);
         sfxSlider.onValueChanged.AddListener(SetPendingSFX);
         brightnessSlider.onValueChanged.AddListener(SetPendingBrightness);
+
+        ConfirmSettings();
     }
 
     void SetupResolutionDropdown()
@@ -71,25 +73,51 @@ public class SettingsManager : MonoBehaviour
         resolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
+        List<Resolution> uniqueResolutions = new List<Resolution>();
 
         int currentIndex = 0;
 
-        for (int i = 0; i < resolutions.Length; i++)
+        foreach (Resolution res in resolutions)
         {
-            string option =
-                resolutions[i].width + " x " + resolutions[i].height;
+            bool exists = false;
 
-            options.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
+            foreach (Resolution unique in uniqueResolutions)
             {
-                currentIndex = i;
+                if (unique.width == res.width &&
+                    unique.height == res.height)
+                {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (!exists)
+            {
+                uniqueResolutions.Add(res);
+
+                options.Add($"{res.width} x {res.height}");
+
+                if (res.width == Screen.currentResolution.width &&
+                    res.height == Screen.currentResolution.height)
+                {
+                    currentIndex = uniqueResolutions.Count - 1;
+                }
             }
         }
 
+        resolutions = uniqueResolutions.ToArray();
+
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentIndex;
+    }
+
+    public void QuitGame()
+    {
+    #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+    #else
+        Application.Quit();
+    #endif
     }
 
     public void SetPendingResolution(int index)
@@ -134,14 +162,18 @@ public class SettingsManager : MonoBehaviour
         {
             Resolution res = resolutions[pendingResolutionIndex];
 
+            FullScreenMode mode = pendingFullscreen
+                ? FullScreenMode.FullScreenWindow
+                : FullScreenMode.Windowed;
+
             Screen.SetResolution(
                 res.width,
                 res.height,
-                pendingFullscreen
+                mode
             );
-        }
 
-        Screen.fullScreen = pendingFullscreen;
+            Screen.fullScreenMode = mode;
+        }
 
         ApplyMusicVolume(pendingMusic);
         ApplySFXVolume(pendingSFX);
@@ -197,16 +229,19 @@ public class SettingsManager : MonoBehaviour
 
     void ApplyMusicVolume(float value)
     {
-        if (musicSource != null)
-            musicSource.volume = value;
-    }
+        float db = Mathf.Lerp(-80f, 0f, value);
 
+        bool success = audioMixer.SetFloat("MusicVolume", db);
+
+        Debug.Log($"MusicVolume = {db}, Success = {success}");
+    }
     void ApplySFXVolume(float value)
     {
-        if (sfxSource != null)
-            sfxSource.volume = value;
+        audioMixer.SetFloat(
+            "SFXVolume",
+            Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20f
+        );
     }
-
     void ApplyBrightness(float value)
     {
         if (brightnessOverlay != null)
