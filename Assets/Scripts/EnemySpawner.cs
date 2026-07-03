@@ -16,12 +16,19 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnHeight = 10f;
 
     [Header("Night Spawn Settings")]
-    [SerializeField] private int maxNightEnemies = 10;
-    [SerializeField] private float spawnInterval = 5f;
-    [SerializeField] private float daytimeSpawnInterval = 2f;
     [SerializeField] private int enemiesToSpawn = 4;
     [SerializeField] private float minDistanceFromPlayer = 5f;
-    [SerializeField] private bool allowDaytimeTesting = true;
+
+    [Header("Day")]
+    [SerializeField] private bool allowDaySpawns = true;
+    [SerializeField] private int maxDayEnemies = 2;
+    [SerializeField] private float daySpawnInterval = 25f;
+    [SerializeField] private int daySpawnChance = 20; // %
+
+    [Header("Night")]
+    [SerializeField] private int maxNightEnemies = 12;
+    [SerializeField] private float nightSpawnInterval = 4f;
+
 
     [Header("Enemy Prefabs")]
     [FormerlySerializedAs("halimawPrefab")]
@@ -56,17 +63,30 @@ public class EnemySpawner : MonoBehaviour
     {
         if (PauseManager.Instance != null &&
             PauseManager.Instance.IsPaused)
-        {
             return;
-        }
 
         if (DayNightCycle.Instance == null)
             return;
 
         bool isNight = DayNightCycle.Instance.IsNight();
-        bool shouldSpawn = isNight || allowDaytimeTesting;
 
-        if (!shouldSpawn)
+        timer -= Time.deltaTime;
+
+        if (isNight)
+        {
+            spawnCycleActive = true;
+
+            if (timer <= 0f)
+            {
+                timer = nightSpawnInterval;
+
+                if (spawnedEnemies.Count < maxNightEnemies)
+                {
+                    SpawnNightEnemy();
+                }
+            }
+        }
+        else
         {
             if (spawnCycleActive)
             {
@@ -74,21 +94,19 @@ public class EnemySpawner : MonoBehaviour
                 RemoveNightEnemies();
             }
 
-            return;
-        }
+            if (!allowDaySpawns)
+                return;
 
-        if (!spawnCycleActive)
-        {
-            spawnCycleActive = true;
-            timer = isNight ? spawnInterval : daytimeSpawnInterval;
-        }
+            if (timer <= 0f)
+            {
+                timer = daySpawnInterval;
 
-        timer -= Time.deltaTime;
-
-        if (timer <= 0f && spawnedEnemies.Count < maxNightEnemies)
-        {
-            SpawnNightEnemy();
-            timer = isNight ? spawnInterval : daytimeSpawnInterval;
+                if (spawnedEnemies.Count < maxDayEnemies &&
+                    Random.Range(0, 100) < daySpawnChance)
+                {
+                    SpawnNightEnemy();
+                }
+            }
         }
     }
 

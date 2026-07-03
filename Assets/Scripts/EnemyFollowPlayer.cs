@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class EnemyFollowPlayer : MonoBehaviour
 {
+    [SerializeField] float daySpeed = 2f;
+    [SerializeField] float nightSpeed = 4f;
+
+    [SerializeField] float dayDetection = 5f;
+    [SerializeField] float nightDetection = 10f;
     public float moveSpeed = 2f;
     public float stopDistance = 0.6f;
 
@@ -41,9 +46,15 @@ public class EnemyFollowPlayer : MonoBehaviour
             return;
         }
 
-        if (player == null) return;
+        if (player == null)
+            return;
 
-        float detectionRange = 6f;
+        // ---------- Day / Night ----------
+        bool isNight = DayNightCycle.Instance != null &&
+                    DayNightCycle.Instance.IsNight();
+
+        float currentSpeed = isNight ? nightSpeed : daySpeed;
+        float detectionRange = isNight ? nightDetection : dayDetection;
 
         // Anino II: enemies detect player slower
         if (SkillManager.Instance != null &&
@@ -52,10 +63,9 @@ public class EnemyFollowPlayer : MonoBehaviour
             detectionRange *= 0.75f;
         }
 
-        float distance =
-            Vector2.Distance(transform.position, player.position);
+        float distance = Vector2.Distance(transform.position, player.position);
 
-        // Player too far
+        // Player too far away
         if (distance > detectionRange)
         {
             rb.linearVelocity = Vector2.zero;
@@ -66,13 +76,12 @@ public class EnemyFollowPlayer : MonoBehaviour
             return;
         }
 
-        // Follow player
+        // Chase player
         if (distance > stopDistance)
         {
-            Vector2 direction =
-                (player.position - transform.position).normalized;
+            Vector2 direction = (player.position - transform.position).normalized;
 
-            rb.linearVelocity = direction * moveSpeed;
+            rb.linearVelocity = direction * currentSpeed;
 
             if (animator != null)
             {
