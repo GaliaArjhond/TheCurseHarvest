@@ -76,5 +76,6 @@ public class SaveData
     public string lastPlayed = "";
     public string saveFileName = "";
 
-    
+    // Tutorial
+    public bool tutorialCompleted = false;
 }

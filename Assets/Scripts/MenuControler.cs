@@ -5,21 +5,25 @@ public class MenuControler : MonoBehaviour
 {
     public GameObject menuCanvas;
 
+    private PlayerInput playerInput;
+
     void Start()
     {
         menuCanvas.SetActive(false);
+
+        playerInput = FindFirstObjectByType<PlayerInput>();
     }
 
     void Update()
     {
-        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        if (playerInput.actions["Inventory"].WasPressedThisFrame())
         {
             bool open = !menuCanvas.activeSelf;
 
-            menuCanvas.SetActive(open);
+            menuCanvas.SetActive(menuCanvas.activeSelf == false);
 
             if (PauseManager.Instance != null)
-                PauseManager.Instance.SetPaused(open);
+                PauseManager.Instance.SetPaused(menuCanvas.activeSelf);
         }
     }
 }

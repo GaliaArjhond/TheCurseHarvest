@@ -7,6 +7,7 @@ public class SaveController : MonoBehaviour
 {
     public static SaveController Instance;
     private ChestInventory chestInventory;
+    public SaveData CurrentSaveData { get; private set; }
 
     private string saveFilePath;
 
@@ -31,7 +32,7 @@ public class SaveController : MonoBehaviour
 
     IEnumerator Start()
     {
-        //DeleteSave();
+        DeleteSave();
         yield return null;
         LoadGame();
     }
@@ -115,11 +116,13 @@ public class SaveController : MonoBehaviour
         
         if (!File.Exists(saveFilePath))
         {
-            Debug.LogWarning("No save found — keeping default scene setup");
+            CurrentSaveData = new SaveData(); // Brand new player
+            Debug.LogWarning("No save found — starting new game");
             return;
         }
-
+        
         SaveData data = JsonUtility.FromJson<SaveData>(File.ReadAllText(saveFilePath));
+        CurrentSaveData = data;
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
