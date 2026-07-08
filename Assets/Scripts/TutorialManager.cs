@@ -11,10 +11,13 @@ public class TutorialManager : MonoBehaviour
 
         [TextArea(4, 10)]
         public string body;
+
+        public Sprite image;
     }
 
     [Header("UI")]
     public GameObject tutorialPanel;
+    public Image tutorialImage;
 
     public TMP_Text titleText;
     public TMP_Text bodyText;
@@ -58,6 +61,15 @@ public class TutorialManager : MonoBehaviour
     {
         titleText.text = pages[currentPage].title;
         bodyText.text = pages[currentPage].body;
+        if (pages[currentPage].image != null)
+        {
+            tutorialImage.gameObject.SetActive(true);
+            tutorialImage.sprite = pages[currentPage].image;
+        }
+        else
+        {
+            tutorialImage.gameObject.SetActive(false);
+        }
 
         // Page Indicator
         pageIndicator.text = (currentPage + 1) + " / " + pages.Length;
@@ -101,11 +113,26 @@ public class TutorialManager : MonoBehaviour
         FinishTutorial();
     }
 
+    public void OpenTutorial()
+    {
+        currentPage = 0;
+
+        tutorialPanel.SetActive(true);
+
+        if (playerMovement != null)
+            playerMovement.enabled = false;
+
+        ShowPage();
+    }
+
     void FinishTutorial()
     {
-        SaveController.Instance.CurrentSaveData.tutorialCompleted = true;
-
-        SaveController.Instance.SaveGame();
+        // Only save completion the first time
+        if (!SaveController.Instance.CurrentSaveData.tutorialCompleted)
+        {
+            SaveController.Instance.CurrentSaveData.tutorialCompleted = true;
+            SaveController.Instance.SaveGame();
+        }
 
         tutorialPanel.SetActive(false);
 

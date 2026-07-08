@@ -67,7 +67,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 23
   Name: Wood Armor
-  description: 
+  description: Lightweight wooden armor crafted for beginner adventurers. Increases
+    defense while exploring dangerous areas
   itemType: 4
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
@@ -77,6 +78,7 @@ MonoBehaviour:
   amount: 1
   maxStack: 999
   amountText: {fileID: 3617207381900983612}
+  worldPrefab: {fileID: 0}
   cropData: {fileID: 0}
   hpBonus: 0
   attackBonus: 0

@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ItemDragHandler : MonoBehaviour,
+    IBeginDragHandler,
+    IDragHandler,
+    IEndDragHandler,
+    IPointerClickHandler
 {
     private Transform originalParent;
     private Slot originalSlot;
@@ -295,5 +299,33 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 slot
             );
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button != PointerEventData.InputButton.Right)
+            return;
+
+        if (InventoryContextMenu.Instance == null)
+        {
+            Debug.LogError("InventoryContextMenu.Instance is NULL");
+            return;
+        }
+
+        Item item = GetComponent<Item>();
+        if (item == null)
+        {
+            Debug.LogError("Item component is missing.");
+            return;
+        }
+
+        Slot slot = GetComponentInParent<Slot>();
+        if (slot == null)
+        {
+            Debug.LogError("Slot component is missing.");
+            return;
+        }
+
+        InventoryContextMenu.Instance.Open(item, slot, eventData.position);
     }
 }

@@ -92,6 +92,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 16
   Name: FishingRod
+  description: Cast your line into rivers and ponds to catch fish. A peaceful way
+    to earn money and gather food
   itemType: 1
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
@@ -101,7 +103,15 @@ MonoBehaviour:
   amount: 1
   maxStack: 99
   amountText: {fileID: 0}
+  worldPrefab: {fileID: 0}
   cropData: {fileID: 0}
+  hpBonus: 0
+  attackBonus: 0
+  defenseBonus: 0
+  staminaBonus: 0
+  moveSpeedBonus: 0
+  fishingLuckBonus: 0
+  miningSpeedBonus: 0
 --- !u!114 &3290673666813923971
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -93,7 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 6
   Name: Wheat
-  description: 
+  description: A versatile grain harvested from wheat crops. Used for cooking and
+    crafting flour
   itemType: 9
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
@@ -103,6 +104,7 @@ MonoBehaviour:
   amount: 1
   maxStack: 999
   amountText: {fileID: 914204916903424506}
+  worldPrefab: {fileID: 0}
   cropData: {fileID: 0}
   hpBonus: 0
   attackBonus: 0

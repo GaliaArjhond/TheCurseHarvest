@@ -32,7 +32,7 @@ public class SaveController : MonoBehaviour
 
     IEnumerator Start()
     {
-        DeleteSave();
+        //DeleteSave();
         yield return null;
         LoadGame();
     }
@@ -116,8 +116,12 @@ public class SaveController : MonoBehaviour
         
         if (!File.Exists(saveFilePath))
         {
-            CurrentSaveData = new SaveData(); // Brand new player
+            CurrentSaveData = new SaveData();
             Debug.LogWarning("No save found — starting new game");
+
+            // Give starting items here
+            HotbarControler.Instance?.GiveStartingItem();
+
             return;
         }
         

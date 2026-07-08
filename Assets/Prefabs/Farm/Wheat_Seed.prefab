@@ -233,7 +233,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 7
   Name: WheatSeed
-  description: 
+  description: Plant on tilled soil and water every day. Harvest mature wheat after
+    several days
   itemType: 7
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
@@ -243,6 +244,7 @@ MonoBehaviour:
   amount: 1
   maxStack: 999
   amountText: {fileID: 4350042064125750188}
+  worldPrefab: {fileID: 0}
   cropData: {fileID: 11400000, guid: ad561e8b0628f69498c2c2406d12610e, type: 2}
   hpBonus: 0
   attackBonus: 0

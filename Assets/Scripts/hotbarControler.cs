@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class HotbarControler : MonoBehaviour
 {
+    [System.Serializable]
+    public class StartingItem
+    {
+        public GameObject itemPrefab;
+        public int amount = 1;
+    }
     public static HotbarControler Instance;
 
     [Header("Hotbar")]
@@ -13,7 +19,7 @@ public class HotbarControler : MonoBehaviour
     public int slotCount = 8;
 
     [Header("Starting Items")]
-    [SerializeField] private List<GameObject> startingItemPrefabs;
+    [SerializeField] private List<StartingItem> startingItems;
 
     private ItemDictionary itemDictionary;
     private Key[] hotbarKeys;
@@ -95,41 +101,106 @@ public class HotbarControler : MonoBehaviour
         Debug.Log("Hotbar slots created.");
     }
 
-    void GiveStartingItem()
+    public void GiveStartingItem()
     {
-        if (hotbarPanel == null) return;
-        if (hotbarPanel.transform.childCount == 0) return;
+        Debug.Log("========== GIVE STARTING ITEMS ==========");
+
+        if (hotbarPanel == null)
+        {
+            Debug.LogError("Hotbar Panel is NULL!");
+            return;
+        }
+
+        if (hotbarPanel.transform.childCount == 0)
+        {
+            Debug.LogError("Hotbar has NO slots!");
+            return;
+        }
+
+        Debug.Log("Hotbar Slots: " + hotbarPanel.transform.childCount);
+        Debug.Log("Starting Items Count: " + startingItems.Count);
 
         InventoryController inventory =
             InventoryController.Instance ??
             FindFirstObjectByType<InventoryController>();
 
-        for (int i = 0; i < startingItemPrefabs.Count; i++)
+        for (int i = 0; i < startingItems.Count; i++)
         {
-            GameObject startingPrefab = startingItemPrefabs[i];
-            if (startingPrefab == null) continue;
+            StartingItem start = startingItems[i];
+
+            Debug.Log("Checking Element " + i);
+
+            if (start == null)
+            {
+                Debug.LogError("Element " + i + " is NULL!");
+                continue;
+            }
+
+            if (start.itemPrefab == null)
+            {
+                Debug.LogError("Element " + i + " Item Prefab is NOT assigned!");
+                continue;
+            }
+
+            Debug.Log("Giving " + start.itemPrefab.name + " x" + start.amount);
 
             if (i < hotbarPanel.transform.childCount)
             {
-                Slot slot = hotbarPanel.transform.GetChild(i).GetComponent<Slot>();
-                if (slot == null || slot.currentItem != null) continue;
+                Slot slot = hotbarPanel.transform
+                    .GetChild(i)
+                    .GetComponent<Slot>();
 
-                GameObject item = Instantiate(startingPrefab, slot.transform);
-                CopyRectTransform(item);
-                slot.currentItem = item;
-            }
-            else if (inventory != null)
-            {
-                Item itemComponent = startingPrefab.GetComponent<Item>();
-                if (itemComponent == null) continue;
-
-                bool added = inventory.AddItem(itemComponent.ID, itemComponent.amount);
-                if (!added)
+                if (slot == null)
                 {
-                    Debug.LogWarning("Starting item overflow could not be added to inventory: " + itemComponent.Name);
+                    Debug.LogError("Slot " + i + " has no Slot component!");
+                    continue;
                 }
+
+                if (slot.currentItem != null)
+                {
+                    Debug.LogWarning("Slot " + i + " already has an item.");
+                    continue;
+                }
+
+                GameObject item = Instantiate(start.itemPrefab, slot.transform);
+
+                CopyRectTransform(item);
+
+                Item itemComponent = item.GetComponent<Item>();
+
+                if (itemComponent != null)
+                {
+                    itemComponent.amount = start.amount;
+                    itemComponent.UpdateAmountText();
+                }
+
+                slot.currentItem = item;
+
+                Debug.Log("Placed into Hotbar Slot " + i);
+            }
+            else
+            {
+                if (inventory == null)
+                {
+                    Debug.LogError("InventoryController not found!");
+                    continue;
+                }
+
+                Item prefabItem = start.itemPrefab.GetComponent<Item>();
+
+                if (prefabItem == null)
+                {
+                    Debug.LogError(start.itemPrefab.name + " has no Item component!");
+                    continue;
+                }
+
+                inventory.AddItem(prefabItem.ID, start.amount);
+
+                Debug.Log("Added to Inventory: " + prefabItem.Name);
             }
         }
+
+        Debug.Log("========== DONE ==========");
     }
 
     void CopyRectTransform(GameObject item)

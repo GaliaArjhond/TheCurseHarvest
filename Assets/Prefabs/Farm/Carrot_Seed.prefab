@@ -230,16 +230,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 12
   Name: Carrot
-  description: 
+  description: Plant on tilled soil and water daily. Grows into a healthy carrot
+    after a few days
   itemType: 7
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
   buyPrice: 10
   sellPrice: 5
-  isStackable: 1
+  isStackable: 0
   amount: 1
   maxStack: 999
   amountText: {fileID: 4350042064125750188}
+  worldPrefab: {fileID: 0}
   cropData: {fileID: 11400000, guid: 1c2401b64ba10654690cb64e8f7c0c2d, type: 2}
   hpBonus: 0
   attackBonus: 0

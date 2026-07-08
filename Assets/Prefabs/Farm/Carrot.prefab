@@ -93,7 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 11
   Name: Carrot
-  description: 
+  description: A fresh and nutritious vegetable. Can be sold, cooked, or used in
+    crafting recipes
   itemType: 8
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
@@ -103,6 +104,7 @@ MonoBehaviour:
   amount: 1
   maxStack: 999
   amountText: {fileID: 914204916903424506}
+  worldPrefab: {fileID: 0}
   cropData: {fileID: 0}
   hpBonus: 0
   attackBonus: 0

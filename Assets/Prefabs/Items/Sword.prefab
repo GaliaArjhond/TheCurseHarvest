@@ -92,7 +92,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   ID: 3
   Name: Sword
-  description: 
+  description: A reliable blade for defending yourself against the cursed creatures
+    that roam at night
   itemType: 1
   isPlaceable: 1
   placeablePrefab: {fileID: 0}
@@ -102,6 +103,7 @@ MonoBehaviour:
   amount: 0
   maxStack: 0
   amountText: {fileID: 0}
+  worldPrefab: {fileID: 0}
   cropData: {fileID: 0}
   hpBonus: 0
   attackBonus: 0
